@@ -1,0 +1,74 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Dialog title="{i18n>TRANSFER_COSTS_TO_CLAIM}"  stretch = "{device>/system/phone}">
+    
+        <Table 
+            core:require="{handler: 'cmh/managecomplaint/ext/controller/CostClaim'}"
+            id="sTableCostCollectors"  
+            inset="false" 
+            mode="MultiSelect"
+            items="{
+                path: 'costCollector',
+                parameters : { $$updateGroupId: 'updateCostCollectors'} 
+            }">
+            <headerToolbar>
+                <OverflowToolbar>                
+                    <Title id="sCostTableHeader" text="{i18n>COST}" level="H2"/>
+                    <ToolbarSpacer/>
+                    <Button id="sAddCostButton" tooltip="{i18n>ADD_COSTS}" text="{i18n>ADD_COSTS}"
+                        core:require="{handler: 'cmh/managecomplaint/ext/controller/CostClaim'}" 
+                        press="handler.onAddCost"/>
+                </OverflowToolbar>
+            </headerToolbar>
+				
+				<columns>
+					<Column>
+						<Text text="{i18n>SUB_ITEM_TYPE}" />
+					</Column>
+                    <Column>
+						<Text text="{i18n>ITEM_TYPE}" />
+					</Column>
+                     <Column minScreenWidth="Tablet" demandPopin="true">
+						<Text text="{i18n>TOTAL_COST}" />
+					</Column>
+                    <Column minScreenWidth="Tablet" demandPopin="true">
+						<Text text="{i18n>QUANTITY_IN_HOURS}" />
+					</Column>
+                     <Column minScreenWidth="Tablet" demandPopin="true">
+						<Text text="{i18n>DESCRIPTION}" />
+					</Column>
+                   
+				</columns>
+				<items>
+					<ColumnListItem selected="{transferToClaim}" >
+						<cells>
+							<Text text="{subItemType_code}" />
+                            <Text text="{itemType_code}" />
+                            <ObjectNumber
+                                number="{totalCost}"
+                                unit="{currency_code}"
+                                emphasized="false"
+                            />
+                            <ObjectNumber
+                                number="{quantity}"
+                                unit="{unit_code}"
+                                emphasized="false"
+                            />
+                            <Text text="{description}" />
+                         </cells>
+					</ColumnListItem>
+				</items>
+			</Table> 
+        
+	
+		<beginButton>
+			<Button type="Emphasized" core:require="{handler: 'cmh/managecomplaint/ext/controller/CostClaim'}"
+				text="{i18n>TRANSFER_TO_CLAIM}"
+				press="handler.onSaveCostDialog"/>
+		</beginButton>
+        <endButton>
+			<Button core:require="{handler: 'cmh/managecomplaint/ext/controller/CostClaim'}"
+				text="{i18n>CANCEL}"
+				press="handler.onCancelCostDialog"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

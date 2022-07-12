@@ -1,0 +1,815 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CAPABILITIES',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Capabilities.v1" Alias="Capabilities"/>
+    </edmx:Reference>
+   <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CORE',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Core.v1" Alias="Core"/>
+    </edmx:Reference>
+     <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_UI',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="ComplaintService">
+            <EntityType Name="BusinessObjectStatuses">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="identifier" Type="Edm.String"/>
+                <Property Name="parent" Type="Edm.Guid"/>
+            </EntityType>
+            <EntityType Name="BusinessObjects">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="businessObjectType" Type="Edm.String"/>
+                <Property Name="isRelevant" Type="Edm.Boolean"/>
+                <Property Name="seqNumber" Type="Edm.String" MaxLength="10"/>
+                <Property Name="complaint" Type="Edm.Guid"/>
+                <Property Name="businessObjectID_ID" Type="Edm.Guid"/>
+                <Property Name="stream_ID" Type="Edm.Guid"/>
+                <NavigationProperty Name="businessObjectID" Type="ComplaintService.CommonBusinessObjects">
+                    <ReferentialConstraint Property="businessObjectID_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <NavigationProperty Name="stream" Type="ComplaintService.Streams" Partner="businessObjects">
+                    <ReferentialConstraint Property="stream_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="CommonBusinessObjects">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="identifier" Type="Edm.String"/>
+                <NavigationProperty Name="businessObjectStatuses" Type="Collection(ComplaintService.BusinessObjectStatuses)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Complaints">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="identifier" Type="Edm.String" MaxLength="30"/>
+                <Property Name="complaintType" Type="Edm.String"/>
+                <Property Name="description" Type="Edm.String" MaxLength="100"/>
+                <Property Name="complaintStatus" Type="Edm.String"/>
+                <Property Name="referenceNumber" Type="Edm.String" MaxLength="40"/>
+                <Property Name="supplier" Type="Edm.Guid"/>
+                <Property Name="material" Type="Edm.Guid"/>
+                <Property Name="Quantity" Type="Edm.String"/>
+                <Property Name="Unit" Type="Edm.String"/>
+                <Property Name="plant" Type="Edm.Guid"/>
+                <Property Name="purchasingOrganisation" Type="Edm.Guid"/>
+                <Property Name="company" Type="Edm.Guid"/>
+                <Property Name="personResponsible" Type="Edm.Guid"/>
+                <Property Name="note" Type="Edm.String" MaxLength="5000"/>
+                <Property Name="creationType" Type="Edm.String" MaxLength="10"/>
+                <Property Name="contactPerson" Type="Edm.String" MaxLength="50"/>
+                <Property Name="totalSubLetCost" Type="Edm.Decimal" Scale="variable"/>
+                <Property Name="totalLaborHour" Type="Edm.Decimal" Scale="variable"/>
+                <Property Name="currency_code" Type="Edm.String" MaxLength="3"/>
+                <NavigationProperty Name="currency" Type="ComplaintService.Currencies">
+                    <ReferentialConstraint Property="currency_code" ReferencedProperty="code"/>
+                </NavigationProperty>
+                <NavigationProperty Name="streams" Type="Collection(ComplaintService.Streams)" Partner="parentID">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="costCollector" Type="Collection(ComplaintService.CostCollectors)" Partner="parent">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="businessObject" Type="Collection(ComplaintService.BusinessObjects)"/>
+            </EntityType>
+            <EntityType Name="CostCollectors">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="quantity" Type="Edm.Decimal" Precision="5" Scale="2"/>
+                <Property Name="totalCost" Type="Edm.Decimal" Precision="23" Scale="4"/>
+                <Property Name="claim" Type="Edm.Guid"/>
+                <Property Name="description" Type="Edm.String" MaxLength="100"/>
+                <Property Name="transferToClaim" Type="Edm.Boolean"/>
+                <Property Name="parent_ID" Type="Edm.Guid"/>
+                <Property Name="itemType_code" Type="Edm.String"/>
+                <Property Name="subItemType_code" Type="Edm.String"/>
+                <Property Name="currency_code" Type="Edm.String" MaxLength="3"/>
+                <NavigationProperty Name="parent" Type="ComplaintService.Complaints" Partner="costCollector">
+                    <ReferentialConstraint Property="parent_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <NavigationProperty Name="itemType" Type="ComplaintService.ItemType">
+                    <ReferentialConstraint Property="itemType_code" ReferencedProperty="code"/>
+                </NavigationProperty>
+                <NavigationProperty Name="subItemType" Type="ComplaintService.SubItemType">
+                    <ReferentialConstraint Property="subItemType_code" ReferencedProperty="code"/>
+                </NavigationProperty>
+                <NavigationProperty Name="currency" Type="ComplaintService.Currencies">
+                    <ReferentialConstraint Property="currency_code" ReferencedProperty="code"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Currencies">
+                <Key>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="name" Type="Edm.String" MaxLength="255"/>
+                <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="code" Type="Edm.String" Nullable="false" MaxLength="3"/>
+                <Property Name="symbol" Type="Edm.String" MaxLength="5"/>
+                <NavigationProperty Name="texts" Type="Collection(ComplaintService.Currencies_texts)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="localized" Type="ComplaintService.Currencies_texts">
+                    <ReferentialConstraint Property="code" ReferencedProperty="code"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Currencies_texts">
+                <Key>
+                    <PropertyRef Name="locale"/>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="locale" Type="Edm.String" Nullable="false" MaxLength="14"/>
+                <Property Name="name" Type="Edm.String" MaxLength="255"/>
+                <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="code" Type="Edm.String" Nullable="false" MaxLength="3"/>
+            </EntityType>
+            <EntityType Name="ItemType">
+                <Key>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="name" Type="Edm.String" MaxLength="255"/>
+                <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="code" Type="Edm.String" Nullable="false"/>
+                <NavigationProperty Name="texts" Type="Collection(ComplaintService.ItemType_texts)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="localized" Type="ComplaintService.ItemType_texts">
+                    <ReferentialConstraint Property="code" ReferencedProperty="code"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="ItemType_texts">
+                <Key>
+                    <PropertyRef Name="locale"/>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="locale" Type="Edm.String" Nullable="false" MaxLength="14"/>
+                <Property Name="name" Type="Edm.String" MaxLength="255"/>
+                <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="code" Type="Edm.String" Nullable="false"/>
+            </EntityType>
+            <EntityType Name="Streams">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="streamType" Type="Edm.String"/>
+                <Property Name="status" Type="Edm.String"/>
+                <Property Name="isRelevant" Type="Edm.Boolean"/>
+                <Property Name="seqNumber" Type="Edm.String" MaxLength="10"/>
+                <Property Name="parentID_ID" Type="Edm.Guid"/>
+                <NavigationProperty Name="businessObjects" Type="Collection(ComplaintService.BusinessObjects)" Partner="stream">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="parentID" Type="ComplaintService.Complaints" Partner="streams">
+                    <ReferentialConstraint Property="parentID_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="SubItemType">
+                <Key>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="name" Type="Edm.String" MaxLength="255"/>
+                <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="code" Type="Edm.String" Nullable="false"/>
+                <NavigationProperty Name="texts" Type="Collection(ComplaintService.SubItemType_texts)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="localized" Type="ComplaintService.SubItemType_texts">
+                    <ReferentialConstraint Property="code" ReferencedProperty="code"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="SubItemType_texts">
+                <Key>
+                    <PropertyRef Name="locale"/>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="locale" Type="Edm.String" Nullable="false" MaxLength="14"/>
+                <Property Name="name" Type="Edm.String" MaxLength="255"/>
+                <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="code" Type="Edm.String" Nullable="false"/>
+            </EntityType>
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="BusinessObjectStatuses" EntityType="ComplaintService.BusinessObjectStatuses"/>
+                <EntitySet Name="BusinessObjects" EntityType="ComplaintService.BusinessObjects">
+                    <NavigationPropertyBinding Path="businessObjectID" Target="CommonBusinessObjects"/>
+                    <NavigationPropertyBinding Path="stream" Target="Streams"/>
+                </EntitySet>
+                <EntitySet Name="CommonBusinessObjects" EntityType="ComplaintService.CommonBusinessObjects">
+                    <NavigationPropertyBinding Path="businessObjectStatuses" Target="BusinessObjectStatuses"/>
+                </EntitySet>
+                <EntitySet Name="Complaints" EntityType="ComplaintService.Complaints">
+                    <NavigationPropertyBinding Path="currency" Target="Currencies"/>
+                    <NavigationPropertyBinding Path="streams" Target="Streams"/>
+                    <NavigationPropertyBinding Path="costCollector" Target="CostCollectors"/>
+                    <NavigationPropertyBinding Path="businessObject" Target="BusinessObjects"/>
+                </EntitySet>
+                <EntitySet Name="CostCollectors" EntityType="ComplaintService.CostCollectors">
+                    <NavigationPropertyBinding Path="parent" Target="Complaints"/>
+                    <NavigationPropertyBinding Path="itemType" Target="ItemType"/>
+                    <NavigationPropertyBinding Path="subItemType" Target="SubItemType"/>
+                    <NavigationPropertyBinding Path="currency" Target="Currencies"/>
+                </EntitySet>
+                <EntitySet Name="Currencies" EntityType="ComplaintService.Currencies">
+                    <NavigationPropertyBinding Path="texts" Target="Currencies_texts"/>
+                    <NavigationPropertyBinding Path="localized" Target="Currencies_texts"/>
+                </EntitySet>
+                <EntitySet Name="Currencies_texts" EntityType="ComplaintService.Currencies_texts"/>
+                <EntitySet Name="ItemType" EntityType="ComplaintService.ItemType">
+                    <NavigationPropertyBinding Path="texts" Target="ItemType_texts"/>
+                    <NavigationPropertyBinding Path="localized" Target="ItemType_texts"/>
+                </EntitySet>
+                <EntitySet Name="ItemType_texts" EntityType="ComplaintService.ItemType_texts"/>
+                <EntitySet Name="Streams" EntityType="ComplaintService.Streams">
+                    <NavigationPropertyBinding Path="businessObjects" Target="BusinessObjects"/>
+                    <NavigationPropertyBinding Path="parentID" Target="Complaints"/>
+                </EntitySet>
+                <EntitySet Name="SubItemType" EntityType="ComplaintService.SubItemType">
+                    <NavigationPropertyBinding Path="texts" Target="SubItemType_texts"/>
+                    <NavigationPropertyBinding Path="localized" Target="SubItemType_texts"/>
+                </EntitySet>
+                <EntitySet Name="SubItemType_texts" EntityType="ComplaintService.SubItemType_texts"/>
+            </EntityContainer>
+            <Annotations Target="ComplaintService.BusinessObjectStatuses/createdAt">
+                <Annotation Term="Common.Label">
+                    <String>Created On</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Core.Immutable">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.BusinessObjectStatuses/createdBy">
+                <Annotation Term="Common.Label">
+                    <String>Created By</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Core.Description">
+                    <String>A user's unique ID</String>
+                </Annotation>
+                <Annotation Term="Core.Immutable">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.BusinessObjectStatuses/modifiedAt">
+                <Annotation Term="Common.Label">
+                    <String>Changed On</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.BusinessObjectStatuses/modifiedBy">
+                <Annotation Term="Common.Label">
+                    <String>Changed By</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Core.Description">
+                    <String>A user's unique ID</String>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.BusinessObjects/createdAt">
+                <Annotation Term="Common.Label">
+                    <String>Created On</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Core.Immutable">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.BusinessObjects/createdBy">
+                <Annotation Term="Common.Label">
+                    <String>Created By</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Core.Description">
+                    <String>A user's unique ID</String>
+                </Annotation>
+                <Annotation Term="Core.Immutable">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.BusinessObjects/modifiedAt">
+                <Annotation Term="Common.Label">
+                    <String>Changed On</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.BusinessObjects/modifiedBy">
+                <Annotation Term="Common.Label">
+                    <String>Changed By</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Core.Description">
+                    <String>A user's unique ID</String>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.EntityContainer/Complaints">
+                <Annotation Term="Capabilities.DeleteRestrictions">
+                    <Record Type="Capabilities.DeleteRestrictionsType">
+                        <PropertyValue Property="Deletable">
+                            <Bool>false</Bool>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.Complaints/createdAt">
+                <Annotation Term="Common.Label">
+                    <String>Created On</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Core.Immutable">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.Complaints/createdBy">
+                <Annotation Term="Common.Label">
+                    <String>Created By</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Core.Description">
+                    <String>A user's unique ID</String>
+                </Annotation>
+                <Annotation Term="Core.Immutable">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.Complaints/modifiedAt">
+                <Annotation Term="Common.Label">
+                    <String>Changed On</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.Complaints/modifiedBy">
+                <Annotation Term="Common.Label">
+                    <String>Changed By</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Core.Description">
+                    <String>A user's unique ID</String>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.Complaints/currency">
+                <Annotation Term="Common.Label">
+                    <String>Currency</String>
+                </Annotation>
+                <Annotation Term="Core.Description">
+                    <String>A currency code as specified in ISO 4217</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.Complaints/currency_code">
+                <Annotation Term="Common.Label">
+                    <String>Currency</String>
+                </Annotation>
+                <Annotation Term="Common.ValueList">
+                    <Record Type="Common.ValueListType">
+                        <PropertyValue Property="Label">
+                            <String>Currency</String>
+                        </PropertyValue>
+                        <PropertyValue Property="CollectionPath">
+                            <String>Currencies</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty">
+                                        <PropertyPath>currency_code</PropertyPath>
+                                    </PropertyValue>
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>code</String>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>name</String>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Core.Description">
+                    <String>A currency code as specified in ISO 4217</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.CostCollectors/createdAt">
+                <Annotation Term="Common.Label">
+                    <String>Created On</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Core.Immutable">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.CostCollectors/createdBy">
+                <Annotation Term="Common.Label">
+                    <String>Created By</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Core.Description">
+                    <String>A user's unique ID</String>
+                </Annotation>
+                <Annotation Term="Core.Immutable">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.CostCollectors/modifiedAt">
+                <Annotation Term="Common.Label">
+                    <String>Changed On</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.CostCollectors/modifiedBy">
+                <Annotation Term="Common.Label">
+                    <String>Changed By</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Core.Description">
+                    <String>A user's unique ID</String>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.CostCollectors/currency">
+                <Annotation Term="Common.Label">
+                    <String>Currency</String>
+                </Annotation>
+                <Annotation Term="Core.Description">
+                    <String>A currency code as specified in ISO 4217</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.CostCollectors/itemType_code">
+                <Annotation Term="Common.ValueList">
+                    <Record Type="Common.ValueListType">
+                        <PropertyValue Property="Label">
+                            <String>ItemType</String>
+                        </PropertyValue>
+                        <PropertyValue Property="CollectionPath">
+                            <String>ItemType</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty">
+                                        <PropertyPath>itemType_code</PropertyPath>
+                                    </PropertyValue>
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>code</String>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>name</String>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.CostCollectors/subItemType_code">
+                <Annotation Term="Common.ValueList">
+                    <Record Type="Common.ValueListType">
+                        <PropertyValue Property="Label">
+                            <String>SubItemType</String>
+                        </PropertyValue>
+                        <PropertyValue Property="CollectionPath">
+                            <String>SubItemType</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty">
+                                        <PropertyPath>subItemType_code</PropertyPath>
+                                    </PropertyValue>
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>code</String>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>name</String>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.CostCollectors/currency_code">
+                <Annotation Term="Common.Label">
+                    <String>Currency</String>
+                </Annotation>
+                <Annotation Term="Common.ValueList">
+                    <Record Type="Common.ValueListType">
+                        <PropertyValue Property="Label">
+                            <String>Currency</String>
+                        </PropertyValue>
+                        <PropertyValue Property="CollectionPath">
+                            <String>Currencies</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty">
+                                        <PropertyPath>currency_code</PropertyPath>
+                                    </PropertyValue>
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>code</String>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>name</String>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Core.Description">
+                    <String>A currency code as specified in ISO 4217</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.Currencies">
+                <Annotation Term="UI.Identification">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>name</Path>
+                            </PropertyValue>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.Currencies/name">
+                <Annotation Term="Common.Label">
+                    <String>Name</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.Currencies/descr">
+                <Annotation Term="Common.Label">
+                    <String>Description</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.Currencies/code">
+                <Annotation Term="Common.Label">
+                    <String>Currency Code</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>name</Path>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.Currencies/symbol">
+                <Annotation Term="Common.Label">
+                    <String>Currency Symbol</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.Currencies_texts/name">
+                <Annotation Term="Common.Label">
+                    <String>Name</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.Currencies_texts/descr">
+                <Annotation Term="Common.Label">
+                    <String>Description</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.Currencies_texts/code">
+                <Annotation Term="Common.Label">
+                    <String>Currency Code</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>name</Path>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.ItemType">
+                <Annotation Term="UI.Identification">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>name</Path>
+                            </PropertyValue>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.ItemType/name">
+                <Annotation Term="Common.Label">
+                    <String>Name</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.ItemType/descr">
+                <Annotation Term="Common.Label">
+                    <String>Description</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.ItemType_texts/name">
+                <Annotation Term="Common.Label">
+                    <String>Name</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.ItemType_texts/descr">
+                <Annotation Term="Common.Label">
+                    <String>Description</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.Streams/createdAt">
+                <Annotation Term="Common.Label">
+                    <String>Created On</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Core.Immutable">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.Streams/createdBy">
+                <Annotation Term="Common.Label">
+                    <String>Created By</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Core.Description">
+                    <String>A user's unique ID</String>
+                </Annotation>
+                <Annotation Term="Core.Immutable">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.Streams/modifiedAt">
+                <Annotation Term="Common.Label">
+                    <String>Changed On</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.Streams/modifiedBy">
+                <Annotation Term="Common.Label">
+                    <String>Changed By</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Core.Description">
+                    <String>A user's unique ID</String>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.SubItemType">
+                <Annotation Term="UI.Identification">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>name</Path>
+                            </PropertyValue>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.SubItemType/name">
+                <Annotation Term="Common.Label">
+                    <String>Name</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.SubItemType/descr">
+                <Annotation Term="Common.Label">
+                    <String>Description</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.SubItemType_texts/name">
+                <Annotation Term="Common.Label">
+                    <String>Name</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ComplaintService.SubItemType_texts/descr">
+                <Annotation Term="Common.Label">
+                    <String>Description</String>
+                </Annotation>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

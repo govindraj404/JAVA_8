@@ -1,0 +1,113 @@
+package com.sap.ic.cmh.configuration.action.handler;
+
+import cds.gen.configurationservice.TargetTypes;
+import cds.gen.configurationservice.DeactivateTargetTypesContext;
+import com.sap.cds.Result;
+import com.sap.cds.Struct;
+import com.sap.cds.ql.cqn.CqnSelect;
+import com.sap.cds.services.cds.CdsService;
+import com.sap.cds.services.handler.EventHandler;
+import com.sap.cds.services.messages.Message;
+import com.sap.cds.services.messages.Messages;
+import com.sap.cds.services.persistence.PersistenceService;
+import com.sap.ic.cmh.configuration.handler.TargetTypeConfigurationHandler;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import com.sap.ic.cmh.auditlog.AuditLogHelper;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+
+public class DeactivateTargetTypesHandlerTest {
+
+    @InjectMocks
+    DeactivateTargetTypesHandler handler;
+    @Mock
+    TargetTypes targetType;
+
+    @Mock
+    EventHandler eventHandler;
+
+    @Mock
+    Messages messages;
+
+    @Mock
+    PersistenceService db;
+
+    @Mock
+    DeactivateTargetTypesContext context;
+
+    @Mock
+    Result result;
+
+    @Mock
+    Message msg;
+
+    @Mock
+    private CdsService cdsService;
+
+    @Mock
+    private CqnSelect cqnSelect;
+
+    @Mock
+    AuditLogHelper<TargetTypes> auditLogHelper;
+
+    @Mock
+    TargetTypeConfigurationHandler targetTypeHandler;
+
+    @Before
+    public void beforeClass() {
+        MockitoAnnotations.openMocks(this);
+        targetType = Struct.create(TargetTypes.class);
+        targetType.setId("143");
+        targetType.setCode("code");
+    }
+
+    @Test
+    public void deactiveTargetTypesTest() {
+        when(context.getCqn()).thenReturn(cqnSelect);
+        when(context.getService()).thenReturn(cdsService);
+        when(cdsService.run(any(CqnSelect.class))).thenReturn(result);
+        targetType.setIsActiveEntity(true);
+        targetType.setIsActive(true);
+        when(result.single(TargetTypes.class)).thenReturn(targetType);
+        handler.deactivateTargetTypes(context);
+    }
+
+    @Test
+    public void deactiveTargetTypesTestIsActive() {
+        Messages messages1 = Mockito.mock(Messages.class);
+        when(context.getCqn()).thenReturn(cqnSelect);
+        when(context.getService()).thenReturn(cdsService);
+        when(cdsService.run(any(CqnSelect.class))).thenReturn(result);
+        targetType.setIsActiveEntity(true);
+        targetType.setIsActive(false);
+        when(result.single(TargetTypes.class)).thenReturn(targetType);
+        handler.deactivateTargetTypes(context);
+    }
+
+    @Test
+    public void deactiveTargetTypesTestIsInActive() {
+        Messages messages1 = Mockito.mock(Messages.class);
+        when(context.getCqn()).thenReturn(cqnSelect);
+        when(context.getService()).thenReturn(cdsService);
+        when(cdsService.run(any(CqnSelect.class))).thenReturn(result);
+        targetType.setIsActiveEntity(false);
+        when(result.single(TargetTypes.class)).thenReturn(targetType);
+        handler.deactivateTargetTypes(context);
+    }
+
+    @Test
+    public void afterDeactivateTargetTypeTest()
+    {
+        when(context.getCqn()).thenReturn(cqnSelect);
+        when(context.getService()).thenReturn(cdsService);
+        when(cdsService.run(any(CqnSelect.class))).thenReturn(result);
+        when(result.single(TargetTypes.class)).thenReturn(targetType);
+        handler.afterDeactivateTargetTypes(context);
+    }
+}

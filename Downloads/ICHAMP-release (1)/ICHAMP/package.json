@@ -1,0 +1,21 @@
+{
+  "name": "cmh",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "mbt build",
+    "rename": "node scripts/rename.js",
+    "prebuild:dev": "npm run rename -- mta.yaml mta-mt.yaml && npm run rename -- mta-dev.yaml mta.yaml",
+    "build:dev": "mbt build -e mta_extensions/build-skip-test.mtaext",
+    "postbuild:dev": "npm run rename -- mta.yaml mta-dev.yaml && npm run rename -- mta-mt.yaml mta.yaml",
+    "build:skip-test": "mbt build -e mta_extensions/build-skip-test.mtaext",
+    "deploy:dev": "cf deploy mta_archives/cmh_0.0.1.mtar",
+    "deploy": "cf deploy mta_archives/cmh_1.0.0.mtar",
+    "undeploy": "cf undeploy cmh --delete-services --delete-service-keys",
+    "dbrefresh": "node scripts/dbrefresh.js",
+    "dbrefresh:qa": "npm run dbrefresh -- qa",
+    "dbrefresh:demo": "npm run dbrefresh -- demo"
+  },
+  "dependencies": {
+    "@sap/sbf": "6.4.7"
+  }
+}

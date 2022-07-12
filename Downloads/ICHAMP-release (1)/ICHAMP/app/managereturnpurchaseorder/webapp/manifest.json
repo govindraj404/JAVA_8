@@ -1,0 +1,198 @@
+{
+    "_version": "1.32.0",
+    "sap.app": {
+        "id": "cmh.managereturnpurchaseorder",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "1.0.0"
+        },
+        "title": "{{APPLICATION_TITLE}}",
+        "description": "{{APPLICATION_DESCRIPTION}}",
+        "dataSources": {
+            "mainService": {
+                "uri": "odata/v4/ReturnPurchaseOrderService/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [
+                        "annotation"
+                    ],
+                    "odataVersion": "4.0",
+                    "localUri": "localService/metadata.xml"
+                }
+            },
+            "annotation": {
+                "type": "ODataAnnotation",
+                "uri": "annotations/annotation.xml",
+                "settings": {
+                    "localUri": "annotations/annotation.xml"
+                }
+            }
+        },
+        "offline": false,
+        "resources": "resources.json",
+        "sourceTemplate": {
+            "id": "ui5template.fiorielements.v4.lrop",
+            "version": "1.0.0"
+        },
+        "crossNavigation": {
+            "inbounds": {
+                "manage-returnpo": {
+                    "signature": {
+                        "parameters": {},
+                        "additionalParameters": "allowed"
+                    },
+                    "semanticObject": "returnpo",
+                    "action": "manage",
+                    "hideLauncher": true
+                }
+            },
+            "outbounds": {}
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "resources": {
+            "js": [],
+            "css": []
+        },
+        "dependencies": {
+            "minUI5Version": "1.76.0",
+            "libs": {
+                "sap.ui.core": {},
+                "sap.fe.templates": {}
+            }
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "uri": "i18n/i18n.properties"
+            },
+            "": {
+                "dataSource": "mainService",
+                "preload": true,
+                "settings": {
+                    "synchronizationMode": "None",
+                    "operationMode": "Server",
+                    "autoExpandSelect": true,
+                    "earlyRequests": true
+                }
+            }
+        },
+        "routing": {
+            "routes": [
+                {
+                    "pattern": ":?query:",
+                    "name": "ReturnPurchaseOrdersList",
+                    "target": "ReturnPurchaseOrdersList"
+                },
+                {
+                    "pattern": "ReturnPurchaseOrders({key}):?query:",
+                    "name": "ReturnPurchaseOrdersObjectPage",
+                    "target": "ReturnPurchaseOrdersObjectPage"
+                }
+            ],
+            "targets": {
+                "ReturnPurchaseOrdersList": {
+                    "type": "Component",
+                    "id": "ReturnPurchaseOrdersList",
+                    "name": "sap.fe.templates.ListReport",
+                    "options": {
+                        "settings": {
+                            "entitySet": "ReturnPurchaseOrders",
+                            "variantManagement": "Page",
+                            "navigation": {
+                                "ReturnPurchaseOrders": {
+                                    "detail": {
+                                        "route": "ReturnPurchaseOrdersObjectPage"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "ReturnPurchaseOrdersObjectPage": {
+                    "type": "Component",
+                    "id": "ReturnPurchaseOrdersObjectPage",
+                    "name": "sap.fe.templates.ObjectPage",
+                    "options": {
+                        "settings": {
+                            "entitySet": "ReturnPurchaseOrders",
+                            "enhanceI18n": "i18n/ObjectPage/i18n.properties",
+                            "editableHeaderContent": false,
+                            "inboundParameters": {
+                                "complaint_ID": {
+                                   "useForCreate": true
+                                }
+                            },
+                            "content": {
+                                "header": {
+                                    "actions": {
+                                        "NavigationAction": {
+                                            "press": "cmh.managereturnpurchaseorder.ext.controller.Navigation.onNavigationButtonPress",
+                                            "visible": true,
+                                            "enabled": true,
+                                            "text": "{i18n>OBJECT_DETAILS}"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "extends": {
+            "extensions": {
+                "sap.ui.controllerExtensions": {
+                    "sap.fe.templates.ObjectPage.ObjectPageController": {
+                        "controllerName": "cmh.managereturnpurchaseorder.ext.controller.OPExtend"
+                    }
+                }
+            }
+        }
+    },
+    "sap.platform.abap": {
+        "_version": "1.1.0",
+        "uri": ""
+    },
+    "sap.platform.hcp": {
+        "_version": "1.1.0",
+        "uri": ""
+    },
+    "sap.fiori": {
+        "_version": "1.1.0",
+        "registrationIds": [],
+        "archeType": "transactional"
+    },
+    "sap.cloud": {
+        "public": true,
+        "service": "com.sap.ic.cmh"
+    },
+    "sap.platform.cf": {
+        "oAuthScopes": [
+            "$XSAPPNAME.ReturnPurchaseOrder.Create",
+            "$XSAPPNAME.ReturnPurchaseOrder.Read",
+            "$XSAPPNAME.ReturnPurchaseOrder.Update"
+        ]
+    }
+}

@@ -1,0 +1,422 @@
+{
+    "_version": "1.32.0",
+    "sap.app": {
+        "id": "cmh.managecomplaint",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "1.0.0"
+        },
+        "title": "{{APPLICATION_TITLE}}",
+        "description": "{{APPLICATION_DESCRIPTION}}",
+        "dataSources": {
+            "mainService": {
+                "uri": "odata/v4/ComplaintService/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [
+                        "annotation"
+                    ],
+                    "odataVersion": "4.0",
+                    "localUri": "localService/metadata.xml"
+                }
+            },
+            "annotation": {
+                "type": "ODataAnnotation",
+                "uri": "annotations/annotation.xml",
+                "settings": {
+                    "localUri": "annotations/annotation.xml"
+                }
+            }
+        },
+        "offline": false,
+        "resources": "resources.json",
+        "sourceTemplate": {
+            "id": "ui5template.fiorielements.v4.lrop",
+            "version": "1.0.0"
+        },
+        "crossNavigation": {
+            "inbounds": {
+              "complaint": {
+                "signature": {
+                  "parameters": {},
+                  "additionalParameters": "allowed"
+                },
+                "semanticObject": "complaint",
+                "action": "manage",
+                "title": "{{APPLICATION_TITLE}}",
+                "icon": "sap-icon://quality-issue"
+              }
+            },
+            "outbounds": {
+              "claim": {
+                "semanticObject": "claim",
+                "action": "manage",
+                "parameters": {
+                  "preferredMode": {
+                        "required": false
+                    },
+                    "ID": {
+                        "required": false
+                    },
+                    "IsActiveEntity": {
+                        "required": false
+                    },
+                    "complaint_ID": {
+                        "required": false
+                    }
+
+                }
+              },
+              "quality": {
+                "semanticObject": "quality",
+                "action": "manage",
+                "parameters": {
+                  "preferredMode": {
+                        "required": false
+                    },
+                    "ID": {
+                        "required": false
+                    },
+                    "IsActiveEntity": {
+                        "required": false 
+                    },
+                     "complaint_ID": {
+                        "required": false
+                    }
+                }
+              },
+              "supplier": {
+                "semanticObject": "supplier",
+                "action": "manage",
+                "parameters": {
+                   "preferredMode": {
+                        "required": false
+                    },
+                    "ID": {
+                        "required": false
+                    },
+                    "IsActiveEntity": {
+                        "required": false
+                    },
+                     "complaint_ID": {
+                        "required": false
+                    }
+                }
+              },
+              "returnpo": {
+                "semanticObject": "returnpo",
+                "action": "manage",
+                "parameters": {
+                   "preferredMode": {
+                        "required": false
+                    },
+                    "ID": {
+                        "required": false
+                    },
+                    "IsActiveEntity": {
+                        "required": false
+                    },
+                    "complaint_ID": {
+                        "required": false
+                    }
+                }
+              },
+               "costcollector": {
+                  "semanticObject": "costcollector",
+                  "action": "manage",
+                  "parameters": {
+                     "ID": {
+                        "required": true
+                    }
+                }
+              }
+            }
+          }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "resources": {
+            "js": [],
+            "css": []
+        },
+        "dependencies": {
+            "minUI5Version": "1.76.0",
+            "libs": {
+                "sap.ui.core": {},
+                "sap.fe.templates": {}
+            }
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "uri": "i18n/i18n.properties"
+            },
+            "": {
+                "dataSource": "mainService",
+                "preload": true,
+                "settings": {
+                    "synchronizationMode": "None",
+                    "operationMode": "Server",
+                    "autoExpandSelect": true,
+                    "groupId" : "$auto",
+                    "earlyRequests": true
+                }
+            }
+        },
+        "routing": {
+            "routes": [
+                {
+                    "pattern": ":?query:",
+                    "name": "ComplaintsList",
+                    "target": "ComplaintsList"
+                },
+                {
+                    "pattern": "Complaints({key}):?query:",
+                    "name": "ComplaintsObjectPage",
+                    "target": "ComplaintsObjectPage"
+                }
+            ],
+            "targets": {
+                "ComplaintsList": {
+                    "type": "Component",
+                    "id": "ComplaintsList",
+                    "name": "sap.fe.templates.ListReport",
+                    "options": {
+                        "settings": {
+                            "entitySet": "Complaints",
+                            "enhanceI18n": "i18n/ListPage/i18n.properties",
+                            "variantManagement": "Page",
+                            "navigation": {
+                                "Complaints": {
+                                    "detail": {
+                                        "route": "ComplaintsObjectPage"
+                                    }
+                                }
+                            }
+                           
+                        }
+                    }
+                },
+                "ComplaintsObjectPage": {
+                    "type": "Component",
+                    "id": "ComplaintsObjectPage",
+                    "name": "sap.fe.templates.ObjectPage",
+                    "options": {
+                        "settings": {
+                            "entitySet": "Complaints",
+                            "enhanceI18n": "i18n/ObjectPage/i18n.properties",
+                            "editableHeaderContent": false,
+                            "content": {
+                                "header": {
+                                    "actions": {
+                                        "NavigationAction": {
+                                            "press": "cmh.managecomplaint.ext.controller.Navigation.onNavigationButtonPress",
+                                            "visible": "{= ${isHideCostCollection} ? false : true}",
+                                            "enabled": true,
+                                            "text": "{i18n>COST_COLLECTOR}"
+                                        }
+                                    }
+                                },
+                                "body": {
+                                    "sections": {
+                                        "CustomSection": {
+                                            "name": "cmh.managecomplaint.ext.fragment.ProcessFlow",
+                                            "position": {
+                                                "anchor": "ReferenceInformationDraftFacet",
+                                                "placement": "After"
+                                            },
+                                            "type": "XMLFragment",
+                                            "title": "{i18n>DOCUMENT_FLOW}",
+                                            "visible":"{= %{complaintStatus_code} !== 'NEW'}"                                              
+                                       }
+                                    }
+                                }
+                            },
+                            "controlConfiguration": {
+                                "businessObjects/@com.sap.vocabularies.UI.v1.LineItem": {
+                                    "actions": {
+                                        "edit": {
+                                            "press": "cmh.managecomplaint.ext.controller.EditStream.openEditStreamDialog",
+                                            "text": "{i18n>ADAPT_STREAM_BUTTON}",
+                                            "enabled": "cmh.managecomplaint.ext.controller.EnableAdaptStream.enableEditStreamButton",
+                                            "visible": "{= (${isHideAdaptStreams} || ${isHideAdaptStreams} === null) ? false : true}"
+                                        }
+                                    },
+                                    "tableSettings": {
+                                        "selectionMode": "None",
+                                        "enableExport": false,
+                                        "personalization" : {
+                                            "column": true,
+                                            "sort": false
+                                        },
+                                        "enablePaste": false,
+                                        "quickVariantSelection": {
+                                            "paths": [
+                                                {
+                                                    "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#Relevant"
+                                                },
+                                                {
+                                                    "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#All"
+                                                }
+                                            ],
+                                            "showCounts": false
+                                        },
+                                        "creationMode": {
+                                            "createAtEnd": false
+                                        }
+                                    },
+                                    "columns": {
+                                        "BusinessObjectStatuses": {
+                                            "header": "{i18n>BUSINESS_OBJECT_STATUS}",
+                                            "position": {
+                                                "placement": "After",
+                                                "anchor": "DataField::stream::status::name"
+                                            },
+                                            "template": "cmh.managecomplaint.ext.fragment.BusinessObjectStatuses"
+                                        },
+                                        "DynamicAction": {
+                                            "header": "{i18n>BUSINESS_OBJECT}",
+                                            "position": {
+                                                "placement": "Before",
+                                                "anchor": "DataField::businessObjectID::personResponsible_ID"
+                                            },
+                                            "template": "cmh.managecomplaint.ext.fragment.CustomActionButton"
+                                        },
+                                        "DataField::businessObjectID_ID":{
+                                            "availability": "Hidden"
+                                        },
+                                        "DataField::isRelevant":{
+                                            "availability": "Hidden"
+                                        },
+                                        "DataField::businessObjectType_code":{
+                                            "availability": "Hidden"
+                                        }
+                                    }
+                                },
+                                "draftBusinessObjects/@com.sap.vocabularies.UI.v1.LineItem": {
+                                    "actions": {
+                                        "edits": {
+                                            "press": "cmh.managecomplaint.ext.controller.EditStream.openEditStreamDialog",
+                                            "text": "{i18n>ADAPT_STREAM_BUTTON}",
+                                            "enabled": "cmh.managecomplaint.ext.controller.EnableAdaptStream.enableEditStreamButton",
+                                            "visible": "{= (${isHideAdaptStreams} || ${isHideAdaptStreams} === null) ? false : true}"
+                                        }
+                                    },
+                                    "tableSettings": {
+                                        "selectionMode": "None",
+                                        "enableExport": false,
+                                        "personalization" : {
+                                            "column": true,
+                                            "sort": false
+                                        },
+                                        "enablePaste": false,
+                                        "quickVariantSelection": {
+                                            "paths": [
+                                                {
+                                                    "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#Relevants"
+                                                },
+                                                {
+                                                    "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#Alls"
+                                                }
+                                            ],
+                                            "showCounts": false
+                                        },
+                                        "creationMode": {
+                                            "createAtEnd": false
+                                        }
+                                    },
+                                    "columns": {
+                                        "BusinessObjectStatuses": {
+                                            "header": "{i18n>BUSINESS_OBJECT_STATUS}",
+                                            "position": {
+                                                "placement": "After",
+                                                "anchor": "DataField::stream::status::name"
+                                            },
+                                            "template": "cmh.managecomplaint.ext.fragment.BusinessObjectStatuses"
+                                        },
+                                        "DynamicAction": {
+                                            "header": "{i18n>BUSINESS_OBJECT}",
+                                            "position": {
+                                                "placement": "Before",
+                                                "anchor": "DataField::businessObjectID::personResponsible_ID"
+                                            },
+                                            "template": "cmh.managecomplaint.ext.fragment.CustomActionButton"
+                                        },
+                                        "DataField::businessObjectID_ID":{
+                                            "availability": "Hidden"
+                                        },
+                                        "DataField::isRelevant":{
+                                            "availability": "Hidden"
+                                        },
+                                        "DataField::businessObjectType_code":{
+                                            "availability": "Hidden"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "extends": {
+            "extensions": {
+                "sap.ui.controllerExtensions": {
+                    "sap.fe.templates.ListReport.ListReportController": {
+                        "controllerName": "cmh.managecomplaint.ext.controller.LRExtend"
+                    },
+                    "sap.fe.templates.ObjectPage.ObjectPageController": {
+                        "controllerName": "cmh.managecomplaint.ext.controller.OPExtend"
+                    }
+                }
+            }
+        }
+    },
+    "sap.platform.abap": {
+        "_version": "1.1.0",
+        "uri": ""
+    },
+    "sap.platform.hcp": {
+        "_version": "1.1.0",
+        "uri": ""
+    },
+    "sap.fiori": {
+        "_version": "1.1.0",
+        "registrationIds": ["F4012"],
+        "archeType": "transactional"
+    },
+    "sap.cloud": {
+      "public": true,
+      "service": "com.sap.ic.cmh"
+    },
+    "sap.platform.cf": {
+      "oAuthScopes": [
+        "$XSAPPNAME.Complaint.Create",
+        "$XSAPPNAME.Complaint.Read",
+        "$XSAPPNAME.Complaint.Update",
+        "$XSAPPNAME.Complaint.Reopen",
+        "$XSAPPNAME.Complaint.Close",
+        "$XSAPPNAME.Complaint.Discard"
+      ]
+    }
+}

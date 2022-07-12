@@ -1,0 +1,10 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base"
+  ],
+  "schedule": ["every 1st week on sunday"],
+  "reviewers": [
+		"I540753", "I311479"
+	]
+}

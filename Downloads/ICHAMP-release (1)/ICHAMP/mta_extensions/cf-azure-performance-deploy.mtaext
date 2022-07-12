@@ -1,0 +1,14 @@
+_schema-version: "3.1"
+ID: mta-azure-performance
+extends: cmh
+version: 0.0.1
+
+modules:
+  - name: cmh-service-broker
+    properties:
+      SBF_CATALOG_SUFFIX: ${space}
+resources:
+  - name: cmh-messaging
+    parameters:
+      config:
+        namespace: default/sap.ic.cmh.${space}/-

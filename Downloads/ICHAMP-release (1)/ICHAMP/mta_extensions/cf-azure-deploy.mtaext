@@ -1,0 +1,22 @@
+_schema-version: "3.1"
+ID: mta-azure
+extends: cmh
+version: 0.0.1
+
+modules:
+  - name: cmh-approuter
+    provides:
+      - name: xray
+        properties:
+          xray_url: "https://xray.hana.ondemand.com/xRayControls/resources/sap/dfa/help"
+      - name: xray_data
+        properties:
+          xray_data_url: "https://cp.hana.ondemand.com/dps"
+  - name: cmh-service-broker
+    properties:
+      SBF_CATALOG_SUFFIX: ${space}
+resources:
+  - name: cmh-messaging
+    parameters:
+      config:
+        namespace: default/sap.ic.cmh.${space}/-

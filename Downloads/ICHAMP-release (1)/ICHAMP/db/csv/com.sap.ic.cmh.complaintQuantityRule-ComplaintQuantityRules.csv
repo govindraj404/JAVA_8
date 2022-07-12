@@ -1,0 +1,7 @@
+CODE,NAME
+REFQTY,Reference Quantity
+RECQTY,Received Quantity
+RCD-REF,Received quantity is more than the reference quantity
+REF-RCD,Received quantity is less than the reference quantity
+GE0LEREF,Complaint Quantity not exceeding proposed quantity
+INPGE0,Complaint Quantity

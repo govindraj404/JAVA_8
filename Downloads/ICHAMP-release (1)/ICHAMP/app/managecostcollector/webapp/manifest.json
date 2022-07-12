@@ -1,0 +1,243 @@
+{
+  "_version": "1.32.0",
+  "sap.app": {
+    "id": "cmh.managecostcollector",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "1.0.0"
+    },
+    "title": "{{APPLICATION_TITLE}}",
+    "description": "{{APPLICATION_DESCRIPTION}}",
+    "dataSources": {
+      "mainService": {
+        "uri": "odata/v4/CostCollectorService/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0",
+          "localUri": "localService/metadata.xml"
+        }
+      }
+    },
+    "offline": false,
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "ui5template.fiorielements.v4.lrop",
+      "version": "1.0.0"
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "costcollector-manage": {
+          "signature": {
+            "parameters": {
+              
+            },
+            "additionalParameters": "allowed"
+          },
+          "semanticObject": "costcollector",
+          "action": "manage",
+          "hideLauncher": true
+        }
+      },
+      "outbounds": {
+        
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "resources": {
+      "js": [
+        
+      ],
+      "css": [
+        
+      ]
+    },
+    "dependencies": {
+      "minUI5Version": "1.76.0",
+      "libs": {
+        "sap.ui.core": {
+          
+        },
+        "sap.fe.templates": {
+          
+        }
+      }
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "uri": "i18n/i18n.properties"
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          
+          "earlyRequests": true,
+          "groupId": "$direct"
+        }
+      }
+    },
+    "routing": {
+      "routes": [
+        {
+          "pattern": ":?query:",
+          "name": "ComplaintsList",
+          "target": "ComplaintsList"
+        },
+        {
+          "pattern": "Complaints({key}):?query:",
+          "name": "ComplaintsObjectPage",
+          "target": "ComplaintsObjectPage"
+        }
+      ],
+      "targets": {
+        "ComplaintsList": {
+          "type": "Component",
+          "id": "ComplaintsList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "entitySet": "Complaints",
+              "variantManagement": "Page",
+              "navigation": {
+                "Complaints": {
+                  "detail": {
+                    "route": "ComplaintsObjectPage"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "ComplaintsObjectPage": {
+          "type": "Component",
+          "id": "ComplaintsObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "entitySet": "Complaints",
+              "enhanceI18n": "i18n/ObjectPage/i18n.properties",
+              "editableHeaderContent": false,
+              "controlConfiguration": {
+                "costCollector/@com.sap.vocabularies.UI.v1.LineItem": {
+                  "actions": {
+                    "MenuActions": {
+                      "text": "{i18n>ADD}",
+                      "menu": [
+                        "customActionSUBL",
+                        "customActionFR"
+                      ],
+                    "position": {
+                        "placement": "Before",
+                        "anchor": "DataFieldForAction::CostCollectorService.Delete"
+                    } 
+                    },
+
+                    "edit": {
+                      "press": "cmh.managecostcollector.ext.controller.EditCost.openEditCostsDialog",
+                      "text": "{i18n>EDIT}",
+                      "enabled": "cmh.managecostcollector.ext.controller.EditCost.setEnabled",
+                       "position": {
+                            "placement": "Before",
+                            "anchor": "DataFieldForAction::CostCollectorService.Delete"
+                        } 
+                    },
+                    
+                    "customActionSUBL": {
+                      "press": "cmh.managecostcollector.ext.controller.AddCosts.openAddCostsDialogSABL",
+                      "text": "{i18n>SUBL}",
+                      "visible": true
+                    },
+                    "customActionFR": {
+                      "press": "cmh.managecostcollector.ext.controller.AddCosts.openAddCostsDialogFR",
+                      "text": "{i18n>FR}",
+                      "visible": true
+                    }
+                  },
+                  "tableSettings": {
+                    "selectionMode": "Single",
+                    "quickVariantSelection": {
+                      "paths": [
+                        {
+                          "annotationPath": "com.sap.vocabularies.UI.v1.SelectionVariant#All"
+                        },
+                        {
+                          "annotationPath": "com.sap.vocabularies.UI.v1.SelectionVariant#TransferredToClaim"
+                        }
+                      ],
+                      "showCounts": false
+                    },
+                    "creationMode": {
+                      "createAtEnd": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "extends": {
+        "extensions": {
+            "sap.ui.controllerExtensions": {
+                "sap.fe.templates.ObjectPage.ObjectPageController": {
+                    "controllerName": "cmh.managecostcollector.ext.controller.OPExtend"
+                }
+            }
+        }
+    }
+  },
+  "sap.platform.abap": {
+    "_version": "1.1.0",
+    "uri": ""
+  },
+  "sap.platform.hcp": {
+    "_version": "1.1.0",
+    "uri": ""
+  },
+  "sap.fiori": {
+    "_version": "1.1.0",
+    "registrationIds": [
+      
+    ],
+    "archeType": "transactional"
+  },
+  "sap.cloud": {
+    "public": true,
+    "service": "com.sap.ic.cmh"
+  },
+  "sap.platform.cf": {
+    "oAuthScopes": [
+      "$XSAPPNAME.CostCollector.Create",
+      "$XSAPPNAME.CostCollector.Read",
+      "$XSAPPNAME.CostCollector.Update",
+      "$XSAPPNAME.CostCollector.Delete"
+    ]
+  }
+}

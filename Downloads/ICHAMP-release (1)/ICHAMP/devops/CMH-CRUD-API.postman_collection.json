@@ -1,0 +1,391 @@
+{
+	"info": {
+		"_postman_id": "df4b11f8-199b-4866-860c-aded94e648b3",
+		"name": "CMH-CRUD-API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Complaints",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "clientSecret",
+							"value": "IT67soWK0ALkwwuxk0P9Jxasd6Y=",
+							"type": "string"
+						},
+						{
+							"key": "clientId",
+							"value": "sb-bb07b747-5244-4e34-8c56-fc0892d326c6!b5296|cmh-quality!b5032",
+							"type": "string"
+						},
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "I350195",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "Dearprince@1919",
+							"type": "string"
+						},
+						{
+							"key": "accessTokenUrl",
+							"value": "https://ferrari.authentication.eu20.hana.ondemand.com/oauth/token",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "tokenName",
+							"value": "try3",
+							"type": "string"
+						},
+						{
+							"key": "scope",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"description\": \"Test\",\r\n    \"referenceNumber\": \"REF-TEST-3011\",\r\n    \"quantity\": 1.00,\r\n    \"note\": null,\r\n    \"totalSubLetCost\": null,\r\n    \"totalLaborHour\": null,\r\n    \"materialCode\": \"BATTERY\",\r\n    \"supplierCode\": \"CATERP\",\r\n    \"unit_code\": \"ST\",\r\n    \"plantCode\": \"1000\",\r\n    \"purchaseOrganisationCode\": \"1000\",\r\n    \"contactPersonCode\": \"Ajay kumar\",\r\n    \"personResponsibleCode\": \"shruthi.anantharaman@sap.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://complaintshandlingqa-srv-quality.cfapps.eu20.hana.ondemand.com/odata/v4/ManageComplaintService/Complaints",
+					"protocol": "https",
+					"host": [
+						"complaintshandlingqa-srv-quality",
+						"cfapps",
+						"eu20",
+						"hana",
+						"ondemand",
+						"com"
+					],
+					"path": [
+						"odata",
+						"v4",
+						"ManageComplaintService",
+						"Complaints"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Quality Notification",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "clientSecret",
+							"value": "IT67soWK0ALkwwuxk0P9Jxasd6Y=",
+							"type": "string"
+						},
+						{
+							"key": "clientId",
+							"value": "sb-bb07b747-5244-4e34-8c56-fc0892d326c6!b5296|cmh-quality!b5032",
+							"type": "string"
+						},
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "I350195",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "Dearprince@1919",
+							"type": "string"
+						},
+						{
+							"key": "accessTokenUrl",
+							"value": "https://ferrari.authentication.eu20.hana.ondemand.com/oauth/token",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "tokenName",
+							"value": "try3",
+							"type": "string"
+						},
+						{
+							"key": "scope",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"complaintCode\": \"239\",\r\n    \"purchaseOrderNumber\": \"4500000555\",\r\n    \"defect\": {\r\n        \"defectCode_code\": \"1\",\r\n        \"defectGroup_code\": \"QM-E\"\r\n    },\r\n    \"purchaseOrderItem\": \"10\",\r\n    \"contactPersonCode\": \"Ajay kumar\",\r\n    \"personResponsibleCode\": \"I540419\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://complaintshandlingqa-srv-quality.cfapps.eu20.hana.ondemand.com/odata/v4/ManageQualityNotificationService/QualityNotifications",
+					"protocol": "https",
+					"host": [
+						"complaintshandlingqa-srv-quality",
+						"cfapps",
+						"eu20",
+						"hana",
+						"ondemand",
+						"com"
+					],
+					"path": [
+						"odata",
+						"v4",
+						"ManageQualityNotificationService",
+						"QualityNotifications"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Return Purchase Order",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n     \"complaintCode\": \"72006\",\r\n    \"reason_code\": \"DRO\",\r\n    \"purchasingGroup_code\": \"001\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Urlhost}}/odata/v4/ManageReturnPurchaseOrderService/ReturnPurchaseOrders",
+					"host": [
+						"{{Urlhost}}"
+					],
+					"path": [
+						"odata",
+						"v4",
+						"ManageReturnPurchaseOrderService",
+						"ReturnPurchaseOrders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Supplier 8D",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "clientSecret",
+							"value": "IT67soWK0ALkwwuxk0P9Jxasd6Y=",
+							"type": "string"
+						},
+						{
+							"key": "clientId",
+							"value": "sb-bb07b747-5244-4e34-8c56-fc0892d326c6!b5296|cmh-quality!b5032",
+							"type": "string"
+						},
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "I350195",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "Dearprince@1919",
+							"type": "string"
+						},
+						{
+							"key": "accessTokenUrl",
+							"value": "https://ferrari.authentication.eu20.hana.ondemand.com/oauth/token",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "tokenName",
+							"value": "try3",
+							"type": "string"
+						},
+						{
+							"key": "scope",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"complaintCode\": \"239\",\r\n    \"personResponsibleCode\": \"I540419\",\r\n    \"requestStartDate\": \"2022-02-10\",\r\n    \"requestEndDate\": \"2022-02-18\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://complaintshandlingqa-srv-quality.cfapps.eu20.hana.ondemand.com/odata/v4/ManageSupplierIssueProcessService/Supplier8DProcesses",
+					"protocol": "https",
+					"host": [
+						"complaintshandlingqa-srv-quality",
+						"cfapps",
+						"eu20",
+						"hana",
+						"ondemand",
+						"com"
+					],
+					"path": [
+						"odata",
+						"v4",
+						"ManageSupplierIssueProcessService",
+						"Supplier8DProcesses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Claim",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \r\n     \"complaintCode\": \"72006\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Urlhost}}/odata/v4/ManageClaimService/Claims",
+					"host": [
+						"{{Urlhost}}"
+					],
+					"path": [
+						"odata",
+						"v4",
+						"ManageClaimService",
+						"Claims"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "Urlhost",
+			"value": "https://complaintshandlingqa-srv-quality.cfapps.eu20.hana.ondemand.com"
+		},
+		{
+			"key": "ID",
+			"value": "4de60cc9-567f-470e-aa07-82b280bd9cd6"
+		},
+		{
+			"key": "code",
+			"value": "'QM-E'"
+		}
+	]
+}

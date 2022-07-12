@@ -1,0 +1,27 @@
+<core:FragmentDefinition id="sBusinessObjectQuickViewFragment" xmlns="sap.m" xmlns:core="sap.ui.core">
+	<QuickView id="sBusinessObjectQuickViewFragment" afterClose="onExit" placement="Auto">
+    <QuickViewPage id="sBusinessObjectQuickViewPage" header="{= (%{dataModel>/BOType} === 'QN') ? %{i18n>QUALITY_NOTIFICATION} : (%{dataModel>/BOType} === 'S8D') ? %{i18n>SUPPLIER_EIGHTD} : (%{dataModel>/BOType} === 'RPO') ? %{i18n>RETURN_PURCHASE_ORDER} : %{i18n>CLAIM} }">
+			<QuickViewGroup id="sGeneralInformationQuickViewGroup" heading="{i18n>GENERAL_INFORMATION}" >
+				<QuickViewGroupElement id="sIdentifier" label="{= (%{dataModel>/BOType} === 'QN') ? %{i18n>QUALITY_NOTIFICATION_NUMBER} : (%{dataModel>/BOType} === 'S8D') ? %{i18n>EIGHTD_NUMBER} : (%{dataModel>/BOType} === 'RPO') ? %{i18n>RETURN_PURCHASE_ORDER_NUMBER} : %{i18n>CLAIM_NUMBER} }" value="{dataModel>/identifier}"  core:require="{handler: 'cmh/managecomplaint/ext/controller/ProcessFlow'}"
+				url="{ parts : ['dataModel>/BOType', 'dataModel>/number','dataModel>/navigation','dataModel>/oViewContext'], formatter: 'handler.getNavigationURL'}"/>
+                <QuickViewGroupElement id="sPurchasingGroup" label="{i18n>PURCHASING_GROUP}" value="{dataModel>/purchasingGroup/description}"  visible="{= %{dataModel>/BOType} === 'RPO'}"/>
+                <QuickViewGroupElement id="sReason" label="{i18n>REASON}" value="{dataModel>/reason/description}"  visible="{= %{dataModel>/BOType} === 'RPO'}"/>
+                <QuickViewGroupElement id="sQualityNotificationNumber" label="{i18n>QUALITY_NOTIFICATION_NUMBER}" value="{dataModel>/defect/parent/identifier}"  visible="{= %{dataModel>/BOType} === 'S8D'}"/>
+                <QuickViewGroupElement id="sRequestStartDate" label="{i18n>REQUEST_START_DATE}" value="{ parts : ['dataModel>/requestStartDate'], formatter: 'cmh.managecomplaint.ext.model.formatter.showFormattedDate'}"
+                visible="{= %{dataModel>/BOType} === 'S8D'}"/>
+                <QuickViewGroupElement id="sRequestEndDate" label="{i18n>REQUEST_END_DATE}" value="{ parts : ['dataModel>/requestEndDate'], 
+                    formatter: 'cmh.managecomplaint.ext.model.formatter.showFormattedDate'}"
+                 visible="{= %{dataModel>/BOType} === 'S8D'}"/>
+                 <QuickViewGroupElement id="sPurchaseOrderNumber" label="{i18n>PURCHASE_ORDER_NUMBER}" value="{dataModel>/purchaseOrderNumber}"  visible="{= %{dataModel>/BOType} === 'QN'}"/>
+                 <QuickViewGroupElement id="sPurchaseOrderItemNumber" label="{i18n>PURCHASE_ORDER_ITEM_NUMBER}" value="{dataModel>/purchaseOrderItem}"  visible="{= %{dataModel>/BOType} === 'QN'}"/>
+                <QuickViewGroupElement id="sResponsiblePerson" label="{i18n>RESPONSIBLE_PERSON}" value="{dataModel>/personResponsible/businessPartnerName1}"/>
+                <QuickViewGroupElement id="sSupplierContactPerson" label="{i18n>SUPPLIER_CONTACT_PERSON}" value="{dataModel>/contactPerson/businessPartnerName1}"/>
+			</QuickViewGroup>
+			<QuickViewGroup id="sDefectQuickViewGroup" heading="{i18n>DEFECT_DETAILS}" visible="{= %{dataModel>/BOType} === 'QN'}">
+				<QuickViewGroupElement id="sDefectNumber" label="{i18n>DEFECT_NUMBER}" value="{dataModel>/defect/identifier}"/>
+                <QuickViewGroupElement id="sDefectGroup" label="{i18n>DEFECT_GROUP}" value="{dataModel>/defect/defectGroup/description}"/>
+                <QuickViewGroupElement id="sDefectCode" label="{i18n>DEFECT_CODE}" value="{dataModel>/defect/defectCode/description}"/>
+			</QuickViewGroup>
+		</QuickViewPage>
+	 </QuickView>
+</core:FragmentDefinition>

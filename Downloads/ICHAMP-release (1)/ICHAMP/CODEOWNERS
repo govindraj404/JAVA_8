@@ -1,0 +1,30 @@
+# Code owners are automatically requested for review when someone opens a pull request that modifies code that they own.
+# Code owners are not automatically requested to review draft pull requests.
+
+# Changes in unmatched file should notify Rahul
+* @I311479
+
+# App changes should notify Rahul, Muneiah
+app/* @I311479 @I545939
+
+# db changes should notify Rahul
+db/cds/**/* @I311479
+
+# Authorization changes should notify Melwin
+srv/cds/authorization/** @I524760
+
+# Fiori changes should notify Rahul
+srv/cds/fiori-annotations/** @I311479
+
+# Service changes should notify Rahul, Shruthi, Aditya, Bhaskar, Sahana, Manisha
+srv/src/main/* @I311479 @I540419 @I540753 @I548835 @I540351 @I540395
+
+# Unit test changes should notify Melwin
+srv/src/test/* @I524760
+
+# i18n-Properties files changes should notify Nidhi
+db/**/*.properties @I548191
+**/i18n/**/*.properties @I548191
+
+# Changes to the TWB config should also notify Nidhi, so translated files that are properties files can be added individually here
+translation_v2.json @I548191

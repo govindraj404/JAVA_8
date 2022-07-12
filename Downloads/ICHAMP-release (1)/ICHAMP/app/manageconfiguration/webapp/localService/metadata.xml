@@ -1,0 +1,163 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+   <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CORE',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Core.v1" Alias="Core"/>
+    </edmx:Reference>
+     <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_UI',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="ConfigurationService">
+            <EntityType Name="ConditionTypes">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="identifier" Type="Edm.String" MaxLength="30"/>
+                <Property Name="destination" Type="Edm.String" MaxLength="3"/>
+                <Property Name="conditionType" Type="Edm.String" MaxLength="100"/>
+                <Property Name="description" Type="Edm.String" MaxLength="40"/>
+                <Property Name="itemType_code" Type="Edm.String" MaxLength="10"/>
+            </EntityType>
+            <EntityType Name="ServiceMaterials">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="identifier" Type="Edm.String" MaxLength="30"/>
+                <Property Name="destination" Type="Edm.String" MaxLength="3"/>
+                <Property Name="serviceMaterial" Type="Edm.String" MaxLength="40"/>
+                <Property Name="description" Type="Edm.String" MaxLength="40"/>
+                <Property Name="subItemType_code" Type="Edm.String" MaxLength="10"/>
+                <Property Name="itemType_code" Type="Edm.String" MaxLength="10"/>
+            </EntityType>
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="ConditionTypes" EntityType="ConfigurationService.ConditionTypes"/>
+                <EntitySet Name="ServiceMaterials" EntityType="ConfigurationService.ServiceMaterials"/>
+            </EntityContainer>
+            <Annotations Target="ConfigurationService.ConditionTypes/createdAt">
+                <Annotation Term="Common.Label">
+                    <String>Created On</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Core.Immutable">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ConfigurationService.ConditionTypes/createdBy">
+                <Annotation Term="Common.Label">
+                    <String>Created By</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Core.Description">
+                    <String>A user's unique ID</String>
+                </Annotation>
+                <Annotation Term="Core.Immutable">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ConfigurationService.ConditionTypes/modifiedAt">
+                <Annotation Term="Common.Label">
+                    <String>Changed On</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ConfigurationService.ConditionTypes/modifiedBy">
+                <Annotation Term="Common.Label">
+                    <String>Changed By</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Core.Description">
+                    <String>A user's unique ID</String>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ConfigurationService.ServiceMaterials/createdAt">
+                <Annotation Term="Common.Label">
+                    <String>Created On</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Core.Immutable">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ConfigurationService.ServiceMaterials/createdBy">
+                <Annotation Term="Common.Label">
+                    <String>Created By</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Core.Description">
+                    <String>A user's unique ID</String>
+                </Annotation>
+                <Annotation Term="Core.Immutable">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ConfigurationService.ServiceMaterials/modifiedAt">
+                <Annotation Term="Common.Label">
+                    <String>Changed On</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ConfigurationService.ServiceMaterials/modifiedBy">
+                <Annotation Term="Common.Label">
+                    <String>Changed By</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Core.Description">
+                    <String>A user's unique ID</String>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

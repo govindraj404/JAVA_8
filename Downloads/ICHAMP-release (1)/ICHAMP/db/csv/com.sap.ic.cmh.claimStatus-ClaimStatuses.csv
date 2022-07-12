@@ -1,0 +1,8 @@
+code,name,sequenceNumber
+NEW,Initial,1
+CLMCRTD,Claim Created,2
+CLMVLTD,Claim Validated,3
+CLMSENT,Claim Sent to Supplier,4
+CLMSRR,Supplier Response Received,5
+CLMPSTD,Claim Posted,6
+CLMCLSD,Claim Closed,7
