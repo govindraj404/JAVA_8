@@ -1,0 +1,6 @@
+code,name,sequenceNumber
+NEW,Initial,1
+QNCRTD,Notification Created,2
+QNINPR,Notification in Progress,3
+QNOATN,Order Assigned to Notification,4
+QNCMPL,Notification Complete,5

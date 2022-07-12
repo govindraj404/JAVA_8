@@ -1,0 +1,4 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" >
+        <Button core:require="{handler: 'cmh/manageconfiguration/ext/controller/ConfigureActionButton'}"
+				press="handler.onConfigure" text="{i18n>CONFIGURE}" tooltip="{i18n>CONFIGURE}" />
+</core:FragmentDefinition>

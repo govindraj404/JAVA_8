@@ -1,0 +1,2556 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CAPABILITIES',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Capabilities.v1" Alias="Capabilities"/>
+    </edmx:Reference>
+    	<edmx:Reference Uri="/sap/bc/ui5_ui5/ui2/ushell/resources/sap/ushell/components/factsheet/vocabularies/Communication.xml">
+		<edmx:Include Alias="Communication" Namespace="com.sap.vocabularies.Communication.v1"/>
+	</edmx:Reference>
+   <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CORE',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Core.v1" Alias="Core"/>
+    </edmx:Reference>
+     <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_UI',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="SupplierIssueProcessService">
+            <EntityType Name="Addresses">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="address" Type="Edm.String" MaxLength="10"/>
+                <Property Name="street" Type="Edm.String" MaxLength="60"/>
+                <Property Name="houseNumber" Type="Edm.String" MaxLength="10"/>
+                <Property Name="addressLine1" Type="Edm.String" MaxLength="60"/>
+                <Property Name="addressLine2" Type="Edm.String" MaxLength="60"/>
+                <Property Name="addressLine3" Type="Edm.String" MaxLength="60"/>
+                <Property Name="postalCode" Type="Edm.String" MaxLength="10"/>
+                <Property Name="city" Type="Edm.String" MaxLength="40"/>
+                <Property Name="country" Type="Edm.String" MaxLength="15"/>
+                <Property Name="poBox" Type="Edm.String" MaxLength="10"/>
+                <Property Name="mobile" Type="Edm.String" MaxLength="30"/>
+                <Property Name="telephone" Type="Edm.String" MaxLength="30"/>
+                <Property Name="extension" Type="Edm.String" MaxLength="10"/>
+                <Property Name="faxNumber" Type="Edm.String" MaxLength="31"/>
+                <Property Name="email" Type="Edm.String" MaxLength="241"/>
+                <Property Name="contactPerson" Type="Edm.String" MaxLength="60"/>
+                <Property Name="countryKey_code" Type="Edm.String" MaxLength="3"/>
+                <NavigationProperty Name="countryKey" Type="SupplierIssueProcessService.Countries">
+                    <ReferentialConstraint Property="countryKey_code" ReferencedProperty="code"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="BusinessObjectRelations">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="sourceBusinessObjectUUID" Type="Edm.Guid"/>
+                <Property Name="sourceBusinessObjectType_code" Type="Edm.String" MaxLength="40"/>
+                <Property Name="targetBusinessObjectType_code" Type="Edm.String" MaxLength="40"/>
+                <Property Name="targetBusinessObjectUUID_ID" Type="Edm.Guid"/>
+                <NavigationProperty Name="sourceBusinessObjectType" Type="SupplierIssueProcessService.BusinessObjectTypes">
+                    <ReferentialConstraint Property="sourceBusinessObjectType_code" ReferencedProperty="code"/>
+                </NavigationProperty>
+                <NavigationProperty Name="targetBusinessObjectType" Type="SupplierIssueProcessService.BusinessObjectTypes">
+                    <ReferentialConstraint Property="targetBusinessObjectType_code" ReferencedProperty="code"/>
+                </NavigationProperty>
+                <NavigationProperty Name="targetBusinessObjectUUID" Type="SupplierIssueProcessService.CommonBusinessObjects">
+                    <ReferentialConstraint Property="targetBusinessObjectUUID_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="BusinessObjectStatuses">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="businessObjectType" Type="Edm.String" MaxLength="40"/>
+                <Property Name="businessObjectStatus_code" Type="Edm.String" MaxLength="40"/>
+                <Property Name="parent" Type="Edm.Guid"/>
+                <NavigationProperty Name="businessObjectStatus" Type="SupplierIssueProcessService.CombineBusinessObjectStatuses">
+                    <ReferentialConstraint Property="businessObjectType" ReferencedProperty="businessObjectType"/>
+                    <ReferentialConstraint Property="businessObjectStatus_code" ReferencedProperty="code"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="BusinessObjectTypes">
+                <Key>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="code" Type="Edm.String" Nullable="false" MaxLength="40"/>
+                <Property Name="name" Type="Edm.String" MaxLength="40"/>
+                <Property Name="sequenceNumber" Type="Edm.Int32"/>
+                <Property Name="streamType_code" Type="Edm.String" MaxLength="40"/>
+                <NavigationProperty Name="streamType" Type="SupplierIssueProcessService.StreamTypes">
+                    <ReferentialConstraint Property="streamType_code" ReferencedProperty="code"/>
+                </NavigationProperty>
+                <NavigationProperty Name="texts" Type="Collection(SupplierIssueProcessService.BusinessObjectTypes_texts)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="localized" Type="SupplierIssueProcessService.BusinessObjectTypes_texts">
+                    <ReferentialConstraint Property="code" ReferencedProperty="code"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="BusinessObjectTypes_texts">
+                <Key>
+                    <PropertyRef Name="locale"/>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="locale" Type="Edm.String" Nullable="false" MaxLength="14"/>
+                <Property Name="code" Type="Edm.String" Nullable="false" MaxLength="40"/>
+                <Property Name="name" Type="Edm.String" MaxLength="40"/>
+            </EntityType>
+            <EntityType Name="BusinessPartners">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="businessPartnerNumber" Type="Edm.String" MaxLength="10"/>
+                <Property Name="vendorCode" Type="Edm.String" MaxLength="10"/>
+                <Property Name="customerCode" Type="Edm.String" MaxLength="10"/>
+                <Property Name="companyCode" Type="Edm.String" MaxLength="4"/>
+                <Property Name="businessPartnerName1" Type="Edm.String" MaxLength="40"/>
+                <Property Name="businessPartnerName2" Type="Edm.String" MaxLength="40"/>
+                <Property Name="address" Type="Edm.String" MaxLength="10"/>
+                <Property Name="businessPartnerType" Type="Edm.String" MaxLength="2"/>
+                <Property Name="companyCodeID_ID" Type="Edm.Guid"/>
+                <Property Name="addressID_ID" Type="Edm.Guid"/>
+                <NavigationProperty Name="companyCodeID" Type="SupplierIssueProcessService.CompanyCodes">
+                    <ReferentialConstraint Property="companyCodeID_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <NavigationProperty Name="addressID" Type="SupplierIssueProcessService.Addresses">
+                    <ReferentialConstraint Property="addressID_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="CombineBusinessObjectStatuses">
+                <Key>
+                    <PropertyRef Name="code"/>
+                    <PropertyRef Name="businessObjectType"/>
+                </Key>
+                <Property Name="code" Type="Edm.String" Nullable="false" MaxLength="40"/>
+                <Property Name="businessObjectType" Type="Edm.String" Nullable="false"/>
+                <Property Name="name" Type="Edm.String" MaxLength="40"/>
+                <Property Name="sequenceNumber" Type="Edm.Int32"/>
+            </EntityType>
+            <EntityType Name="CommonBusinessObjects">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="identifier" Type="Edm.String" MaxLength="30"/>
+                <Property Name="businessObjectType" Type="Edm.String" MaxLength="40"/>
+                <Property Name="businessObjectStatus_code" Type="Edm.String" MaxLength="40"/>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="personResponsible_ID" Type="Edm.Guid"/>
+                <Property Name="complaint_ID" Type="Edm.Guid"/>
+                <NavigationProperty Name="businessObjectStatuses" Type="Collection(SupplierIssueProcessService.BusinessObjectStatuses)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="personResponsible" Type="SupplierIssueProcessService.BusinessPartners">
+                    <ReferentialConstraint Property="personResponsible_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="CompanyCodes">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="companyCode" Type="Edm.String" MaxLength="4"/>
+                <Property Name="companyCodeName" Type="Edm.String" MaxLength="25"/>
+                <Property Name="address" Type="Edm.String" MaxLength="10"/>
+                <Property Name="countryKey_code" Type="Edm.String" MaxLength="3"/>
+                <Property Name="currency_code" Type="Edm.String" MaxLength="3"/>
+                <Property Name="addressID_ID" Type="Edm.Guid"/>
+                <NavigationProperty Name="countryKey" Type="SupplierIssueProcessService.Countries">
+                    <ReferentialConstraint Property="countryKey_code" ReferencedProperty="code"/>
+                </NavigationProperty>
+                <NavigationProperty Name="currency" Type="SupplierIssueProcessService.Currencies">
+                    <ReferentialConstraint Property="currency_code" ReferencedProperty="code"/>
+                </NavigationProperty>
+                <NavigationProperty Name="addressID" Type="SupplierIssueProcessService.Addresses">
+                    <ReferentialConstraint Property="addressID_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Countries">
+                <Key>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="name" Type="Edm.String" MaxLength="255"/>
+                <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="code" Type="Edm.String" Nullable="false" MaxLength="3"/>
+                <NavigationProperty Name="texts" Type="Collection(SupplierIssueProcessService.Countries_texts)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="localized" Type="SupplierIssueProcessService.Countries_texts">
+                    <ReferentialConstraint Property="code" ReferencedProperty="code"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Countries_texts">
+                <Key>
+                    <PropertyRef Name="locale"/>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="locale" Type="Edm.String" Nullable="false" MaxLength="14"/>
+                <Property Name="name" Type="Edm.String" MaxLength="255"/>
+                <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="code" Type="Edm.String" Nullable="false" MaxLength="3"/>
+            </EntityType>
+            <EntityType Name="Currencies">
+                <Key>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="name" Type="Edm.String" MaxLength="255"/>
+                <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="code" Type="Edm.String" Nullable="false" MaxLength="3"/>
+                <Property Name="symbol" Type="Edm.String" MaxLength="5"/>
+                <NavigationProperty Name="texts" Type="Collection(SupplierIssueProcessService.Currencies_texts)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="localized" Type="SupplierIssueProcessService.Currencies_texts">
+                    <ReferentialConstraint Property="code" ReferencedProperty="code"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Currencies_texts">
+                <Key>
+                    <PropertyRef Name="locale"/>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="locale" Type="Edm.String" Nullable="false" MaxLength="14"/>
+                <Property Name="name" Type="Edm.String" MaxLength="255"/>
+                <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="code" Type="Edm.String" Nullable="false" MaxLength="3"/>
+            </EntityType>
+            <EntityType Name="DefectCodes">
+                <Key>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="code" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="description" Type="Edm.String" MaxLength="40"/>
+                <Property Name="defectGroup_code" Type="Edm.String" MaxLength="20"/>
+                <NavigationProperty Name="defectGroup" Type="SupplierIssueProcessService.DefectGroups">
+                    <ReferentialConstraint Property="defectGroup_code" ReferencedProperty="code"/>
+                </NavigationProperty>
+                <NavigationProperty Name="texts" Type="Collection(SupplierIssueProcessService.DefectCodes_texts)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="localized" Type="SupplierIssueProcessService.DefectCodes_texts">
+                    <ReferentialConstraint Property="code" ReferencedProperty="code"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="DefectCodes_texts">
+                <Key>
+                    <PropertyRef Name="locale"/>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="locale" Type="Edm.String" Nullable="false" MaxLength="14"/>
+                <Property Name="code" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="description" Type="Edm.String" MaxLength="40"/>
+            </EntityType>
+            <EntityType Name="DefectGroups">
+                <Key>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="code" Type="Edm.String" Nullable="false" MaxLength="20"/>
+                <Property Name="description" Type="Edm.String" MaxLength="40"/>
+                <NavigationProperty Name="texts" Type="Collection(SupplierIssueProcessService.DefectGroups_texts)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="localized" Type="SupplierIssueProcessService.DefectGroups_texts">
+                    <ReferentialConstraint Property="code" ReferencedProperty="code"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="DefectGroups_texts">
+                <Key>
+                    <PropertyRef Name="locale"/>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="locale" Type="Edm.String" Nullable="false" MaxLength="14"/>
+                <Property Name="code" Type="Edm.String" Nullable="false" MaxLength="20"/>
+                <Property Name="description" Type="Edm.String" MaxLength="40"/>
+            </EntityType>
+            <EntityType Name="Defects">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="identifier" Type="Edm.String" MaxLength="30"/>
+                <Property Name="description" Type="Edm.String" MaxLength="40"/>
+                <Property Name="personResponsible" Type="Edm.Guid"/>
+                <Property Name="parent" Type="Edm.Guid"/>
+                <Property Name="isQualityNotificationFieldControl" Type="Edm.Int32"/>
+                <Property Name="defectGroup_code" Type="Edm.String" MaxLength="20"/>
+                <Property Name="defectCode_code" Type="Edm.String" MaxLength="10"/>
+                <NavigationProperty Name="defectGroup" Type="SupplierIssueProcessService.DefectGroups">
+                    <ReferentialConstraint Property="defectGroup_code" ReferencedProperty="code"/>
+                </NavigationProperty>
+                <NavigationProperty Name="defectCode" Type="SupplierIssueProcessService.DefectCodes">
+                    <ReferentialConstraint Property="defectCode_code" ReferencedProperty="code"/>
+                </NavigationProperty>
+                <NavigationProperty Name="businessObjectStatuses" Type="Collection(SupplierIssueProcessService.BusinessObjectStatuses)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="MaterialMasterGeneralDatas">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="materialCode" Type="Edm.String" MaxLength="40"/>
+                <Property Name="materialDescription" Type="Edm.String" MaxLength="40"/>
+                <Property Name="materialType" Type="Edm.String" MaxLength="4"/>
+                <Property Name="materialGroup" Type="Edm.String" MaxLength="9"/>
+                <Property Name="division" Type="Edm.String" MaxLength="2"/>
+                <Property Name="xPlantMaterialStatus" Type="Edm.String" MaxLength="2"/>
+                <Property Name="validFrom" Type="Edm.Date"/>
+                <Property Name="grossWeight" Type="Edm.Decimal" Precision="13" Scale="3"/>
+                <Property Name="netWeight" Type="Edm.Decimal" Precision="13" Scale="3"/>
+                <Property Name="volume" Type="Edm.Decimal" Precision="13" Scale="3"/>
+                <Property Name="sizeDimensions" Type="Edm.String" MaxLength="32"/>
+                <Property Name="EAN_UPC" Type="Edm.String" MaxLength="18"/>
+                <Property Name="EANCategary" Type="Edm.String" MaxLength="2"/>
+                <Property Name="productCompositionIndicator" Type="Edm.String" MaxLength="1"/>
+                <Property Name="packagingMaterialGroup" Type="Edm.String" MaxLength="4"/>
+                <Property Name="baseUnitOfMeasure_code" Type="Edm.String"/>
+                <Property Name="weightUnit_code" Type="Edm.String"/>
+                <Property Name="volumeUnit_code" Type="Edm.String"/>
+                <NavigationProperty Name="baseUnitOfMeasure" Type="SupplierIssueProcessService.UnitOfMeasures">
+                    <ReferentialConstraint Property="baseUnitOfMeasure_code" ReferencedProperty="code"/>
+                </NavigationProperty>
+                <NavigationProperty Name="weightUnit" Type="SupplierIssueProcessService.UnitOfMeasures">
+                    <ReferentialConstraint Property="weightUnit_code" ReferencedProperty="code"/>
+                </NavigationProperty>
+                <NavigationProperty Name="volumeUnit" Type="SupplierIssueProcessService.UnitOfMeasures">
+                    <ReferentialConstraint Property="volumeUnit_code" ReferencedProperty="code"/>
+                </NavigationProperty>
+                <NavigationProperty Name="texts" Type="Collection(SupplierIssueProcessService.MaterialMasterGeneralDatas_texts)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="localized" Type="SupplierIssueProcessService.MaterialMasterGeneralDatas_texts">
+                    <ReferentialConstraint Property="ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="MaterialMasterGeneralDatas_texts">
+                <Key>
+                    <PropertyRef Name="locale"/>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="locale" Type="Edm.String" Nullable="false" MaxLength="14"/>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="materialCode" Type="Edm.String" MaxLength="40"/>
+                <Property Name="materialDescription" Type="Edm.String" MaxLength="40"/>
+            </EntityType>
+            <EntityType Name="Plants">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="plant" Type="Edm.String" MaxLength="4"/>
+                <Property Name="plantName" Type="Edm.String" MaxLength="25"/>
+                <Property Name="plantNameExtension" Type="Edm.String" MaxLength="40"/>
+                <Property Name="companyCode" Type="Edm.String" MaxLength="4"/>
+                <Property Name="customerNoOfPlant" Type="Edm.String" MaxLength="10"/>
+                <Property Name="supplierNoOfPlant" Type="Edm.String" MaxLength="10"/>
+                <Property Name="address" Type="Edm.String" MaxLength="10"/>
+                <Property Name="factoryCalendar" Type="Edm.String" MaxLength="2"/>
+                <Property Name="companyCodeID_ID" Type="Edm.Guid"/>
+                <Property Name="addressID_ID" Type="Edm.Guid"/>
+                <NavigationProperty Name="companyCodeID" Type="SupplierIssueProcessService.CompanyCodes">
+                    <ReferentialConstraint Property="companyCodeID_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <NavigationProperty Name="addressID" Type="SupplierIssueProcessService.Addresses">
+                    <ReferentialConstraint Property="addressID_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="PurchaseOrganizations">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="purchaseOrganization" Type="Edm.String" MaxLength="4"/>
+                <Property Name="purchaseOrganizationName" Type="Edm.String" MaxLength="25"/>
+                <Property Name="companyCode" Type="Edm.String" MaxLength="4"/>
+                <Property Name="companyCodeID_ID" Type="Edm.Guid"/>
+                <NavigationProperty Name="companyCodeID" Type="SupplierIssueProcessService.CompanyCodes">
+                    <ReferentialConstraint Property="companyCodeID_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="StreamTypes">
+                <Key>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="code" Type="Edm.String" Nullable="false" MaxLength="40"/>
+                <Property Name="name" Type="Edm.String" MaxLength="40"/>
+                <NavigationProperty Name="texts" Type="Collection(SupplierIssueProcessService.StreamTypes_texts)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="localized" Type="SupplierIssueProcessService.StreamTypes_texts">
+                    <ReferentialConstraint Property="code" ReferencedProperty="code"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="StreamTypes_texts">
+                <Key>
+                    <PropertyRef Name="locale"/>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="locale" Type="Edm.String" Nullable="false" MaxLength="14"/>
+                <Property Name="code" Type="Edm.String" Nullable="false" MaxLength="40"/>
+                <Property Name="name" Type="Edm.String" MaxLength="40"/>
+            </EntityType>
+            <EntityType Name="Supplier8DProcesses">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="identifier" Type="Edm.String" MaxLength="30"/>
+                <Property Name="supplierIssueProcessesType" Type="Edm.String" MaxLength="20"/>
+                <Property Name="quantity" Type="Edm.Decimal" Precision="5" Scale="2"/>
+                <Property Name="unit" Type="Edm.String" MaxLength="10"/>
+                <Property Name="requestStartDate" Type="Edm.Date"/>
+                <Property Name="requestEndDate" Type="Edm.Date"/>
+                <Property Name="actualStartDate" Type="Edm.Date"/>
+                <Property Name="actualEndDate" Type="Edm.Date"/>
+                <Property Name="contactPerson" Type="Edm.String" MaxLength="50"/>
+                <Property Name="isSupplierFieldControl" Type="Edm.Int32"/>
+                <Property Name="supplier_ID" Type="Edm.Guid"/>
+                <Property Name="status_code" Type="Edm.String" MaxLength="40"/>
+                <Property Name="company_ID" Type="Edm.Guid"/>
+                <Property Name="material_ID" Type="Edm.Guid"/>
+                <Property Name="plant_ID" Type="Edm.Guid"/>
+                <Property Name="personResponsible_ID" Type="Edm.Guid"/>
+                <Property Name="purchasingOrganization_ID" Type="Edm.Guid"/>
+                <Property Name="complaint_ID" Type="Edm.Guid"/>
+                <Property Name="defect_ID" Type="Edm.Guid"/>
+                <NavigationProperty Name="supplier" Type="SupplierIssueProcessService.BusinessPartners">
+                    <ReferentialConstraint Property="supplier_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <NavigationProperty Name="company" Type="SupplierIssueProcessService.CompanyCodes">
+                    <ReferentialConstraint Property="company_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <NavigationProperty Name="material" Type="SupplierIssueProcessService.MaterialMasterGeneralDatas">
+                    <ReferentialConstraint Property="material_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <NavigationProperty Name="plant" Type="SupplierIssueProcessService.Plants">
+                    <ReferentialConstraint Property="plant_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <NavigationProperty Name="personResponsible" Type="SupplierIssueProcessService.BusinessPartners">
+                    <ReferentialConstraint Property="personResponsible_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <NavigationProperty Name="purchasingOrganization" Type="SupplierIssueProcessService.PurchaseOrganizations">
+                    <ReferentialConstraint Property="purchasingOrganization_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <NavigationProperty Name="defect" Type="SupplierIssueProcessService.Defects">
+                    <ReferentialConstraint Property="defect_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <NavigationProperty Name="businessObjectStatuses" Type="Collection(SupplierIssueProcessService.BusinessObjectStatuses)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="businessObjectRelations" Type="Collection(SupplierIssueProcessService.BusinessObjectRelations)"/>
+            </EntityType>
+            <EntityType Name="UnitOfMeasures">
+                <Key>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="code" Type="Edm.String" Nullable="false"/>
+                <Property Name="name" Type="Edm.String"/>
+                <NavigationProperty Name="texts" Type="Collection(SupplierIssueProcessService.UnitOfMeasures_texts)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="localized" Type="SupplierIssueProcessService.UnitOfMeasures_texts">
+                    <ReferentialConstraint Property="code" ReferencedProperty="code"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="UnitOfMeasures_texts">
+                <Key>
+                    <PropertyRef Name="locale"/>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="locale" Type="Edm.String" Nullable="false" MaxLength="14"/>
+                <Property Name="code" Type="Edm.String" Nullable="false"/>
+                <Property Name="name" Type="Edm.String"/>
+            </EntityType>
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="Addresses" EntityType="SupplierIssueProcessService.Addresses">
+                    <NavigationPropertyBinding Path="countryKey" Target="Countries"/>
+                </EntitySet>
+                <EntitySet Name="BusinessObjectRelations" EntityType="SupplierIssueProcessService.BusinessObjectRelations">
+                    <NavigationPropertyBinding Path="sourceBusinessObjectType" Target="BusinessObjectTypes"/>
+                    <NavigationPropertyBinding Path="targetBusinessObjectType" Target="BusinessObjectTypes"/>
+                    <NavigationPropertyBinding Path="targetBusinessObjectUUID" Target="CommonBusinessObjects"/>
+                </EntitySet>
+                <EntitySet Name="BusinessObjectStatuses" EntityType="SupplierIssueProcessService.BusinessObjectStatuses">
+                    <NavigationPropertyBinding Path="businessObjectStatus" Target="CombineBusinessObjectStatuses"/>
+                </EntitySet>
+                <EntitySet Name="BusinessObjectTypes" EntityType="SupplierIssueProcessService.BusinessObjectTypes">
+                    <NavigationPropertyBinding Path="streamType" Target="StreamTypes"/>
+                    <NavigationPropertyBinding Path="texts" Target="BusinessObjectTypes_texts"/>
+                    <NavigationPropertyBinding Path="localized" Target="BusinessObjectTypes_texts"/>
+                </EntitySet>
+                <EntitySet Name="BusinessObjectTypes_texts" EntityType="SupplierIssueProcessService.BusinessObjectTypes_texts"/>
+                <EntitySet Name="BusinessPartners" EntityType="SupplierIssueProcessService.BusinessPartners">
+                    <NavigationPropertyBinding Path="companyCodeID" Target="CompanyCodes"/>
+                    <NavigationPropertyBinding Path="addressID" Target="Addresses"/>
+                </EntitySet>
+                <EntitySet Name="CombineBusinessObjectStatuses" EntityType="SupplierIssueProcessService.CombineBusinessObjectStatuses"/>
+                <EntitySet Name="CommonBusinessObjects" EntityType="SupplierIssueProcessService.CommonBusinessObjects">
+                    <NavigationPropertyBinding Path="businessObjectStatuses" Target="BusinessObjectStatuses"/>
+                    <NavigationPropertyBinding Path="personResponsible" Target="BusinessPartners"/>
+                </EntitySet>
+                <EntitySet Name="CompanyCodes" EntityType="SupplierIssueProcessService.CompanyCodes">
+                    <NavigationPropertyBinding Path="countryKey" Target="Countries"/>
+                    <NavigationPropertyBinding Path="currency" Target="Currencies"/>
+                    <NavigationPropertyBinding Path="addressID" Target="Addresses"/>
+                </EntitySet>
+                <EntitySet Name="Countries" EntityType="SupplierIssueProcessService.Countries">
+                    <NavigationPropertyBinding Path="texts" Target="Countries_texts"/>
+                    <NavigationPropertyBinding Path="localized" Target="Countries_texts"/>
+                </EntitySet>
+                <EntitySet Name="Countries_texts" EntityType="SupplierIssueProcessService.Countries_texts"/>
+                <EntitySet Name="Currencies" EntityType="SupplierIssueProcessService.Currencies">
+                    <NavigationPropertyBinding Path="texts" Target="Currencies_texts"/>
+                    <NavigationPropertyBinding Path="localized" Target="Currencies_texts"/>
+                </EntitySet>
+                <EntitySet Name="Currencies_texts" EntityType="SupplierIssueProcessService.Currencies_texts"/>
+                <EntitySet Name="DefectCodes" EntityType="SupplierIssueProcessService.DefectCodes">
+                    <NavigationPropertyBinding Path="defectGroup" Target="DefectGroups"/>
+                    <NavigationPropertyBinding Path="texts" Target="DefectCodes_texts"/>
+                    <NavigationPropertyBinding Path="localized" Target="DefectCodes_texts"/>
+                </EntitySet>
+                <EntitySet Name="DefectCodes_texts" EntityType="SupplierIssueProcessService.DefectCodes_texts"/>
+                <EntitySet Name="DefectGroups" EntityType="SupplierIssueProcessService.DefectGroups">
+                    <NavigationPropertyBinding Path="texts" Target="DefectGroups_texts"/>
+                    <NavigationPropertyBinding Path="localized" Target="DefectGroups_texts"/>
+                </EntitySet>
+                <EntitySet Name="DefectGroups_texts" EntityType="SupplierIssueProcessService.DefectGroups_texts"/>
+                <EntitySet Name="Defects" EntityType="SupplierIssueProcessService.Defects">
+                    <NavigationPropertyBinding Path="defectGroup" Target="DefectGroups"/>
+                    <NavigationPropertyBinding Path="defectCode" Target="DefectCodes"/>
+                    <NavigationPropertyBinding Path="businessObjectStatuses" Target="BusinessObjectStatuses"/>
+                </EntitySet>
+                <EntitySet Name="MaterialMasterGeneralDatas" EntityType="SupplierIssueProcessService.MaterialMasterGeneralDatas">
+                    <NavigationPropertyBinding Path="baseUnitOfMeasure" Target="UnitOfMeasures"/>
+                    <NavigationPropertyBinding Path="weightUnit" Target="UnitOfMeasures"/>
+                    <NavigationPropertyBinding Path="volumeUnit" Target="UnitOfMeasures"/>
+                    <NavigationPropertyBinding Path="texts" Target="MaterialMasterGeneralDatas_texts"/>
+                    <NavigationPropertyBinding Path="localized" Target="MaterialMasterGeneralDatas_texts"/>
+                </EntitySet>
+                <EntitySet Name="MaterialMasterGeneralDatas_texts" EntityType="SupplierIssueProcessService.MaterialMasterGeneralDatas_texts"/>
+                <EntitySet Name="Plants" EntityType="SupplierIssueProcessService.Plants">
+                    <NavigationPropertyBinding Path="companyCodeID" Target="CompanyCodes"/>
+                    <NavigationPropertyBinding Path="addressID" Target="Addresses"/>
+                </EntitySet>
+                <EntitySet Name="PurchaseOrganizations" EntityType="SupplierIssueProcessService.PurchaseOrganizations">
+                    <NavigationPropertyBinding Path="companyCodeID" Target="CompanyCodes"/>
+                </EntitySet>
+                <EntitySet Name="StreamTypes" EntityType="SupplierIssueProcessService.StreamTypes">
+                    <NavigationPropertyBinding Path="texts" Target="StreamTypes_texts"/>
+                    <NavigationPropertyBinding Path="localized" Target="StreamTypes_texts"/>
+                </EntitySet>
+                <EntitySet Name="StreamTypes_texts" EntityType="SupplierIssueProcessService.StreamTypes_texts"/>
+                <EntitySet Name="Supplier8DProcesses" EntityType="SupplierIssueProcessService.Supplier8DProcesses">
+                    <NavigationPropertyBinding Path="supplier" Target="BusinessPartners"/>
+                    <NavigationPropertyBinding Path="company" Target="CompanyCodes"/>
+                    <NavigationPropertyBinding Path="material" Target="MaterialMasterGeneralDatas"/>
+                    <NavigationPropertyBinding Path="plant" Target="Plants"/>
+                    <NavigationPropertyBinding Path="personResponsible" Target="BusinessPartners"/>
+                    <NavigationPropertyBinding Path="purchasingOrganization" Target="PurchaseOrganizations"/>
+                    <NavigationPropertyBinding Path="defect" Target="Defects"/>
+                    <NavigationPropertyBinding Path="businessObjectStatuses" Target="BusinessObjectStatuses"/>
+                    <NavigationPropertyBinding Path="businessObjectRelations" Target="BusinessObjectRelations"/>
+                </EntitySet>
+                <EntitySet Name="UnitOfMeasures" EntityType="SupplierIssueProcessService.UnitOfMeasures">
+                    <NavigationPropertyBinding Path="texts" Target="UnitOfMeasures_texts"/>
+                    <NavigationPropertyBinding Path="localized" Target="UnitOfMeasures_texts"/>
+                </EntitySet>
+                <EntitySet Name="UnitOfMeasures_texts" EntityType="SupplierIssueProcessService.UnitOfMeasures_texts"/>
+            </EntityContainer>
+            <Annotations Target="SupplierIssueProcessService.Addresses/city">
+                <Annotation Term="Common.Label">
+                    <String>CITY</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.Addresses/countryKey">
+                <Annotation Term="Common.Label">
+                    <String>Country</String>
+                </Annotation>
+                <Annotation Term="Core.Description">
+                    <String>A country code as specified in ISO 3166-1</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.Addresses/countryKey_code">
+                <Annotation Term="Common.Label">
+                    <String>Country</String>
+                </Annotation>
+                <Annotation Term="Common.ValueList">
+                    <Record Type="Common.ValueListType">
+                        <PropertyValue Property="Label">
+                            <String>Country</String>
+                        </PropertyValue>
+                        <PropertyValue Property="CollectionPath">
+                            <String>Countries</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty">
+                                        <PropertyPath>countryKey_code</PropertyPath>
+                                    </PropertyValue>
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>code</String>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>name</String>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Core.Description">
+                    <String>A country code as specified in ISO 3166-1</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.BusinessObjectRelations/createdAt">
+                <Annotation Term="Common.Label">
+                    <String>Created On</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Core.Immutable">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.BusinessObjectRelations/createdBy">
+                <Annotation Term="Common.Label">
+                    <String>Created By</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Core.Description">
+                    <String>A user's unique ID</String>
+                </Annotation>
+                <Annotation Term="Core.Immutable">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.BusinessObjectRelations/modifiedAt">
+                <Annotation Term="Common.Label">
+                    <String>Changed On</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.BusinessObjectRelations/modifiedBy">
+                <Annotation Term="Common.Label">
+                    <String>Changed By</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Core.Description">
+                    <String>A user's unique ID</String>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.BusinessObjectRelations/sourceBusinessObjectType_code">
+                <Annotation Term="Common.ValueListMapping">
+                    <Record Type="Common.ValueListMappingType">
+                        <PropertyValue Property="CollectionPath">
+                            <String>BusinessObjectTypes</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Label">
+                            <String>Business Object Types</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>code</String>
+                                    </PropertyValue>
+                                    <PropertyValue Property="LocalDataProperty">
+                                        <PropertyPath>businessObjectType_code</PropertyPath>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>name</String>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Common.ValueListWithFixedValues">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.BusinessObjectRelations/targetBusinessObjectType_code">
+                <Annotation Term="Common.ValueListMapping">
+                    <Record Type="Common.ValueListMappingType">
+                        <PropertyValue Property="CollectionPath">
+                            <String>BusinessObjectTypes</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Label">
+                            <String>Business Object Types</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>code</String>
+                                    </PropertyValue>
+                                    <PropertyValue Property="LocalDataProperty">
+                                        <PropertyPath>businessObjectType_code</PropertyPath>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>name</String>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Common.ValueListWithFixedValues">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.BusinessObjectStatuses/createdAt">
+                <Annotation Term="Common.Label">
+                    <String>Created On</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Core.Immutable">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.BusinessObjectStatuses/createdBy">
+                <Annotation Term="Common.Label">
+                    <String>Created By</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Core.Description">
+                    <String>A user's unique ID</String>
+                </Annotation>
+                <Annotation Term="Core.Immutable">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.BusinessObjectStatuses/modifiedAt">
+                <Annotation Term="Common.Label">
+                    <String>Changed On</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.BusinessObjectStatuses/modifiedBy">
+                <Annotation Term="Common.Label">
+                    <String>Changed By</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Core.Description">
+                    <String>A user's unique ID</String>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.BusinessObjectTypes/code">
+                <Annotation Term="Common.Label">
+                    <String>Business Object Type</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>name</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+                <Annotation Term="UI.Hidden">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.BusinessObjectTypes/name">
+                <Annotation Term="Common.FieldControl">
+                    <EnumMember>Common.FieldControlType/ReadOnly</EnumMember>
+                </Annotation>
+                <Annotation Term="Common.Label">
+                    <String>Business Object Type</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.BusinessObjectTypes_texts/code">
+                <Annotation Term="Common.Label">
+                    <String>Business Object Type</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>name</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+                <Annotation Term="UI.Hidden">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.BusinessObjectTypes_texts/name">
+                <Annotation Term="Common.FieldControl">
+                    <EnumMember>Common.FieldControlType/ReadOnly</EnumMember>
+                </Annotation>
+                <Annotation Term="Common.Label">
+                    <String>Business Object Type</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.BusinessPartners">
+                <Annotation Term="Communication.Contact">
+                    <Record Type="Communication.ContactType">
+                        <PropertyValue Property="email">
+                            <Collection>
+                                <Record Type="Communication.EmailAddressType">
+                                    <PropertyValue Property="type">
+                                        <EnumMember>Communication.ContactInformationType/work</EnumMember>
+                                    </PropertyValue>
+                                    <PropertyValue Property="address">
+                                        <Path>addressID/email</Path>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="fn">
+                            <Path>businessPartnerName1</Path>
+                        </PropertyValue>
+                        <PropertyValue Property="tel">
+                            <Collection>
+                                <Record Type="Communication.PhoneNumberType">
+                                    <PropertyValue Property="uri">
+                                        <Path>addressID/mobile</Path>
+                                    </PropertyValue>
+                                    <PropertyValue Property="type">
+                                        <EnumMember>Communication.PhoneType/cell</EnumMember>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="Communication.PhoneNumberType">
+                                    <PropertyValue Property="uri">
+                                        <Path>addressID/email</Path>
+                                    </PropertyValue>
+                                    <PropertyValue Property="type">
+                                        <EnumMember>Communication.PhoneType/fax</EnumMember>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.FieldGroup" Qualifier="QuickView">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value">
+                                        <Path>addressID/postalCode</Path>
+                                    </PropertyValue>
+                                    <PropertyValue Property="Label">
+                                        <String>Address</String>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value">
+                                        <Path>addressID/mobile</Path>
+                                    </PropertyValue>
+                                    <PropertyValue Property="Label">
+                                        <String>Mobile</String>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value">
+                                        <Path>addressID/email</Path>
+                                    </PropertyValue>
+                                    <PropertyValue Property="Label">
+                                        <String>Email ID</String>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.HeaderInfo">
+                    <Record Type="UI.HeaderInfoType">
+                        <PropertyValue Property="Description">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value">
+                                    <Path>businessPartnerName1</Path>
+                                </PropertyValue>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="ImageUrl">
+                            <String>sap-icon://offsite-work</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Title">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value">
+                                    <Path>businessPartnerName1</Path>
+                                </PropertyValue>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="TypeName">
+                            <String>Supplier</String>
+                        </PropertyValue>
+                        <PropertyValue Property="TypeNamePlural">
+                            <String>Suppliers</String>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.QuickViewFacets">
+                    <Collection>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="Target">
+                                <AnnotationPath>@Communication.Contact</AnnotationPath>
+                            </PropertyValue>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="Label">
+                                <String>Company Details</String>
+                            </PropertyValue>
+                            <PropertyValue Property="Target">
+                                <AnnotationPath>@UI.FieldGroup#QuickView</AnnotationPath>
+                            </PropertyValue>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.EntityContainer/BusinessPartners">
+                <Annotation Term="Capabilities.SearchRestrictions">
+                    <Record Type="Capabilities.SearchRestrictionsType">
+                        <PropertyValue Property="Searchable">
+                            <Bool>true</Bool>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.BusinessPartners/ID">
+                <Annotation Term="Common.Label">
+                    <String>ID</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>businessPartnerName1</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+                <Annotation Term="UI.Hidden">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.BusinessPartners/companyCodeID_ID">
+                <Annotation Term="Common.ValueListMapping">
+                    <Record Type="Common.ValueListMappingType">
+                        <PropertyValue Property="CollectionPath">
+                            <String>CompanyCodes</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Label">
+                            <String>Company Code</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>ID</String>
+                                    </PropertyValue>
+                                    <PropertyValue Property="LocalDataProperty">
+                                        <PropertyPath>companyCode_ID</PropertyPath>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>companyCode</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>companyCodeName</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>addressID/city</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>currency/code</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.CombineBusinessObjectStatuses/businessObjectType">
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.EntityContainer/CommonBusinessObjects">
+                <Annotation Term="Capabilities.SearchRestrictions">
+                    <Record Type="Capabilities.SearchRestrictionsType">
+                        <PropertyValue Property="Searchable">
+                            <Bool>true</Bool>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.CommonBusinessObjects/ID">
+                <Annotation Term="Common.Label">
+                    <String>ID</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>identifier</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+                <Annotation Term="UI.Hidden">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.CommonBusinessObjects/identifier">
+                <Annotation Term="Common.Label">
+                    <String>Business Object Number</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.CommonBusinessObjects/createdAt">
+                <Annotation Term="Common.Label">
+                    <String>Created On</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Core.Immutable">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.CommonBusinessObjects/createdBy">
+                <Annotation Term="Common.Label">
+                    <String>Created By</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Core.Description">
+                    <String>A user's unique ID</String>
+                </Annotation>
+                <Annotation Term="Core.Immutable">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.CommonBusinessObjects/personResponsible_ID">
+                <Annotation Term="Common.FieldControl">
+                    <EnumMember>Common.FieldControlType/ReadOnly</EnumMember>
+                </Annotation>
+                <Annotation Term="Common.ValueListMapping">
+                    <Record Type="Common.ValueListMappingType">
+                        <PropertyValue Property="CollectionPath">
+                            <String>BusinessPartners</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Label">
+                            <String>Supplier</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>ID</String>
+                                    </PropertyValue>
+                                    <PropertyValue Property="LocalDataProperty">
+                                        <PropertyPath>supplier_ID</PropertyPath>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>businessPartnerNumber</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>businessPartnerName1</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>addressID/houseNumber</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>addressID/address</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>addressID/city</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>addressID/postalCode</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>addressID/country</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>addressID/mobile</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>addressID/email</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.CompanyCodes">
+                <Annotation Term="UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>companyCode</PropertyPath>
+                        <PropertyPath>companyCodeName</PropertyPath>
+                        <PropertyPath>addressID/city</PropertyPath>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.EntityContainer/CompanyCodes">
+                <Annotation Term="Capabilities.SearchRestrictions">
+                    <Record Type="Capabilities.SearchRestrictionsType">
+                        <PropertyValue Property="Searchable">
+                            <Bool>true</Bool>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.CompanyCodes/ID">
+                <Annotation Term="Common.Label">
+                    <String>Company Code</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>companyCodeName</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+                <Annotation Term="UI.Hidden">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.CompanyCodes/companyCode">
+                <Annotation Term="Common.Label">
+                    <String>Company Code</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.CompanyCodes/companyCodeName">
+                <Annotation Term="Common.Label">
+                    <String>COMPANY_CODE_NAME</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.CompanyCodes/countryKey">
+                <Annotation Term="Common.Label">
+                    <String>Country</String>
+                </Annotation>
+                <Annotation Term="Core.Description">
+                    <String>A country code as specified in ISO 3166-1</String>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.CompanyCodes/currency">
+                <Annotation Term="Common.Label">
+                    <String>Currency</String>
+                </Annotation>
+                <Annotation Term="Core.Description">
+                    <String>A currency code as specified in ISO 4217</String>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.CompanyCodes/addressID">
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.CompanyCodes/address">
+                <Annotation Term="UI.Hidden">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.CompanyCodes/countryKey_code">
+                <Annotation Term="Common.Label">
+                    <String>Country</String>
+                </Annotation>
+                <Annotation Term="Common.ValueList">
+                    <Record Type="Common.ValueListType">
+                        <PropertyValue Property="Label">
+                            <String>Country</String>
+                        </PropertyValue>
+                        <PropertyValue Property="CollectionPath">
+                            <String>Countries</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty">
+                                        <PropertyPath>countryKey_code</PropertyPath>
+                                    </PropertyValue>
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>code</String>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>name</String>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Core.Description">
+                    <String>A country code as specified in ISO 3166-1</String>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.CompanyCodes/currency_code">
+                <Annotation Term="Common.Label">
+                    <String>Currency</String>
+                </Annotation>
+                <Annotation Term="Common.ValueList">
+                    <Record Type="Common.ValueListType">
+                        <PropertyValue Property="Label">
+                            <String>Currency</String>
+                        </PropertyValue>
+                        <PropertyValue Property="CollectionPath">
+                            <String>Currencies</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty">
+                                        <PropertyPath>currency_code</PropertyPath>
+                                    </PropertyValue>
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>code</String>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>name</String>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Core.Description">
+                    <String>A currency code as specified in ISO 4217</String>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.CompanyCodes/addressID_ID">
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.Countries">
+                <Annotation Term="UI.Identification">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>name</Path>
+                            </PropertyValue>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.Countries/name">
+                <Annotation Term="Common.Label">
+                    <String>Name</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.Countries/descr">
+                <Annotation Term="Common.Label">
+                    <String>Description</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.Countries/code">
+                <Annotation Term="Common.Label">
+                    <String>Country Code</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>name</Path>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.Countries_texts/name">
+                <Annotation Term="Common.Label">
+                    <String>Name</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.Countries_texts/descr">
+                <Annotation Term="Common.Label">
+                    <String>Description</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.Countries_texts/code">
+                <Annotation Term="Common.Label">
+                    <String>Country Code</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>name</Path>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.Currencies">
+                <Annotation Term="UI.Identification">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>name</Path>
+                            </PropertyValue>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.Currencies/name">
+                <Annotation Term="Common.Label">
+                    <String>Name</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.Currencies/descr">
+                <Annotation Term="Common.Label">
+                    <String>Description</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.Currencies/code">
+                <Annotation Term="Common.Label">
+                    <String>Currency Code</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>name</Path>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.Currencies/symbol">
+                <Annotation Term="Common.Label">
+                    <String>Currency Symbol</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.Currencies_texts/name">
+                <Annotation Term="Common.Label">
+                    <String>Name</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.Currencies_texts/descr">
+                <Annotation Term="Common.Label">
+                    <String>Description</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.Currencies_texts/code">
+                <Annotation Term="Common.Label">
+                    <String>Currency Code</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>name</Path>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.DefectCodes/code">
+                <Annotation Term="Common.Label">
+                    <String>Code</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>description</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+                <Annotation Term="UI.Hidden">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.DefectCodes/description">
+                <Annotation Term="Common.Label">
+                    <String>Description</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.DefectCodes/defectGroup">
+                <Annotation Term="UI.Hidden">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.DefectCodes/defectGroup_code">
+                <Annotation Term="Common.ValueListMapping">
+                    <Record Type="Common.ValueListMappingType">
+                        <PropertyValue Property="CollectionPath">
+                            <String>DefectGroups</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Label">
+                            <String>Group</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>code</String>
+                                    </PropertyValue>
+                                    <PropertyValue Property="LocalDataProperty">
+                                        <PropertyPath>defectGroup_code</PropertyPath>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>description</String>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Common.ValueListWithFixedValues">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="UI.Hidden">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.DefectCodes_texts/code">
+                <Annotation Term="Common.Label">
+                    <String>Code</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>description</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+                <Annotation Term="UI.Hidden">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.DefectCodes_texts/description">
+                <Annotation Term="Common.Label">
+                    <String>Description</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.DefectGroups/code">
+                <Annotation Term="Common.Label">
+                    <String>Group</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>description</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+                <Annotation Term="UI.Hidden">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.DefectGroups/description">
+                <Annotation Term="Common.Label">
+                    <String>Description</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.DefectGroups_texts/code">
+                <Annotation Term="Common.Label">
+                    <String>Group</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>description</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+                <Annotation Term="UI.Hidden">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.DefectGroups_texts/description">
+                <Annotation Term="Common.Label">
+                    <String>Description</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.Defects/createdAt">
+                <Annotation Term="Common.Label">
+                    <String>Created On</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Core.Immutable">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.Defects/createdBy">
+                <Annotation Term="Common.Label">
+                    <String>Created By</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Core.Description">
+                    <String>A user's unique ID</String>
+                </Annotation>
+                <Annotation Term="Core.Immutable">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.Defects/modifiedAt">
+                <Annotation Term="Common.Label">
+                    <String>Changed On</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.Defects/modifiedBy">
+                <Annotation Term="Common.Label">
+                    <String>Changed By</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Core.Description">
+                    <String>A user's unique ID</String>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.Defects/isQualityNotificationFieldControl">
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.Defects/defectGroup_code">
+                <Annotation Term="Common.ValueListMapping">
+                    <Record Type="Common.ValueListMappingType">
+                        <PropertyValue Property="CollectionPath">
+                            <String>DefectGroups</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Label">
+                            <String>Group</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>code</String>
+                                    </PropertyValue>
+                                    <PropertyValue Property="LocalDataProperty">
+                                        <PropertyPath>defectGroup_code</PropertyPath>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>description</String>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Common.ValueListWithFixedValues">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.Defects/defectCode_code">
+                <Annotation Term="Common.ValueListMapping">
+                    <Record Type="Common.ValueListMappingType">
+                        <PropertyValue Property="CollectionPath">
+                            <String>DefectCodes</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Label">
+                            <String>Code</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>code</String>
+                                    </PropertyValue>
+                                    <PropertyValue Property="LocalDataProperty">
+                                        <PropertyPath>defectCode_code</PropertyPath>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>defectGroup_code</String>
+                                    </PropertyValue>
+                                    <PropertyValue Property="LocalDataProperty">
+                                        <PropertyPath>defect/defectGroup_code</PropertyPath>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>description</String>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Common.ValueListWithFixedValues">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.MaterialMasterGeneralDatas">
+                <Annotation Term="UI.FieldGroup" Qualifier="QuickView">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value">
+                                        <Path>sizeDimensions</Path>
+                                    </PropertyValue>
+                                    <PropertyValue Property="Label">
+                                        <String>DIMENSON</String>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value">
+                                        <Path>grossWeight</Path>
+                                    </PropertyValue>
+                                    <PropertyValue Property="Label">
+                                        <String>WEIGHT</String>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value">
+                                        <Path>volume</Path>
+                                    </PropertyValue>
+                                    <PropertyValue Property="Label">
+                                        <String>VOLUME</String>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.HeaderInfo">
+                    <Record Type="UI.HeaderInfoType">
+                        <PropertyValue Property="Description">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value">
+                                    <Path>materialCode</Path>
+                                </PropertyValue>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="ImageUrl">
+                            <String>sap-icon://product</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Title">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value">
+                                    <Path>materialDescription</Path>
+                                </PropertyValue>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="TypeName">
+                            <String>Material</String>
+                        </PropertyValue>
+                        <PropertyValue Property="TypeNamePlural">
+                            <String>Materials</String>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.QuickViewFacets">
+                    <Collection>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="Label">
+                                <String>Material Details</String>
+                            </PropertyValue>
+                            <PropertyValue Property="Target">
+                                <AnnotationPath>@UI.FieldGroup#QuickView</AnnotationPath>
+                            </PropertyValue>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.EntityContainer/MaterialMasterGeneralDatas">
+                <Annotation Term="Capabilities.SearchRestrictions">
+                    <Record Type="Capabilities.SearchRestrictionsType">
+                        <PropertyValue Property="Searchable">
+                            <Bool>true</Bool>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.MaterialMasterGeneralDatas/ID">
+                <Annotation Term="Common.Label">
+                    <String>ID</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>materialCode</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+                <Annotation Term="UI.Hidden">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.MaterialMasterGeneralDatas/baseUnitOfMeasure_code">
+                <Annotation Term="Common.ValueListMapping">
+                    <Record Type="Common.ValueListMappingType">
+                        <PropertyValue Property="CollectionPath">
+                            <String>UnitOfMeasures</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Label">
+                            <String>Unit</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>code</String>
+                                    </PropertyValue>
+                                    <PropertyValue Property="LocalDataProperty">
+                                        <PropertyPath>unit_code</PropertyPath>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>name</String>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.MaterialMasterGeneralDatas/weightUnit_code">
+                <Annotation Term="Common.ValueListMapping">
+                    <Record Type="Common.ValueListMappingType">
+                        <PropertyValue Property="CollectionPath">
+                            <String>UnitOfMeasures</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Label">
+                            <String>Unit</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>code</String>
+                                    </PropertyValue>
+                                    <PropertyValue Property="LocalDataProperty">
+                                        <PropertyPath>unit_code</PropertyPath>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>name</String>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.MaterialMasterGeneralDatas/volumeUnit_code">
+                <Annotation Term="Common.ValueListMapping">
+                    <Record Type="Common.ValueListMappingType">
+                        <PropertyValue Property="CollectionPath">
+                            <String>UnitOfMeasures</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Label">
+                            <String>Unit</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>code</String>
+                                    </PropertyValue>
+                                    <PropertyValue Property="LocalDataProperty">
+                                        <PropertyPath>unit_code</PropertyPath>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>name</String>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.MaterialMasterGeneralDatas_texts/ID">
+                <Annotation Term="Common.Label">
+                    <String>ID</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>materialCode</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+                <Annotation Term="UI.Hidden">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.EntityContainer/Plants">
+                <Annotation Term="Capabilities.SearchRestrictions">
+                    <Record Type="Capabilities.SearchRestrictionsType">
+                        <PropertyValue Property="Searchable">
+                            <Bool>true</Bool>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.Plants/ID">
+                <Annotation Term="Common.Label">
+                    <String>ID</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>plant</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+                <Annotation Term="UI.Hidden">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.Plants/companyCodeID_ID">
+                <Annotation Term="Common.ValueListMapping">
+                    <Record Type="Common.ValueListMappingType">
+                        <PropertyValue Property="CollectionPath">
+                            <String>CompanyCodes</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Label">
+                            <String>Company Code</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>ID</String>
+                                    </PropertyValue>
+                                    <PropertyValue Property="LocalDataProperty">
+                                        <PropertyPath>companyCode_ID</PropertyPath>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>companyCode</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>companyCodeName</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>addressID/city</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>currency/code</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.EntityContainer/PurchaseOrganizations">
+                <Annotation Term="Capabilities.SearchRestrictions">
+                    <Record Type="Capabilities.SearchRestrictionsType">
+                        <PropertyValue Property="Searchable">
+                            <Bool>true</Bool>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.PurchaseOrganizations/ID">
+                <Annotation Term="Common.Label">
+                    <String>ID</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>purchaseOrganization</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+                <Annotation Term="UI.Hidden">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.PurchaseOrganizations/purchaseOrganization">
+                <Annotation Term="Common.Label">
+                    <String>Purchase Organization</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.PurchaseOrganizations/companyCodeID_ID">
+                <Annotation Term="Common.ValueListMapping">
+                    <Record Type="Common.ValueListMappingType">
+                        <PropertyValue Property="CollectionPath">
+                            <String>CompanyCodes</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Label">
+                            <String>Company Code</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>ID</String>
+                                    </PropertyValue>
+                                    <PropertyValue Property="LocalDataProperty">
+                                        <PropertyPath>companyCode_ID</PropertyPath>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>companyCode</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>companyCodeName</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>addressID/city</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>currency/code</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.StreamTypes/code">
+                <Annotation Term="Common.Text">
+                    <Path>name</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.StreamTypes/name">
+                <Annotation Term="Common.FieldControl">
+                    <EnumMember>Common.FieldControlType/ReadOnly</EnumMember>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.StreamTypes_texts/code">
+                <Annotation Term="Common.Text">
+                    <Path>name</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.StreamTypes_texts/name">
+                <Annotation Term="Common.FieldControl">
+                    <EnumMember>Common.FieldControlType/ReadOnly</EnumMember>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.Supplier8DProcesses/createdAt">
+                <Annotation Term="Common.Label">
+                    <String>Created On</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Core.Immutable">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.Supplier8DProcesses/createdBy">
+                <Annotation Term="Common.Label">
+                    <String>Created By</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Core.Description">
+                    <String>A user's unique ID</String>
+                </Annotation>
+                <Annotation Term="Core.Immutable">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.Supplier8DProcesses/modifiedAt">
+                <Annotation Term="Common.Label">
+                    <String>Changed On</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.Supplier8DProcesses/modifiedBy">
+                <Annotation Term="Common.Label">
+                    <String>Changed By</String>
+                </Annotation>
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Core.Description">
+                    <String>A user's unique ID</String>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.Supplier8DProcesses/isSupplierFieldControl">
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.Supplier8DProcesses/supplier_ID">
+                <Annotation Term="Common.ValueListMapping">
+                    <Record Type="Common.ValueListMappingType">
+                        <PropertyValue Property="CollectionPath">
+                            <String>BusinessPartners</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Label">
+                            <String>Supplier</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>ID</String>
+                                    </PropertyValue>
+                                    <PropertyValue Property="LocalDataProperty">
+                                        <PropertyPath>supplier_ID</PropertyPath>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>businessPartnerNumber</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>businessPartnerName1</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>addressID/houseNumber</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>addressID/address</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>addressID/city</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>addressID/postalCode</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>addressID/country</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>addressID/mobile</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>addressID/email</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.Supplier8DProcesses/company_ID">
+                <Annotation Term="Common.ValueListMapping">
+                    <Record Type="Common.ValueListMappingType">
+                        <PropertyValue Property="CollectionPath">
+                            <String>CompanyCodes</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Label">
+                            <String>Company Code</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>ID</String>
+                                    </PropertyValue>
+                                    <PropertyValue Property="LocalDataProperty">
+                                        <PropertyPath>companyCode_ID</PropertyPath>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>companyCode</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>companyCodeName</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>addressID/city</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>currency/code</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.Supplier8DProcesses/material_ID">
+                <Annotation Term="Common.ValueListMapping">
+                    <Record Type="Common.ValueListMappingType">
+                        <PropertyValue Property="CollectionPath">
+                            <String>MaterialMasterGeneralDatas</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Label">
+                            <String>Material</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>ID</String>
+                                    </PropertyValue>
+                                    <PropertyValue Property="LocalDataProperty">
+                                        <PropertyPath>material_ID</PropertyPath>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>materialCode</String>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>materialDescription</String>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.Supplier8DProcesses/plant_ID">
+                <Annotation Term="Common.ValueListMapping">
+                    <Record Type="Common.ValueListMappingType">
+                        <PropertyValue Property="CollectionPath">
+                            <String>Plants</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Label">
+                            <String>Plant</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>ID</String>
+                                    </PropertyValue>
+                                    <PropertyValue Property="LocalDataProperty">
+                                        <PropertyPath>plant_ID</PropertyPath>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>plant</String>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>plantName</String>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>addressID/city</String>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>addressID/postalCode</String>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.Supplier8DProcesses/personResponsible_ID">
+                <Annotation Term="Common.ValueListMapping">
+                    <Record Type="Common.ValueListMappingType">
+                        <PropertyValue Property="CollectionPath">
+                            <String>BusinessPartners</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Label">
+                            <String>Supplier</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>ID</String>
+                                    </PropertyValue>
+                                    <PropertyValue Property="LocalDataProperty">
+                                        <PropertyPath>supplier_ID</PropertyPath>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>businessPartnerNumber</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>businessPartnerName1</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>addressID/houseNumber</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>addressID/address</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>addressID/city</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>addressID/postalCode</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>addressID/country</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>addressID/mobile</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>addressID/email</String>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.Supplier8DProcesses/purchasingOrganization_ID">
+                <Annotation Term="Common.ValueListMapping">
+                    <Record Type="Common.ValueListMappingType">
+                        <PropertyValue Property="CollectionPath">
+                            <String>PurchaseOrganizations</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Label">
+                            <String>Purchase Organization</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>ID</String>
+                                    </PropertyValue>
+                                    <PropertyValue Property="LocalDataProperty">
+                                        <PropertyPath>purchasingOrganization_ID</PropertyPath>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>purchaseOrganization</String>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>purchaseOrganizationName</String>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.UnitOfMeasures/code">
+                <Annotation Term="Common.Label">
+                    <String>Unit</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>name</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.UnitOfMeasures/name">
+                <Annotation Term="Common.Label">
+                    <String>Unit</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.UnitOfMeasures_texts/code">
+                <Annotation Term="Common.Label">
+                    <String>Unit</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>name</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SupplierIssueProcessService.UnitOfMeasures_texts/name">
+                <Annotation Term="Common.Label">
+                    <String>Unit</String>
+                </Annotation>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

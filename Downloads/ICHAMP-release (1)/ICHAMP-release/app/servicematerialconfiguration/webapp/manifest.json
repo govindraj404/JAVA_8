@@ -1,0 +1,217 @@
+{
+    "_version": "1.32.0",
+    "sap.app": {
+        "id": "cmh.servicematerialconfiguration",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "1.0.0"
+        },
+        "title": "{{APPLICATION_TITLE}}",
+        "description": "{{APPLICATION_DESCRIPTION}}",
+        "dataSources": {
+            "mainService": {
+                "uri": "odata/v4/ConfigurationService/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [
+                        "annotation"
+                    ],
+                    "odataVersion": "4.0",
+                    "localUri": "localService/metadata.xml"
+                }
+            },
+            "annotation": {
+                "type": "ODataAnnotation",
+                "uri": "annotations/annotation.xml",
+                "settings": {
+                    "localUri": "annotations/annotation.xml"
+                }
+            }
+        },
+        "offline": false,
+        "resources": "resources.json",
+        "sourceTemplate": {
+            "id": "ui5template.fiorielements.v4.lrop",
+            "version": "1.0.0"
+        },
+        "crossNavigation": {
+            "inbounds": {
+                "servicematerialconfiguration": {
+                    "signature": {
+                        "parameters": {},
+                        "additionalParameters": "allowed"
+                    },
+                    "semanticObject": "servicematerialconfiguration",
+                    "action": "manage",
+                    "hideLauncher": true
+                }
+            },
+            "outbounds": {}
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "resources": {
+            "js": [],
+            "css": []
+        },
+        "dependencies": {
+            "minUI5Version": "1.99.0",
+            "libs": {
+                "sap.ui.core": {},
+                "sap.fe.templates": {}
+            }
+        },
+        "models": {
+            "@i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "uri": "i18n/i18n.properties"
+            },
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "uri": "i18n/i18n.properties"
+            },
+            "": {
+                "dataSource": "mainService",
+                "preload": true,
+                "settings": {
+                    "synchronizationMode": "None",
+                    "operationMode": "Server",
+                    "autoExpandSelect": true,
+                    "earlyRequests": true
+                }
+            }
+        },
+        "rootView": {		
+            "viewName": "sap.fe.templates.RootContainer.view.Fcl",		
+            "type": "XML",		
+            "async": true,		
+            "id": "appRootView"		
+        },
+        "routing": {
+            "routes": [
+                {
+                    "pattern": ":?query:",
+                    "name": "ServiceMaterialsList",
+                    "target": ["ServiceMaterialsList"]
+                },
+                {
+                    "pattern": "ServiceMaterials({key}):?query:",
+                    "name": "ServiceMaterialsObjectPage",
+                    "target":["ServiceMaterialsList","ServiceMaterialsObjectPage"]
+                }
+            ],
+            "targets": {
+                "ServiceMaterialsList": {
+                    "type": "Component",
+                    "id": "ServiceMaterialsList",
+                    "name": "sap.fe.templates.ListReport",
+                    "controlAggregation":"beginColumnPages",	
+                    "contextPattern":"",
+                    "options": {
+                        "settings": {
+                            "entitySet": "ServiceMaterials",
+                            "variantManagement": "Page",
+                            "enhanceI18n":"i18n/ListReport/i18n.properties",
+                            "navigation": {
+                                "ServiceMaterials": {
+                                    "detail": {
+                                        "route": "ServiceMaterialsObjectPage"
+                                    }
+                                }
+                            },
+                            "controlConfiguration" : {
+                                "@com.sap.vocabularies.UI.v1.LineItem" : {
+                                    "actions": {
+                                        "DataFieldForAction::ConfigurationService.CopyServiceMaterials": {
+                                            "enabled": "cmh.servicematerialconfiguration.ext.controller.CopyAction.setEnabled"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "ServiceMaterialsObjectPage": {
+                    "type": "Component",
+                    "id": "ServiceMaterialsObjectPage",
+                    "name": "sap.fe.templates.ObjectPage",
+                    "controlAggregation": "midColumnPages",		
+                    "contextPattern": "/ServiceMaterials({key})",
+                    "options": {
+                        "settings": {
+                            "editableHeaderContent": false,
+                            "enhanceI18n":"i18n/ObjectPage/i18n.properties",
+                            "entitySet": "ServiceMaterials",
+                            "controlConfiguration": {
+                                "serviceMaterialUnit/@com.sap.vocabularies.UI.v1.LineItem": {
+                                    "tableSettings": {
+                                        "enableExport": false,
+                                        "personalization" : {
+                                            "column": true,
+                                            "sort": false
+                                        },
+                                        "enablePaste": false
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "config": {		
+                "routerClass": "sap.f.routing.Router",		
+                "flexibleColumnLayout": {		
+                    "defaultTwoColumnLayoutType": "TwoColumnsMidExpanded",		
+                    "limitFCLToTwoColumns": true		
+                }		
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        }
+    },
+    "sap.platform.abap": {
+        "_version": "1.1.0",
+        "uri": ""
+    },
+    "sap.platform.hcp": {
+        "_version": "1.1.0",
+        "uri": ""
+    },
+    "sap.fiori": {
+        "_version": "1.1.0",
+        "registrationIds": [],
+        "archeType": "transactional"
+    },
+    "sap.cloud": {
+        "public": true,
+        "service": "com.sap.ic.cmh"
+    },
+    "sap.platform.cf": {
+        "oAuthScopes": [
+            "$XSAPPNAME.ConditionType.Admin",
+            "$XSAPPNAME.ServiceMaterial.Admin",
+            "$XSAPPNAME.DestinationConfiguration.Admin",
+            "$XSAPPNAME.BusinessObjectConfiguration.Admin",
+            "$XSAPPNAME.ClaimStatusMapping.Admin"
+        ]
+    }
+}

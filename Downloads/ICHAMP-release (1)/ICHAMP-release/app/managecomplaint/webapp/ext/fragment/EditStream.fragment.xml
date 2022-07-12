@@ -1,0 +1,29 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Dialog
+        stretch = "{device>/system/phone}"
+		id="sEditStreamDialog"
+		title="{i18n>TITLE_ADAPT_STREAM}">
+     
+            <CheckBox core:require="{handler: 'cmh/managecomplaint/ext/controller/EditStream'}" 
+                id="sSelectAllBox" text="{i18n>SELECT_ALL}" selected="{oEditStreams>/AllSelect}" 
+                select="handler.onSelectAllCheckbox" />
+        	<Tree core:require="{handler: 'cmh/managecomplaint/ext/controller/EditStream'}"
+                id="sEditStreamTreeList"
+                mode="MultiSelect"
+                items="{path: 'oEditStreams>/value'}"
+                select="handler.onSelect">
+                <StandardTreeItem  
+                    title="{oEditStreams>description}" selected="{oEditStreams>isRelevant}"  />
+            </Tree>
+		<beginButton>
+			<Button id="sEditStreamSaveButton" core:require="{handler: 'cmh/managecomplaint/ext/controller/EditStream'}"
+				text="{i18n>SAVE}"
+				press="handler.onSaveDialog"/>
+		</beginButton>
+        <endButton>
+			<Button id="sEditStreamCloseButton" core:require="{handler: 'cmh/managecomplaint/ext/controller/EditStream'}"
+				text="{i18n>CANCEL}"
+				press="handler.onCloseDialog"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

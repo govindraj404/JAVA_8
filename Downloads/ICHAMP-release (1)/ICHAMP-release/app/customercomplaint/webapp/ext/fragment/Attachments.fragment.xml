@@ -1,0 +1,49 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core"  xmlns="sap.m" xmlns:upload="sap.m.upload">
+<upload:UploadSet
+                id="sUploadSet"
+                mediaTypes="application/pdf,application/msword,image/jpeg,image/png,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                maxFileNameLength="100"
+                maxFileSize="5"
+                multiple= "true"
+                uploadButtonInvisible="{= ${ui>/editMode} !== 'Editable'}"
+               noDataText="{i18n>NO_ATTACHMENTS}"
+               sameFilenameAllowed = "true"
+               items="{path : 'attachments', templateShareable : 'true'}"
+                core:require="{handler: 'cmh/customercomplaint/ext/controller/Attachment'}"
+                afterItemAdded="handler.createAttachment"
+                afterItemRemoved="handler.deleteAttachment"
+                fileSizeExceeded="handler.handleFileSizeExceeded" 
+                fileTypeMismatch="handler.handleOtherFileType"
+                >
+                <upload:toolbar>
+				<OverflowToolbar>
+					<Title id="sTitle" text="{i18n>ITEMS}"/>
+                    <ToolbarSpacer/>
+                    <Button
+							id="sDownloadButton"
+							text="{i18n>DOWNLOAD}"
+							press="handler.downloadAttachment"/>
+				</OverflowToolbar>
+			</upload:toolbar>
+            <upload:items>
+                <upload:UploadSetItem
+                        fileName="{path: 'name'}"
+                        mediaType="{path:'type'}"
+                        url="{path : 'ID',  formatter: 'handler.formatURL'}"
+                        visibleEdit="{= ${ui>/editMode} === 'Editable'}"
+                        visibleRemove="{= ${ui>/editMode} === 'Editable'}"
+                        >
+                    <upload:attributes>
+                    <ObjectAttribute title="{createdAt##@com.sap.vocabularies.Common.v1.Label}"
+                        text="{path : 'createdAt'}"
+                        active="false"/>
+                    <ObjectAttribute title="{i18n>FILE_SIZE}" 
+                        text="{size}"
+                        active="false"/>
+                    </upload:attributes>
+                </upload:UploadSetItem>
+            </upload:items>
+        </upload:UploadSet>
+
+
+</core:FragmentDefinition>

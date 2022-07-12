@@ -1,0 +1,58 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns:m="sap.m"
+	xmlns="sap.suite.ui.commons"  xmlns:l="sap.ui.layout">
+    <m:Panel  id="idPFPanel" >
+        <m:MessageStrip text="{i18n>DOCUMENT_FLOW_NOT_AVAILABLE}"
+            id="idNoDataVBox" visible="{globalModel>/showDocumentFlowNoData}"
+            showIcon="true">
+        </m:MessageStrip>
+        <m:FlexBox id="idProcessFlowToolBar" visible="{globalModel>/showDocumentFlow}"
+				justifyContent="End">
+				<m:Button id="idButtonZoomOut" icon="sap-icon://zoom-out" 
+                        core:require="{handler: 'cmh/managecomplaint/ext/controller/ProcessFlow'}"
+                        press="handler.onZoomOut"
+                        type="Transparent" tooltip="{i18>ZOOM_OUT}"/>
+                <m:Button id="idButtonZoomIn" icon="sap-icon://zoom-in" 
+                    core:require="{handler: 'cmh/managecomplaint/ext/controller/ProcessFlow'}"
+                    press="handler.onZoomIn"
+                    type="Transparent" tooltip="{i18>ZOOM_IN}"/>
+                <m:Button id="idButtonReset" icon="sap-icon://reset" 
+                        core:require="{handler: 'cmh/managecomplaint/ext/controller/ProcessFlow'}"
+                        press="handler.onReset"
+                        type="Transparent" tooltip="{i18>reset}"/>
+			</m:FlexBox>
+        
+        <ProcessFlow id="sDocumentProcessFlow" core:require="{handler: 'cmh/managecomplaint/ext/controller/ProcessFlow',formatMessage: 'sap/base/strings/formatMessage'}"
+            nodes="{globalModel>/Nodes}"	wheelZoomable="false"
+            lanes="{globalModel>/Lanes}" visible="{globalModel>/showDocumentFlow}"
+            nodePress="handler.onNodePress">
+            <nodes>
+                <ProcessFlowNode
+                    laneId="{globalModel>laneID}"
+                    state="{globalModel>state}"
+                    stateText="{globalModel>stateText}"
+                    nodeId="{globalModel>nodeID}"
+                    children="{globalModel>child}"
+                    title="{ 
+                      parts: [
+                     'i18n>BO_NAME_AND_IDENTIFIER',
+                     'globalModel>nodeTitle',
+                     'globalModel>titleAbbreviation'
+                    ],
+                    formatter: 'formatMessage',
+                    targetType:'any',
+                    wrapping:true
+                    }"
+                    texts="{globalModel>text}"
+                    titleAbbreviation="{globalModel>titleAbbreviation}"
+                    isTitleClickable="false"/>
+            </nodes>
+            <lanes>
+                <ProcessFlowLaneHeader 
+                    laneId="{globalModel>laneID}"
+                    text="{globalModel>label}"
+                    iconSrc="{globalModel>laneIconSrc}"
+                    position="{globalModel>lanePosition}" />
+            </lanes>   
+        </ProcessFlow> 
+    </m:Panel>
+</core:FragmentDefinition>

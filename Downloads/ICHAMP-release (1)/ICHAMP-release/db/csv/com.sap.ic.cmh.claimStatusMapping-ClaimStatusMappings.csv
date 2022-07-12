@@ -1,0 +1,8 @@
+code,name,status_code
+B004,Reimburser Version Created,CLMCRTD
+B003,Claim Checked,CLMVLTD
+B010,Claim Sent to Reimburser,CLMSENT
+B020,Reimburser Inbound (Reply) Received,CLMSRR
+B025,Reimburser Version Posted,CLMPSTD
+B011,Correction Claimant Version Posting,CLMCORR
+B060,Claim Closed,CLMCLSD

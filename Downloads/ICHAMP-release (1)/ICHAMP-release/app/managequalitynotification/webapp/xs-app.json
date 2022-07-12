@@ -1,0 +1,17 @@
+{
+  "welcomeFile": "flpSandbox.html",
+  "routes": [
+    {
+      "authenticationType": "none",
+      "csrfProtection": false,
+      "source": "^/odata/v4/QualityNotificationService/",
+      "destination": "backend"
+    },
+    {
+      "source": "^(.*)$",
+      "target": "$1",
+      "service": "html5-apps-repo-rt",
+      "authenticationType": "xsuaa"
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout">
+    <HBox  direction="Column" renderType="Bare">
+        <Link 
+            core:require="{
+                handler : 'cmh/managecomplaint/ext/controller/CustomActionButton',
+                formatMessage: 'sap/base/strings/formatMessage'
+            }"
+            press="handler.onClickCreate" 
+            text="{ 
+                parts: [
+                   'i18n>BO_NAME_AND_IDENTIFIER',
+                   'businessObjectType/name',
+                   'businessObjectID/identifier'
+                ],
+                formatter: 'formatMessage'
+            }" 
+            visible="{
+                path: 'businessObjectID_ID',
+                formatter: 'handler.showLink',
+                targetType: 'any',
+                mode : 'OneTime'
+            }"
+            wrapping = "true"
+        />
+        
+        
+        <Button core:require="{handler: 'cmh/managecomplaint/ext/controller/CustomActionButton'}"
+				press="handler.onClickCreate" 
+                visible="{= %{businessObjectID_ID} === null &amp;&amp; %{isVisible}}"
+                text="{
+                    parts: ['businessObjectType_code','globalModel>/action'],
+                    formatter: 'handler.actionText',
+                    targetType: 'any'
+                }" 
+                tooltip="{
+                    parts: ['businessObjectType_code','globalModel>/action'],
+                    formatter: 'handler.actionText',
+                    targetType: 'any'
+                }"
+                enabled="{isValidActionPrecondition}"/>
+           
+    </HBox>
+</core:FragmentDefinition>

@@ -1,0 +1,49 @@
+_schema-version: "3.1"
+ID: mta-azure-production
+extends: cmh
+version: 0.0.1
+
+parameters:
+  app-prefix: complainthandling
+  global-xsappname: ComplaintHandling
+  metering-service-plan: default
+modules:
+  - name: cmh-approuter
+    parameters:
+      host: "*"
+      domain: ${app-prefix}.${default-domain}
+      keep-existing-routes: false
+      routes:
+        - route: "*.${app-prefix}.${default-domain}"
+    properties:
+      TENANT_HOST_PATTERN: '^(.*).${domain}'
+      EXTERNAL_REVERSE_PROXY: true
+    provides:
+      - name: app-url
+        properties:
+          url: '${domain}'
+      - name: xray
+        properties:
+          xray_url: "https://xray.hana.ondemand.com/xRayControls/resources/sap/dfa/help"
+      - name: xray_data
+        properties:
+          xray_data_url: "https://cp.hana.ondemand.com/dps"
+  - name: cmh-srv
+    properties:
+      CDS_MULTITENANCY_APPUI_TENANTSEPARATOR: "."
+      CDS_MULTITENANCY_APPUI_URL: '${app-prefix}.${default-domain}'
+resources:
+  - name: cmh-messaging
+    parameters:
+      config:
+        namespace: default/sap.ic.cmh.${space}/-
+  - name: cmh-service-uaa
+    parameters:
+      config:
+        oauth2-configuration:
+          redirect-uris:
+            - "https://*.${app-prefix}.${default-domain}/**"
+  - name: cmh-malware-scanning-service
+    optional: false
+    parameters:
+      active: true

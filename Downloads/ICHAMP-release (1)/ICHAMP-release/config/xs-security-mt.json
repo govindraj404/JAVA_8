@@ -1,0 +1,510 @@
+{
+    "xsappname": "${global-xsappname}",
+    "tenant-mode": "shared",
+    "authorities-inheritance": false,
+    "scopes": [
+        {
+            "name": "uaa.user",
+            "description": "UAA"
+        },
+        {
+            "name": "$XSAPPNAME.mtdeployment",
+            "description": "Scope to trigger a re-deployment of the database artifacts"
+        },
+        {
+            "name": "$XSAPPNAME.HealthChecks.Read",
+            "description": "Scope to Health check"
+        },
+        {
+            "name": "$XSAPPNAME.mtcallback",
+            "description": "Multi Tenancy Callback Access",
+            "grant-as-authority-to-apps": [
+                "$XSAPPNAME(application, sap-provisioning, tenant-onboarding)"
+            ]
+        },
+        {
+            "name": "$XSAPPNAME.Callback",
+            "description": "With this scope set, the callbacks for tenant onboarding, offboarding and getDependencies can be called.",
+            "grant-as-authority-to-apps": [
+                "$XSAPPNAME(application,sap-provisioning,tenant-onboarding)"
+            ]
+        },
+        {
+            "name": "$XSAPPNAME.Complaint.Create",
+            "description": "Authorization to create complaint"
+        },
+        {
+            "name": "$XSAPPNAME.Complaint.Read",
+            "description": "Authorization to read complaint"
+        },
+        {
+            "name": "$XSAPPNAME.Complaint.Update",
+            "description": "Authorization to update complaint"
+        },
+        {
+            "name": "$XSAPPNAME.Complaint.Discard",
+            "description": "Authorization to discard complaint"
+        },
+        {
+            "name": "$XSAPPNAME.Complaint.Reopen",
+            "description": "Authorization to reopen complaint"
+        },
+        {
+            "name": "$XSAPPNAME.Complaint.Close",
+            "description": "Authorization to close complaint"
+        },
+        {
+            "name": "$XSAPPNAME.Claim.Create",
+            "description": "Authorization to create claim"
+        },
+        {
+            "name": "$XSAPPNAME.Claim.Read",
+            "description": "Authorization to read claim"
+        },
+        {
+            "name": "$XSAPPNAME.Claim.Update",
+            "description": "Authorization to update claim"
+        },
+        {
+            "name": "$XSAPPNAME.Stream.Read",
+            "description": "Authorization to read stream"
+        },
+        {
+            "name": "$XSAPPNAME.Stream.Update",
+            "description": "Authorization to update stream"
+        },
+        {
+            "name": "$XSAPPNAME.QualityNotification.Create",
+            "description": "Authorization to create quality notification"
+        },
+        {
+            "name": "$XSAPPNAME.QualityNotification.Read",
+            "description": "Authorization to read quality notification"
+        },
+        {
+            "name": "$XSAPPNAME.QualityNotification.Update",
+            "description": "Authorization to update quality notification"
+        },
+        {
+            "name": "$XSAPPNAME.ReturnPurchaseOrder.Create",
+            "description": "Authorization to create return purchase order"
+        },
+        {
+            "name": "$XSAPPNAME.ReturnPurchaseOrder.Read",
+            "description": "Authorization to read return purchase order"
+        },
+        {
+            "name": "$XSAPPNAME.ReturnPurchaseOrder.Update",
+            "description": "Authorization to update return purchase order"
+        },
+        {
+            "name": "$XSAPPNAME.SupplierIssueProcess.Create",
+            "description": "Authorization to create supplier issue process"
+        },
+        {
+            "name": "$XSAPPNAME.SupplierIssueProcess.Read",
+            "description": "Authorization to read supplier issue process"
+        },
+        {
+            "name": "$XSAPPNAME.SupplierIssueProcess.Update",
+            "description": "Authorization to update supplier issue process"
+        },
+        {
+            "name": "$XSAPPNAME.CostCollector.Create",
+            "description": "Authorization to create cost collector"
+        },
+        {
+            "name": "$XSAPPNAME.CostCollector.Read",
+            "description": "Authorization to read cost collector"
+        },
+        {
+            "name": "$XSAPPNAME.CostCollector.Update",
+            "description": "Authorization to update cost collector"
+        },
+        {
+            "name": "$XSAPPNAME.CostCollector.Delete",
+            "description": "Authorization to delete cost collector"
+        },
+        {
+            "name": "$XSAPPNAME.ConditionType.Read",
+            "description": "Authorization to read condition type"
+        },
+        {
+            "name": "$XSAPPNAME.ServiceMaterial.Read",
+            "description": "Authorization to read service material"
+        },
+        {
+            "name": "$XSAPPNAME.DestinationConfiguration.Read",
+            "description": "Authorization to read destination configuration"
+        },
+        {
+            "name": "$XSAPPNAME.BusinessObjectConfiguration.Read",
+            "description": "Authorization to read business object configuration"
+        },
+        {
+            "name": "$XSAPPNAME.ClaimStatusMapping.Read",
+            "description": "Authorization to read claim status mapping"
+        },
+        {
+            "name": "$XSAPPNAME.ConditionType.Admin",
+            "description": "Authorization to create, update and delete condition type"
+        },
+        {
+            "name": "$XSAPPNAME.ServiceMaterial.Admin",
+            "description": "Authorization to create, update and delete service material"
+        },
+        {
+            "name": "$XSAPPNAME.DestinationConfiguration.Admin",
+            "description": "Authorization to create, update and delete destination configuration"
+        },
+        {
+            "name": "$XSAPPNAME.BusinessObjectConfiguration.Admin",
+            "description": "Authorization to create, update and delete business object configuration"
+        },
+        {
+            "name": "$XSAPPNAME.ClaimStatusMapping.Admin",
+            "description": "Authorization to create, update and delete claim status mapping"
+        },
+        {
+            "name": "$XSAPPNAME.emmanagement",
+            "description": "Enterprise-Messaging Management Access"
+        },
+        {
+            "name": "$XSAPPNAME.emcallback",
+            "description": "Enterprise-Messaging Callback Access",
+            "grant-as-authority-to-apps": [
+                "$XSSERVICENAME(cmh-messaging)"
+            ]
+        },
+        {
+            "name": "$XSAPPNAME.ExtendCDS",
+            "description": "Extend your own tenant's models"
+        },
+        {
+            "name": "$XSAPPNAME.ExtendCDSdelete",
+            "description": "Undeploy your own tenant's extensions"
+        },
+        {
+            "name": "$XSAPPNAME.JobSchedulerUser",
+            "description": "Authority for Job Scheduler",
+            "grant-as-authority-to-apps": [
+                "$XSSERVICENAME(cmh-job-scheduler)"
+            ]
+        },
+        {
+            "name": "$XSAPPNAME.PersonalDataManagerUser",
+            "description": "Authority for Personal Data Manager",
+            "grant-as-authority-to-apps": [
+                "$XSSERVICENAME(cmh-personal-data-manager)"
+            ]
+        },
+        {
+            "name": "$XSAPPNAME.RetentionManagerUser",
+            "description":"Authority for Retention Manager Service" ,
+            "grant-as-authority-to-apps": [
+                "$XSSERVICENAME(cmh-retention-manager)"
+            ]
+        }
+    ],
+    "authorities": [
+        "$XSAPPNAME.mtdeployment",
+        "$XSAPPNAME.mtcallback",
+        "$XSAPPNAME.Callback",
+        "$XSAPPNAME.Complaint.Create",
+        "$XSAPPNAME.Complaint.Read",
+        "$XSAPPNAME.Complaint.Update",
+        "$XSAPPNAME.Claim.Create",
+        "$XSAPPNAME.Complaint.Discard",
+        "$XSAPPNAME.Claim.Read",
+        "$XSAPPNAME.Claim.Update",
+        "$XSAPPNAME.Stream.Read",
+        "$XSAPPNAME.Stream.Update",
+        "$XSAPPNAME.QualityNotification.Create",
+        "$XSAPPNAME.QualityNotification.Read",
+        "$XSAPPNAME.QualityNotification.Update",
+        "$XSAPPNAME.ReturnPurchaseOrder.Create",
+        "$XSAPPNAME.ReturnPurchaseOrder.Read",
+        "$XSAPPNAME.ReturnPurchaseOrder.Update",
+        "$XSAPPNAME.SupplierIssueProcess.Create",
+        "$XSAPPNAME.SupplierIssueProcess.Read",
+        "$XSAPPNAME.SupplierIssueProcess.Update",
+        "$XSAPPNAME.CostCollector.Create",
+        "$XSAPPNAME.CostCollector.Read",
+        "$XSAPPNAME.CostCollector.Update",
+        "$XSAPPNAME.CostCollector.Delete",
+        "$XSAPPNAME.ConditionType.Read",
+        "$XSAPPNAME.ServiceMaterial.Read",
+        "$XSAPPNAME.DestinationConfiguration.Read",
+        "$XSAPPNAME.BusinessObjectConfiguration.Read",
+        "$XSAPPNAME.ClaimStatusMapping.Read",
+        "$XSAPPNAME.ConditionType.Admin",
+        "$XSAPPNAME.ServiceMaterial.Admin",
+        "$XSAPPNAME.DestinationConfiguration.Admin",
+        "$XSAPPNAME.BusinessObjectConfiguration.Admin",
+        "$XSAPPNAME.ClaimStatusMapping.Admin",
+        "$XSAPPNAME.HealthChecks.Read",
+        "$XSAPPNAME.ExtendCDS",
+        "$XSAPPNAME.ExtendCDSdelete"
+    ],
+    "attributes": [
+        {
+            "name": "Plant",
+            "description": "The Plant in which the user is allowed to view or modify the complaint",
+            "valueType": "string",
+            "valueRequired": false
+        },
+        {
+            "name": "CompanyCode",
+            "description": "The Company in which the user is allowed to view or modify the complaint",
+            "valueType": "string",
+            "valueRequired": false
+        }
+    ],
+    "role-templates": [
+        {
+            "name": "Token_Exchange",
+            "description": "UAA",
+            "scope-references": [
+                "uaa.user"
+            ]
+        },
+        {
+            "name": "ComplaintRead",
+            "description": "Role template to read complaint",
+            "scope-references": [
+                "$XSAPPNAME.Complaint.Read"
+            ],
+            "attribute-references": ["Plant","CompanyCode"]
+        },
+        {
+            "name": "ComplaintEdit",
+            "description": "Role template to create and update complaint",
+            "scope-references": [
+                "$XSAPPNAME.Complaint.Create",
+                "$XSAPPNAME.Complaint.Update",
+                "$XSAPPNAME.Complaint.Discard",
+                "$XSAPPNAME.Complaint.Reopen",
+                "$XSAPPNAME.Complaint.Close"
+            ]
+        },
+        {
+            "name": "ClaimRead",
+            "description": "Role template to read claim",
+            "scope-references": [
+                "$XSAPPNAME.Claim.Read"
+            ]
+        },
+        {
+            "name": "ClaimEdit",
+            "description": "Role template to create and update claim",
+            "scope-references": [
+                "$XSAPPNAME.Claim.Create",
+                "$XSAPPNAME.Claim.Update"
+            ]
+        },
+        {
+            "name": "StreamEdit",
+            "description": "Role template to read and update stream",
+            "scope-references": [
+                "$XSAPPNAME.Stream.Read",
+                "$XSAPPNAME.Stream.Update"
+            ]
+        },
+        {
+            "name": "QualityNotificationRead",
+            "description": "Role template to read quality notification",
+            "scope-references": [
+                "$XSAPPNAME.QualityNotification.Read"
+            ]
+        },
+        {
+            "name": "QualityNotificationEdit",
+            "description": "Role template to create and update quality notification",
+            "scope-references": [
+                "$XSAPPNAME.QualityNotification.Create",
+                "$XSAPPNAME.QualityNotification.Update"
+            ]
+        },
+        {
+            "name": "ReturnPurchaseOrderRead",
+            "description": "Role template to read return purchase order",
+            "scope-references": [
+                "$XSAPPNAME.ReturnPurchaseOrder.Read"
+            ]
+        },
+        {
+            "name": "ReturnPurchaseOrderEdit",
+            "description": "Role template to create and update return purchase order",
+            "scope-references": [
+                "$XSAPPNAME.ReturnPurchaseOrder.Create",
+                "$XSAPPNAME.ReturnPurchaseOrder.Update"
+            ]
+        },
+        {
+            "name": "SupplierIssueProcessRead",
+            "description": "Role template to read supplier issue process",
+            "scope-references": [
+                "$XSAPPNAME.SupplierIssueProcess.Read"
+            ]
+        },
+        {
+            "name": "SupplierIssueProcessEdit",
+            "description": "Role template to create and update supplier issue process",
+            "scope-references": [
+                "$XSAPPNAME.SupplierIssueProcess.Create",
+                "$XSAPPNAME.SupplierIssueProcess.Update"
+            ]
+        },
+        {
+            "name": "CostCollectorRead",
+            "description": "Role template to read cost collector",
+            "scope-references": [
+                "$XSAPPNAME.CostCollector.Read"
+            ]
+        },
+        {
+            "name": "CostCollectorEdit",
+            "description": "Role template to create, update and delete cost collector",
+            "scope-references": [
+                "$XSAPPNAME.CostCollector.Create",
+                "$XSAPPNAME.CostCollector.Update",
+                "$XSAPPNAME.CostCollector.Delete"
+            ]
+        },
+        {
+            "name": "ConfigurationRead",
+            "description": "Role template to read configurations",
+            "scope-references": [
+                "$XSAPPNAME.ConditionType.Read",
+                "$XSAPPNAME.ServiceMaterial.Read",
+                "$XSAPPNAME.DestinationConfiguration.Read",
+                "$XSAPPNAME.BusinessObjectConfiguration.Read",
+                "$XSAPPNAME.ClaimStatusMapping.Read"
+
+            ]
+        },
+        {
+            "name": "ConfigurationAdmin",
+            "description": "Role template to create, update and delete configurations",
+            "scope-references": [
+                "$XSAPPNAME.ConditionType.Admin",
+                "$XSAPPNAME.ServiceMaterial.Admin",
+                "$XSAPPNAME.DestinationConfiguration.Admin",
+                "$XSAPPNAME.BusinessObjectConfiguration.Admin",
+                "$XSAPPNAME.ClaimStatusMapping.Admin"
+            ]
+        },
+        {
+            "name": "Messaging_Admin",
+            "description": "Enterprise Messaging Administrator",
+            "scope-references": [
+                "$XSAPPNAME.emmanagement"
+            ]
+        },
+        {
+            "name": "HealthChecksRead",
+            "description": "Role template to health check",
+            "scope-references": [
+                "$XSAPPNAME.HealthChecks.Read"
+            ]
+        },
+        {
+            "name": "Extension_Developer",
+            "description": "CDS Extension Developer",
+            "scope-references": ["$XSAPPNAME.ExtendCDS"],
+            "attribute-references": []
+        },
+        {
+            "name": "Extension_Admin",
+            "description": "CDS Extension Administrator",
+            "scope-references": ["$XSAPPNAME.ExtendCDS", "$XSAPPNAME.ExtendCDSdelete"]
+        }
+    ],
+    "role-collections": [
+        {
+            "name": "Quality Manager",
+            "description": "Quality Manager Role Collection",
+            "role-template-references": [
+                "$XSAPPNAME.ComplaintRead",
+                "$XSAPPNAME.ComplaintEdit",
+                "$XSAPPNAME.ClaimRead",
+                "$XSAPPNAME.ClaimEdit",
+                "$XSAPPNAME.StreamEdit",
+                "$XSAPPNAME.QualityNotificationRead",
+                "$XSAPPNAME.QualityNotificationEdit",
+                "$XSAPPNAME.ReturnPurchaseOrderRead",
+                "$XSAPPNAME.ReturnPurchaseOrderEdit",
+                "$XSAPPNAME.SupplierIssueProcessRead",
+                "$XSAPPNAME.SupplierIssueProcessEdit",
+                "$XSAPPNAME.CostCollectorRead",
+                "$XSAPPNAME.CostCollectorEdit",
+                "$XSAPPNAME.ConfigurationRead"
+            ]
+        },
+        {
+            "name": "Quality Engineer",
+            "description": "Quality Engineer Role Collection",
+            "role-template-references": [
+                "$XSAPPNAME.ComplaintRead",
+                "$XSAPPNAME.StreamEdit",
+                "$XSAPPNAME.QualityNotificationRead",
+                "$XSAPPNAME.QualityNotificationEdit",
+                "$XSAPPNAME.SupplierIssueProcessRead",
+                "$XSAPPNAME.SupplierIssueProcessEdit",
+                "$XSAPPNAME.ClaimRead",
+                "$XSAPPNAME.ReturnPurchaseOrderRead",
+                "$XSAPPNAME.CostCollectorRead",
+                "$XSAPPNAME.CostCollectorEdit",
+                "$XSAPPNAME.ConfigurationRead"
+            ]
+        },
+        {
+            "name": "Quality Audit",
+            "description": "Quality Audit Role Collection",
+            "role-template-references": [
+                "$XSAPPNAME.ComplaintRead",
+                "$XSAPPNAME.ClaimRead",
+                "$XSAPPNAME.QualityNotificationRead",
+                "$XSAPPNAME.ReturnPurchaseOrderRead",
+                "$XSAPPNAME.SupplierIssueProcessRead",
+                "$XSAPPNAME.CostCollectorRead",
+                "$XSAPPNAME.ConfigurationRead"
+            ]
+        },
+        {
+            "name": "Claim Analyst",
+            "description": "Claim Analyst Role Collection",
+            "role-template-references": [
+                "$XSAPPNAME.ComplaintRead",
+                "$XSAPPNAME.ClaimRead",
+                "$XSAPPNAME.ClaimEdit",
+                "$XSAPPNAME.QualityNotificationRead",
+                "$XSAPPNAME.ReturnPurchaseOrderRead",
+                "$XSAPPNAME.SupplierIssueProcessRead",
+                "$XSAPPNAME.CostCollectorRead",
+                "$XSAPPNAME.CostCollectorEdit",
+                "$XSAPPNAME.ConfigurationRead"
+            ]
+        },
+        {
+            "name": "Returns And Refund Clerk",
+            "description": "Returns And Refund Clerk Role Collection",
+            "role-template-references": [
+                "$XSAPPNAME.ComplaintRead",
+                "$XSAPPNAME.ClaimRead",
+                "$XSAPPNAME.QualityNotificationRead",
+                "$XSAPPNAME.SupplierIssueProcessRead",
+                "$XSAPPNAME.ReturnPurchaseOrderRead",
+                "$XSAPPNAME.ReturnPurchaseOrderEdit",
+                "$XSAPPNAME.ConfigurationRead"
+            ]
+        },
+        {
+            "name": "Configuration Admin",
+            "description": "Admin Role Collection",
+            "role-template-references": [
+                "$XSAPPNAME.ConfigurationAdmin"
+            ]
+        }
+    ]
+}

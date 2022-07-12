@@ -1,0 +1,4 @@
+complaintType_code,streamType_code,sequenceNumber
+SREC,QLTY,1
+SREC,CLP,2
+SREC,LOG,3

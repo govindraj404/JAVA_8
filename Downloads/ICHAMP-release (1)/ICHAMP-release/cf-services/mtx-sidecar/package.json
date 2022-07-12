@@ -1,0 +1,19 @@
+{
+    "name": "mtx-deploy",
+    "engines": {
+        "node": ">=12.18"
+    },
+    "dependencies": {
+        "@sap/cds": "5.4.1",
+        "@sap/cds-mtx": "2.4.2",
+        "@sap/hdi-deploy": "4.1.0",
+        "@sap/instance-manager": "3.3.3",
+        "@sap/xssec": "3.2.13",
+        "express": "4.17.3",
+        "@sap/hana-client": "2.9.28",
+        "passport": "0.6.0"
+    },
+    "scripts": {
+        "start": "node server.js"
+    }
+}

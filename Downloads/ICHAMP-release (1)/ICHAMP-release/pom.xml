@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.sap.ic</groupId>
+	<artifactId>cmh-parent</artifactId>
+	<version>${revision}</version>
+	<packaging>pom</packaging>
+
+	<name>cmh-parent</name>
+
+	<properties>
+		<!-- OUR VERSION -->
+		<revision>1.0.0</revision>
+
+		<!-- DEPENDENCIES VERSION -->
+		<jdk.version>1.8</jdk.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<cds.services.version>1.20.0</cds.services.version>
+		<spring.boot.version>2.6.6</spring.boot.version>
+		
+		<!-- Bucket4j -->
+		<bucket4j-version>7.5.0</bucket4j-version>
+		<!-- Please check if there are managed versions in  -->
+        <!-- https://github.wdf.sap.corp/Phosphor/security-patched-spring-boot-24x -->
+        <!-- https://help.sap.com/doc/6c02295dfa8f47cf9c08a19f2e172901/1.0/en-US/index.html -->
+        <!-- https://nexusrel.wdf.sap.corp:8443/nexus/#nexus-search;gav~com.sap.cloud.sdk~sdk-bom~~~ -->
+		
+		<com.sap.cloud.sdk.sdk-bom.version>3.54.0</com.sap.cloud.sdk.sdk-bom.version>        
+        <com.sap.sgs.spring-bom.version>2.5.10-sap-02</com.sap.sgs.spring-bom.version>
+
+		<cdsdk.version>4.4.1</cdsdk.version>
+		<node.version>v12.18.3</node.version>
+
+		<node.url>http://nexus.wdf.sap.corp:8081/nexus/content/groups/build.releases.apt/</node.url>
+		<npmRegistry.url>http://nexus.wdf.sap.corp:8081/nexus/content/groups/build.releases.npm</npmRegistry.url>
+		
+		<io.springfox.version>2.9.2</io.springfox.version>
+        <auditlog.sap.version>2.3.9</auditlog.sap.version>
+		<cf.env.version>2.3.0</cf.env.version>
+		<sap-passport-version>1.4.0</sap-passport-version>
+		<cf-logging-version>3.0.8</cf-logging-version>
+		<jclouds.version>2.4.0</jclouds.version>
+	</properties>
+	<modules>
+		<module>srv</module>
+	</modules>
+	<repositories>
+		<repository>
+			<id>central</id>
+			<url>http://nexus.wdf.sap.corp:8081/nexus/content/groups/build.releases/</url>
+		</repository>
+	</repositories>
+	<dependencyManagement>
+		<dependencies>
+			<!-- Security Patched Spring Boot Dependencies -->
+			<dependency>
+				<groupId>com.sap.sgs</groupId>
+				<artifactId>security-patched-spring-boot-dependencies</artifactId>
+				<version>${com.sap.sgs.spring-bom.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+            <!-- SAP CP Spring XSUAA Security Library -->
+            <dependency>
+                <groupId>com.sap.cloud.security.xsuaa</groupId>
+                <artifactId>xsuaa-spring-boot-starter</artifactId>
+                <version>2.11.16</version>
+            </dependency>
+			<!-- SAP Cloud SDK -->
+			<dependency>
+				<groupId>com.sap.cloud.sdk</groupId>
+				<artifactId>sdk-bom</artifactId>
+				<version>${com.sap.cloud.sdk.sdk-bom.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<!-- CDS SERVICES -->
+			<dependency>
+				<groupId>com.sap.cds</groupId>
+				<artifactId>cds-services-bom</artifactId>
+				<version>${cds.services.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<!-- SAP Cloud SDK Passport Dependency -->
+			<dependency>
+				<groupId>com.sap.cloud.sdk.cloudplatform</groupId>
+				<artifactId>sap-passport</artifactId>
+			</dependency>
+
+		</dependencies>
+
+	</dependencyManagement>
+
+	<build>
+		<plugins>
+			<!-- JAVA VERSION -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
+				</configuration>
+			</plugin>
+
+			<!-- MAKE SPRING BOOT PLUGIN RUNNABLE FROM ROOT -->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>${spring.boot.version}</version>
+				<configuration>
+					<fork>false</fork>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

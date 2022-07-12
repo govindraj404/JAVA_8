@@ -1,0 +1,21 @@
+{
+	"name": "claimstatusconfiguration",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"build": "ui5 build -a --include-task=generateManifestBundle generateCachebusterInfo --clean-dest"
+	},
+	"devDependencies": {
+		"rimraf": "3.0.2",
+		"@ui5/logger": "2.0.1"
+	},
+	"dependencies": {
+		"@ui5/cli": "2.14.8",
+		"ui5-task-zipper": "0.4.11"
+	},
+	"ui5": {
+		"dependencies": [
+		"ui5-task-zipper"
+		]
+	}
+}

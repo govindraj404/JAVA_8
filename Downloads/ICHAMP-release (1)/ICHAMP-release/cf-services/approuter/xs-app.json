@@ -1,0 +1,47 @@
+{
+    "welcomeFile": "/cp.portal",
+    "authenticationMethod": "route",
+    "logout": {
+        "logoutEndpoint": "/do/logout"
+    },
+    "routes": [
+        {
+            "source": "^(/applications/.*)$",
+            "target": "$1",
+            "service": "html5-apps-repo-rt",
+            "authenticationType": "xsuaa"
+        },
+        {
+            "source": "^/v4/odata/(.*)$",
+            "authenticationType": "none",
+            "destination": "backend",
+            "csrfProtection": false
+        },
+        {
+            "source": "^/resources/sap/dfa/help/(.*)$",
+            "target": "$1",
+            "destination": "xray",
+            "csrfProtection": false,
+            "authenticationType": "none"
+        },
+        {
+            "source": "^/sap/dfa/help/(.*)$",
+            "target": "$1",
+            "destination": "xray_data",
+            "csrfProtection": false,
+            "authenticationType": "none"
+        },
+        {
+            "source": "^/objectstorage/api/attachment(.*)$",
+            "destination": "backend",
+            "csrfProtection": false,
+            "authenticationType": "none"
+        },
+        {
+            "source": "^/extend/(.*)$",
+            "authenticationType": "none",
+            "destination": "backend",
+            "target":"$1"
+        }
+    ]
+}
