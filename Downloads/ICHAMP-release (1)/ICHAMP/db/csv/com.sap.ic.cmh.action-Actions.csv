@@ -1,5 +1,0 @@
-code,name,businessObjectType_code,targetBusinessObjectStatus_code
-CRTQN,Create Quality Notification,QN,QNCRTD
-CRTWC,Create Claim,CLM,CLMCRTD
-CRTRPO,Create Return Purchase Order,RPO,RPOCRTD
-CRTS8D,Create Supplier 8D,S8D,S8DCRTD

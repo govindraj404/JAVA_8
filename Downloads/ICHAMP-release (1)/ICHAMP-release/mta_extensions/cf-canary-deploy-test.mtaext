@@ -1,8 +1,0 @@
-ID: ichamp.development
-_schema-version: "3.1"
-extends: ichamp
-
-modules:
-  - name: ichamp
-    parameters:
-      memory: 2048M

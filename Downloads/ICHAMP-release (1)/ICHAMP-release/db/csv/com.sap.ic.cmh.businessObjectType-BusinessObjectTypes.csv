@@ -1,5 +1,0 @@
-code,name,streamType_code,sequenceNumber
-QN,Quality Notification,QLTY,1
-RPO,Return Purchase Order,LOG,1
-CLM,Claim,CLP,1
-S8D,Supplier 8D,QLTY,2

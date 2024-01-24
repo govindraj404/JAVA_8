@@ -1,9 +1,0 @@
-ID: ichamp.local
-_schema-version: "3.1"
-extends: cmh
-
-modules:
-    - name: cmh-srv
-      build-parameters:
-          builder: custom
-          commands: [mvn clean package -DskipTests=true] # To skip test in local build

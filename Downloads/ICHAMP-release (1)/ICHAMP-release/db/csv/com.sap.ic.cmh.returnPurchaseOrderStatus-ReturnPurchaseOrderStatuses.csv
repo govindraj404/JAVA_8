@@ -1,8 +1,0 @@
-code,name,sequenceNumber
-NEW,Initial,1
-RPOCRTD,Return Purchase Order Created,2
-RPOGI,Goods Issued,3
-RPOGIV,Invoice Verified for Goods Issue,4
-RPOGR,Goods Received,5
-RPOGRIV,Invoice Verified for Goods Received,6
-RPOCLSD,Return Purchase Order Closed,7

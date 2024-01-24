@@ -1,6 +1,0 @@
-code,description,isExternalRelevant
-INTNT,Internal Note,false
-REJNT,Reject Note,true
-REWNT,Rework Note,true
-CUSTNT,Customer Note,true
-APPNT,Approval Note,false
