@@ -7,3 +7,6 @@
 #### IBM 30jan webc
 
 * wbx://meeting/ibm.webex.com/ibm?MK=1464331491&MTGTK=RzH__wAAAAbDi2LuPkoJLNVHzHtrnkRk2D-dc5DbQoOHzaTYOJCdaQ2&MeetingUUID=117f0507bd8346d8b8964268c4ab7bc5&sitetype=TRAIN&r2sec=1&ST=1&RA=0&RL=0&preFilled=1&subservicetype=0&isVIPMtg=0&RAE=1&JFV=1&FX=20&tfsid=psDDYCriHQ
+
+#### TCS 
+* https://teams.microsoft.com/l/meetup-join/19%3ameeting_MDZkYzk0ZjEtZmYzNS00Mjg0LWJiNTMtZWM4ZGVlYzgxYjZk%40thread.v2/0?context=%7b%22Tid%22%3a%22404b1967-6507-45ab-8a6d-7374a3f478be%22%2c%22Oid%22%3a%2269826f0e-edf5-48b3-ade9-ff71ad727ac3%22%7d
