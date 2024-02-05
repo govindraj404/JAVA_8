@@ -10,3 +10,6 @@
 
 #### TCS 
 * https://teams.microsoft.com/l/meetup-join/19%3ameeting_MDZkYzk0ZjEtZmYzNS00Mjg0LWJiNTMtZWM4ZGVlYzgxYjZk%40thread.v2/0?context=%7b%22Tid%22%3a%22404b1967-6507-45ab-8a6d-7374a3f478be%22%2c%22Oid%22%3a%2269826f0e-edf5-48b3-ade9-ff71ad727ac3%22%7d
+
+IBM test link
+https://click.pstmrk.it/3s/www.hackerrank.com%2Ftests%2F85tdj7cqid9%2Flogin%3Fb%3DeyJ1c2VybmFtZSI6ImthbWlyZWRkeWdvdmluZGFyYWp1QGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiMmUxYWVmZjAiLCJoaWRlIjp0cnVlLCJhY2NvbW1vZGF0aW9ucyI6eyJhZGRpdGlvbmFsX3RpbWVfcGVyY2VudCI6MH19/EDcI/cyGzAQ/AQ/58eb6d07-e47a-4ff7-a463-a50af96a8a93/1/HlVXBeQmjc
