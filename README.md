@@ -17,3 +17,26 @@ https://click.pstmrk.it/3s/www.hackerrank.com%2Ftests%2F85tdj7cqid9%2Flogin%3Fb%
 Bosh
 
 https://teams.microsoft.com/l/meetup-join/19%3ameeting_ZWU3Y2FkNDgtNDQ2Yi00MmY5LTlhN2QtOGE3N2FlZGY5ZjRk%40thread.v2/0?context=%7b%22Tid%22%3a%220ae51e19-07c8-4e4b-bb6d-648ee58410f4%22%2c%22Oid%22%3a%2257a84d8a-1c0d-42d5-ab85-9ae906354fc2%22%7d
+
+
+
+// Assuming dateString is your Angular date in string format
+const dateString = "2024-02-05T12:34:56.789Z"; // Example date string
+
+// Convert the string to a Date object
+const utcDate = new Date(dateString);
+
+// Format the date to a custom string
+const formattedUtcString = new Intl.DateTimeFormat('en-GB', {
+  day: '2-digit',
+  month: 'short',
+  year: 'numeric',
+  hour: '2-digit',
+  minute: '2-digit',
+  second: '2-digit',
+  timeZone: 'UTC'
+}).format(utcDate);
+
+// Now formattedUtcString contains the desired output
+console.log(formattedUtcString);
+
