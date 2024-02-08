@@ -44,3 +44,6 @@ fcaso
 
 https://teams.microsoft.com/l/meetup-join/19%3ameeting_ZjIwN2Q2MzgtZDQ1Yi00MzBlLWE0MWQtOTdjOTFlNTdjNDJl%40thread.v2/0?context=%7b%22Tid%22%3a%227eb02d8c-f294-4119-9e60-4b79961041e3%22%2c%22Oid%22%3a%22debcb979-483b-4b33-8b4e-7d099628542f%22%7d
 
+
+https://pages.talview.com/cds/live-session/verification/index.html?c=qESqFMOHm-SzLwRfsAFK0ybA8~4hbDuT8OpzqR-y3lYxNzA3MjI0OTMwMzg1MDU0MDk_&link=https://tlv.sh/1Y2czKa117AoRyKo9
+
