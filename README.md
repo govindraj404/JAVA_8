@@ -47,3 +47,8 @@ https://teams.microsoft.com/l/meetup-join/19%3ameeting_ZjIwN2Q2MzgtZDQ1Yi00MzBlL
 
 https://pages.talview.com/cds/live-session/verification/index.html?c=qESqFMOHm-SzLwRfsAFK0ybA8~4hbDuT8OpzqR-y3lYxNzA3MjI0OTMwMzg1MDU0MDk_&link=https://tlv.sh/1Y2czKa117AoRyKo9
 
+
+
+CTS
+https://pages.talview.com/cds/live-session/verification/index.html?c=Rj2Q9NLVLOK049YvQwFGnchCA3Djjh~dWLAZsWYPTvExNzA3MzgxNjk0Mzg1NjkzMjI_&link=https://tlv.sh/Jv2oqgYfstP4fNbi9
+
