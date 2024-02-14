@@ -63,3 +63,9 @@ export class AppComponent {
   }
 }
 
+
+# bosh
+https://teams.microsoft.com/l/meetup-join/19%3ameeting_ZWU3Y2FkNDgtNDQ2Yi00MmY5LTlhN2QtOGE3N2FlZGY5ZjRk%40thread.v2/0?context=%7b%22Tid%22%3a%220ae51e19-07c8-4e4b-bb6d-648ee58410f4%22%2c%22Oid%22%3a%2257a84d8a-1c0d-42d5-ab85-9ae906354fc2%22%7d
+
+#TcS id
+https://teams.microsoft.com/l/meetup-join/19%3ameeting_YTAzOWE5YjItMjQzZS00MzlmLTllM2YtZDM5MGQ5NzYzMDNk%40thread.v2/0?context=%7b%22Tid%22%3a%22404b1967-6507-45ab-8a6d-7374a3f478be%22%2c%22Oid%22%3a%2295f639e6-c94d-4234-afbe-64793df24131%22%7d
