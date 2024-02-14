@@ -69,3 +69,8 @@ https://teams.microsoft.com/l/meetup-join/19%3ameeting_ZWU3Y2FkNDgtNDQ2Yi00MmY5L
 
 #TcS id
 https://teams.microsoft.com/l/meetup-join/19%3ameeting_YTAzOWE5YjItMjQzZS00MzlmLTllM2YtZDM5MGQ5NzYzMDNk%40thread.v2/0?context=%7b%22Tid%22%3a%22404b1967-6507-45ab-8a6d-7374a3f478be%22%2c%22Oid%22%3a%2295f639e6-c94d-4234-afbe-64793df24131%22%7d
+
+https://teams.microsoft.com/l/meetup-join/19%3ameeting_MzMyMDI3ZDUtM2Y4NC00ZjYyLWE3YTMtZjFjMzI5N2M4OTQ5%40thread.v2/0?context=%7b%22Tid%22%3a%2295119adf-3c99-4cd4-a052-694f60948651%22%2c%22Oid%22%3a%2239a672f8-c81c-4326-a2d1-9bc57459976e%22%7d
+
+
+
