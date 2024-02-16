@@ -1,48 +1,72 @@
-<html>
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
-<head></head>
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
+})
+export class LoginComponent implements OnInit {
+  loginForm: FormGroup;
 
-<body>
+  constructor(
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private http: HttpClient,
+    private router: Router
+  ) { }
 
-    <form novalidate="novalidate" action="httplogin.fcc" method="post" id="login-form" accept-charset="UTF-8">
+  ngOnInit() {
+    this.loginForm = this.fb.group({
+      user: ['', [Validators.required]],
+      password: ['', [Validators.required]],
+      smagentname: [''],
+      target: [''],
+    });
 
-        <div class="js-form-item form-item js-form-type-textfield form-type-textfield js-form-item-user form-item-user">
+    // Fetch values from URL parameters using FormData
+    const formData = new FormData();
+    this.route.queryParams.subscribe(params => {
+      formData.set('smagentname', params['smagentname'] || '');
+      formData.set('target', params['target'] || '');
 
-            <label for="edit-user" class="js-form-required form-required">Username/Email</label>
+      // Patch the form values
+      this.loginForm.patchValue({
+        smagentname: formData.get('smagentname') || '',
+        target: formData.get('target') || '',
+      });
+    });
+  }
 
-            <input autocorrect="none" autocapitalize="none" spellcheck="false" autofocus="autofocus"
+  onSubmit() {
+    // Prepare data for POST request
+    const formData = new FormData();
+    formData.set('user', this.loginForm.get('user').value);
+    formData.set('password', this.loginForm.get('password').value);
+    formData.set('smagentname', this.loginForm.get('smagentname').value);
+    formData.set('target', this.loginForm.get('target').value);
 
-                placeholder="Username/Email" type="text" id="edit-user" name="user" value="" size="60" maxlength="60"
+    // Set headers for x-www-form-urlencoded content type
+    const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
 
-                class="form-text required form-control" required="required" aria-required="true" />
+    // Make POST request
+    this.http.post('https://loginUrl/login.fcc', this.encodeFormData(formData), { headers })
+      .subscribe(response => {
+        // Handle the response as needed
+        console.log(response);
+        // Redirect to another page if necessary
+        this.router.navigate(['/success']);
+      });
+  }
 
-        </div>
-        <div
-
-            class="js-form-item form-item js-form-type-password form-type-password js-form-item-password form-item-password">
-
-            <label for="edit-password" class="js-form-required form-required">Password</label>
-
-            <input type="password" id="edit-password" name="password" size="60" maxlength="128"
-
-                class="form-text required form-control" required="required" aria-required="true" />
-
-        </div>
-
-        <input type="hidden" name="smagentname" value="$" />
-
-        <input type="hidden" name="target" value="$SM$" />
-
-        <div>
-
-            <input type="submit" id="edit-submit" name="op" value="Log in"
-
-                class="button button--primary js-form-submit form-submit btn btn-primary" />
-
-        </div>
-
-    </form>
-
-</body>
-
-</html>
+  // Helper function to encode form data for x-www-form-urlencoded format
+  private encodeFormData(formData: FormData): string {
+    const urlSearchParams = new URLSearchParams();
+    formData.forEach((value, key) => {
+      urlSearchParams.append(key, value as string);
+    });
+    return urlSearchParams.toString();
+  }
+}
