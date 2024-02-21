@@ -1,14 +1,30 @@
 ```typescript
 
-import { LimitedConcurrencyObservable } from './LimitedConcurrencyObservable'; // Import the LimitedConcurrencyObservable class
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpEvent, HttpEventType, HttpRequest, HttpResponse } from '@angular/common/http';
+import { Observable, from, Subject } from 'rxjs';
+import { lastValueFrom, mergeMap } from 'rxjs/operators';
 
-// ...
+// Existing imports...
 
 @Injectable({
   providedIn: 'root',
 })
 export class UploadService {
-  // ... Existing code ...
+  uploadProgress$ = new Subject<any>();
+  finishedProgress$ = new Subject<any>();
+  uploadCompleted$ = new Subject<any>();
+  files!: File[];
+  successList: File[] = [];
+  uploadFileCount!: number;
+  url: string = '/api/uploadFile';
+  partFile!: PartFile;
+
+  async preSignedPartUrl(files: PartFile): Promise<any> {
+    return lastValueFrom(
+      this.httpClient.post(`${this.url}/presignPart`, files)
+    );
+  }
 
   async uploadMultipartFile(
     file: File,
@@ -16,25 +32,43 @@ export class UploadService {
     respFile: SendResponseFile
   ) {
     try {
-      //   const FILE_CHUNK_SIZE = 10000000; // 10MB
       const FILE_CHUNK_SIZE = 50 * 1000 * 1000; // 10MB
       const fileSize = file.size;
       const NUM_CHUNKS = Math.floor(fileSize / FILE_CHUNK_SIZE) + 1;
-      let start, end, blob;
-      let uploadPartsArray: UploadPart[] = [];
-      let countParts = 0;
-      let orderData: OrderData[] = [];
-      let totalDataDone: any[] = [];
-      const time: number = new Date().getTime();
-      let speed = 0;
 
       const concurrency = 2; // Set your desired concurrency level
-      const limitedObservable = new LimitedConcurrencyObservable(concurrency);
+
+      const limitedObservable = {
+        queue: [] as (() => void)[],
+        activeCount: 0,
+        concurrency,
+        subject: new Subject<void>(),
+        startProcessing() {
+          while (this.activeCount < this.concurrency && this.queue.length > 0) {
+            const task = this.queue.shift();
+            this.activeCount++;
+
+            // Execute the task and notify the subject when done
+            task?.();
+            this.activeCount--;
+            this.startProcessing();
+            this.subject.next();
+          }
+        },
+        enqueue(task: () => void) {
+          this.queue.push(task);
+          this.subject.next(); // Start processing if there is room in the queue
+        },
+        asObservable(): Observable<void> {
+          return this.subject.asObservable();
+        },
+      };
 
       for (let index = 1; index < NUM_CHUNKS + 1; index++) {
-        start = (index - 1) * FILE_CHUNK_SIZE;
-        end = index * FILE_CHUNK_SIZE;
-        blob = index < NUM_CHUNKS ? file.slice(start, end) : file.slice(start);
+        const start = (index - 1) * FILE_CHUNK_SIZE;
+        const end = index * FILE_CHUNK_SIZE;
+        const blob = index < NUM_CHUNKS ? file.slice(start, end) : file.slice(start);
+
         totalDataDone.push({
           part: index - 1,
           loaded: 0,
@@ -42,7 +76,6 @@ export class UploadService {
 
         // Wrap the loop body in a function and enqueue it with limitedObservable
         limitedObservable.enqueue(async () => {
-          // (1) Generate presigned URL for each part
           this.partFile = {
             filePartDto: {
               region: region,
@@ -53,9 +86,9 @@ export class UploadService {
               contentLength: blob.size,
             },
           };
+
           const uploadUrlPresigned = await this.preSignedPartUrl(this.partFile);
 
-          // (2) Puts each file part into the storage server
           if (uploadUrlPresigned) {
             orderData.push({
               presignedUrl: uploadUrlPresigned.filePartDto.presignedUrl,
@@ -66,9 +99,7 @@ export class UploadService {
               'PUT',
               uploadUrlPresigned.filePartDto.presignedUrl,
               blob,
-              {
-                reportProgress: true,
-              }
+              { reportProgress: true }
             );
 
             this.httpClient.request(req).subscribe((event: HttpEvent<any>) => {
@@ -81,7 +112,7 @@ export class UploadService {
                   };
                   totalDataDone.forEach((a) => (percentDone += a.loaded));
                   const diff = new Date().getTime() - time;
-                  this.uploadProgress$.emit({
+                  this.uploadProgress$.next({
                     progress: Math.round((percentDone / fileSize) * 100),
                     token: respFile.tempStrId,
                     currentPart: index,
@@ -92,7 +123,7 @@ export class UploadService {
                   break;
                 case HttpEventType.Response:
               }
-              // (3) Calls the CompleteMultipartUpload endpoint in the backend server
+
               if (event instanceof HttpResponse) {
                 const currentPresigned = orderData.find(
                   (item) => item.presignedUrl === event.url
@@ -122,7 +153,7 @@ export class UploadService {
                   ).then((res) => {
                     this.successList.push(file);
                     if (this.successList.length === this.uploadFileCount) {
-                      this.uploadCompleted$.emit(this.successList);
+                      this.uploadCompleted$.next(this.successList);
                     }
                   });
                 }
@@ -139,5 +170,5 @@ export class UploadService {
     }
   }
   
-  // ... Existing code ...
+  // ... Remaining existing code ...
 }
