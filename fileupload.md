@@ -1,6 +1,4 @@
-```typescript
-
-   import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpEvent, HttpEventType, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { lastValueFrom } from 'rxjs';
@@ -42,7 +40,7 @@ export class UploadService {
       let countParts = 0;
       const time: number = new Date().getTime();
 
-      for (let index = 1; index < NUM_CHUNKS + 1; index++) {
+      async function uploadPart(index: number) {
         const start = (index - 1) * FILE_CHUNK_SIZE;
         const end = index * FILE_CHUNK_SIZE;
         const blob = index < NUM_CHUNKS ? file.slice(start, end) : file.slice(start);
@@ -52,7 +50,7 @@ export class UploadService {
           loaded: 0,
         });
 
-        limitedObservable.subscribe(() => {
+        try {
           this.partFile = {
             filePartDto: {
               region: region,
@@ -64,76 +62,84 @@ export class UploadService {
             },
           };
 
-          this.preSignedPartUrl(this.partFile).then((uploadUrlPresigned) => {
-            if (uploadUrlPresigned) {
-              orderData.push({
-                presignedUrl: uploadUrlPresigned.filePartDto.presignedUrl,
-                index: index,
-              });
+          const uploadUrlPresigned = await this.preSignedPartUrl(this.partFile);
 
-              const req = new HttpRequest('PUT', uploadUrlPresigned.filePartDto.presignedUrl, blob, {
-                reportProgress: true,
-              });
+          if (uploadUrlPresigned) {
+            orderData.push({
+              presignedUrl: uploadUrlPresigned.filePartDto.presignedUrl,
+              index: index,
+            });
 
-              this.httpClient.request(req).subscribe((event: HttpEvent<any>) => {
-                switch (event.type) {
-                  case HttpEventType.UploadProgress:
-                    let percentDone = 0;
-                    totalDataDone[index - 1] = {
-                      part: index,
-                      loaded: event.loaded,
-                    };
-                    totalDataDone.forEach((a) => (percentDone += a.loaded));
-                    const diff = new Date().getTime() - time;
-                    this.uploadProgress$.next({
-                      progress: Math.round((percentDone / fileSize) * 100),
-                      token: respFile.tempStrId,
-                      currentPart: index,
-                      totalSize: fileSize,
-                      fileName: file.name,
-                      speed: Math.round((percentDone / diff) * 1000),
+            const req = new HttpRequest('PUT', uploadUrlPresigned.filePartDto.presignedUrl, blob, {
+              reportProgress: true,
+            });
+
+            this.httpClient.request(req).subscribe((event: HttpEvent<any>) => {
+              switch (event.type) {
+                case HttpEventType.UploadProgress:
+                  let percentDone = 0;
+                  totalDataDone[index - 1] = {
+                    part: index,
+                    loaded: event.loaded,
+                  };
+                  totalDataDone.forEach((a) => (percentDone += a.loaded));
+                  const diff = new Date().getTime() - time;
+                  this.uploadProgress$.next({
+                    progress: Math.round((percentDone / fileSize) * 100),
+                    token: respFile.tempStrId,
+                    currentPart: index,
+                    totalSize: fileSize,
+                    fileName: file.name,
+                    speed: Math.round((percentDone / diff) * 1000),
+                  });
+                  break;
+                case HttpEventType.Response:
+                  if (event instanceof HttpResponse) {
+                    const currentPresigned = orderData.find(
+                      (item) => item.presignedUrl === event.url
+                    );
+                    countParts++;
+                    uploadPartsArray.push({
+                      etag: event.headers.get('ETag')?.replace(/[|&;$%@"<>()+,]/g, ''),
+                      partNumber: currentPresigned?.index,
                     });
-                    break;
-                  case HttpEventType.Response:
-                    if (event instanceof HttpResponse) {
-                      const currentPresigned = orderData.find(
-                        (item) => item.presignedUrl === event.url
-                      );
-                      countParts++;
-                      uploadPartsArray.push({
-                        etag: event.headers.get('ETag')?.replace(/[|&;$%@"<>()+,]/g, ''),
-                        partNumber: currentPresigned?.index,
+
+                    if (uploadPartsArray.length === NUM_CHUNKS) {
+                      lastValueFrom(
+                        this.httpClient.post(`${this.url}/completeMultipart`, {
+                          file: {
+                            region: region,
+                            bucket: respFile.bucket,
+                            fileId: respFile.fileId,
+                            fileObjectKey: respFile.fileObjectKey,
+                            completedPartList: uploadPartsArray.sort((a, b) => {
+                              return a.partNumber - b.partNumber;
+                            }),
+                            uploadId: respFile.uploadId,
+                          },
+                        })
+                      ).then((res) => {
+                        this.successList.push(file);
+                        if (this.successList.length === this.uploadFileCount) {
+                          this.uploadCompleted$.next(this.successList);
+                        }
                       });
-
-                      if (uploadPartsArray.length === NUM_CHUNKS) {
-                        lastValueFrom(
-                          this.httpClient.post(`${this.url}/completeMultipart`, {
-                            file: {
-                              region: region,
-                              bucket: respFile.bucket,
-                              fileId: respFile.fileId,
-                              fileObjectKey: respFile.fileObjectKey,
-                              completedPartList: uploadPartsArray.sort((a, b) => {
-                                return a.partNumber - b.partNumber;
-                              }),
-                              uploadId: respFile.uploadId,
-                            },
-                          })
-                        ).then((res) => {
-                          this.successList.push(file);
-                          if (this.successList.length === this.uploadFileCount) {
-                            this.uploadCompleted$.next(this.successList);
-                          }
-                        });
-                      }
                     }
-                    break;
-                }
-              });
-
+                  }
+                  break;
+              }
               limitedObservable.next(); // Notify that this task is done
-            }
-          });
+            });
+          }
+        } catch (e) {
+          console.log('error: ', e);
+          limitedObservable.next(); // Notify that this task is done even in case of an error
+        }
+      }
+
+      for (let index = 1; index < NUM_CHUNKS + 1; index++) {
+        limitedObservable.subscribe(() => {
+          uploadPart(index);
         });
 
         if (index <= concurrency) {
@@ -141,9 +147,6 @@ export class UploadService {
           limitedObservable.next();
         }
       }
-
-      // Move this line outside of the loop
-      // limitedObservable.next();
     } catch (e) {
       console.log('error: ', e);
     }
