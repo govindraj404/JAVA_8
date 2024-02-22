@@ -1,5 +1,6 @@
 ```typescript
-import { Injectable } from '@angular/core';
+
+   import { Injectable } from '@angular/core';
 import { HttpClient, HttpEvent, HttpEventType, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { lastValueFrom } from 'rxjs';
@@ -128,9 +129,9 @@ export class UploadService {
                     }
                     break;
                 }
-
-                limitedObservable.next(); // Notify that this task is done
               });
+
+              limitedObservable.next(); // Notify that this task is done
             }
           });
         });
@@ -140,6 +141,9 @@ export class UploadService {
           limitedObservable.next();
         }
       }
+
+      // Move this line outside of the loop
+      // limitedObservable.next();
     } catch (e) {
       console.log('error: ', e);
     }
