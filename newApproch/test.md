@@ -32,48 +32,39 @@ export class UploadService {
       const fileSize = file.size;
       const NUM_CHUNKS = Math.floor(fileSize / FILE_CHUNK_SIZE) + 1;
 
+      const concurrentLimit = 2; // Set your desired concurrency limit
+
       const totalDataDone: any[] = [];
       const orderData: OrderData[] = [];
       const uploadPartsArray: UploadPart[] = [];
       let countParts = 0;
       const time: number = new Date().getTime();
 
-      const concurrentLimit = 2;
-
       for (let index = 1; index < NUM_CHUNKS + 1; index += concurrentLimit) {
         const chunkPromises = [];
 
         for (let i = 0; i < concurrentLimit && index + i <= NUM_CHUNKS; i++) {
-          const currentIndex = index + i;
-          const start = (currentIndex - 1) * FILE_CHUNK_SIZE;
-          const end = currentIndex * FILE_CHUNK_SIZE;
-          const blob =
-            currentIndex < NUM_CHUNKS ? file.slice(start, end) : file.slice(start);
+          const partIndex = index + i;
+          const start = (partIndex - 1) * FILE_CHUNK_SIZE;
+          const end = partIndex * FILE_CHUNK_SIZE;
+          const blob = partIndex < NUM_CHUNKS ? file.slice(start, end) : file.slice(start);
 
           totalDataDone.push({
-            part: currentIndex - 1,
+            part: partIndex - 1,
             loaded: 0,
           });
 
-          chunkPromises.push(this.uploadPart(currentIndex, blob, region, respFile, totalDataDone, fileSize, time));
+          chunkPromises.push(this.uploadPart(partIndex, blob, region, respFile));
         }
 
         await Promise.all(chunkPromises);
       }
     } catch (e) {
-      console.log('error: ', e);
+      console.error('Error uploading file:', e);
     }
   }
 
-  private async uploadPart(
-    index: number,
-    blob: Blob,
-    region: string,
-    respFile: SendResponseFile,
-    totalDataDone: any[],
-    fileSize: number,
-    time: number
-  ): Promise<void> {
+  private async uploadPart(index: number, blob: Blob, region: string, respFile: SendResponseFile): Promise<void> {
     try {
       this.partFile = {
         filePartDto: {
@@ -93,32 +84,38 @@ export class UploadService {
           reportProgress: true,
         });
 
-        await lastValueFrom(this.httpClient.request(req).pipe(take(1)));
+        const event: HttpEvent<any> = await this.httpClient.request(req).toPromise();
 
-        let percentDone = 0;
-        totalDataDone[index - 1] = {
-          part: index,
-          loaded: blob.size,
-        };
-        totalDataDone.forEach((a) => (percentDone += a.loaded));
-        const diff = new Date().getTime() - time;
-        this.uploadProgress$.next({
-          progress: Math.round((percentDone / fileSize) * 100),
-          token: respFile.tempStrId,
-          currentPart: index,
-          totalSize: fileSize,
-          fileName: file.name,
-          speed: Math.round((percentDone / diff) * 1000),
-        });
-
-        if (index === NUM_CHUNKS) {
-          this.uploadCompleted$.next(this.successList);
+        switch (event.type) {
+          case HttpEventType.UploadProgress:
+            let percentDone = 0;
+            totalDataDone[index - 1] = {
+              part: index,
+              loaded: event.loaded,
+            };
+            totalDataDone.forEach((a) => (percentDone += a.loaded));
+            const diff = new Date().getTime() - time;
+            this.uploadProgress$.next({
+              progress: Math.round((percentDone / fileSize) * 100),
+              token: respFile.tempStrId,
+              currentPart: index,
+              totalSize: fileSize,
+              fileName: file.name,
+              speed: Math.round((percentDone / diff) * 1000),
+            });
+            break;
+          case HttpEventType.Response:
+            if (event instanceof HttpResponse) {
+              // Handle completion logic as needed
+              console.log(`Part ${index} completed successfully.`);
+            }
+            break;
         }
       }
-    } catch (e) {
-      console.log('error: ', e);
+    } catch (error) {
+      console.error(`Error uploading part ${index}:`, error);
     }
   }
 
-  // Remaining code
+  // ... Remaining code ...
 }
