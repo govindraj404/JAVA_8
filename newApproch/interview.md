@@ -3,3 +3,6 @@ https://teams.microsoft.com/l/meetup-join/19%3ameeting_MmIyMGNmYmYtMmNiMC00YjY5L
 
 #incido
 https://incedoinc.zoom.us/j/98274965784
+
+#at&t
+https://teams.microsoft.com/l/meetup-join/19%3ameeting_ODViM2MzYmMtYWNjZS00MzJjLTkxOWItZTE2YjJiMThlZWIw%40thread.v2/0?context=%7b%22Tid%22%3a%22e741d71c-c6b6-47b0-803c-0f3b32b07556%22%2c%22Oid%22%3a%22c3e8ce0f-c3b7-4b79-927a-6c83f3993cac%22%7d
