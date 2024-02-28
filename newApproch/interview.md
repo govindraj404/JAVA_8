@@ -10,3 +10,6 @@ https://teams.microsoft.com/l/meetup-join/19%3ameeting_ODViM2MzYmMtYWNjZS00MzJjL
 
 HCL L1
 https://teams.microsoft.com/l/meetup-join/19%3ameeting_ZDFlY2IxNmQtZDZjZS00NDJmLThmNmEtZDIyZmJiNWQxNmU1%40thread.v2/0?context=%7b%22Tid%22%3a%22189de737-c93a-4f5a-8b68-6f4ca9941912%22%2c%22Oid%22%3a%22ad0c5f82-5338-4cb6-a193-5328e49fdf2e%22%7d
+
+IBM
+https://ibm.webex.com/wbxmjs/joinservice/sites/ibm/meeting/download/055bbfdb3d024da484fe709d007bc142?protocolUID=8fe5e3c0008ece32be194958ced32c9f#noRefresh
