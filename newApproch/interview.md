@@ -13,3 +13,6 @@ https://teams.microsoft.com/l/meetup-join/19%3ameeting_ZDFlY2IxNmQtZDZjZS00NDJmL
 
 IBM
 https://ibm.webex.com/wbxmjs/joinservice/sites/ibm/meeting/download/055bbfdb3d024da484fe709d007bc142?protocolUID=8fe5e3c0008ece32be194958ced32c9f#noRefresh
+
+Wallmart
+https://walmart.zoom.us/j/91052565291
