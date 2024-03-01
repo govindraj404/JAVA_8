@@ -328,5 +328,8 @@ this.httpClient.request(req).subscribe((event: HttpEvent<any>) => {
 #TechM      
 ```link
  https://teams.microsoft.com/l/meetup-join/19%3ameeting_NTA4YmRhZTgtOTEyZC00MWE5LTk3MWEtOGJiNGE2NmE5Zjk0%40thread.v2/0?context=%7b%22Tid%22%3a%22edf442f5-b994-4c86-a131-b42b03a16c95%22%2c%22Oid%22%3a%22a915056f-afe6-45da-b1e9-d87398746620%22%7d
+
+#CGI
+https://teams.microsoft.com/l/meetup-join/19%3ameeting_YmRhOWUxYjItNjk3Ni00MmYxLWFlOGQtY2M2ZjkyZjUzMWM1%40thread.v2/0?context=%7b%22Tid%22%3a%22b9fec68c-c92d-461e-9a97-3d03a0f18b82%22%2c%22Oid%22%3a%220edd474b-645d-404b-be43-62f8948cd2fd%22%7d
  
 
