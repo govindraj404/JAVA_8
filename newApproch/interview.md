@@ -26,3 +26,6 @@ https://adpmeet.webex.com/wbxmjs/joinservice/sites/adpmeet/meeting/download/b860
 
 cTS
 https://pages.talview.com/cds/live-session/verification/index.html?c=yrRTi-1i19d8Uu8S8n8OkMbwhXQ20-WUix1zzGwqGb4xNzA5MzQ0ODE3MzkxNDM0MDY_&link=https://tlv.sh/pMEmsJdb1dfh6aUK7
+
+
+https://teams.microsoft.com/l/meetup-join/19%3ameeting_NGZmNmU0MDAtNjBjNS00NDMxLTgyZTgtMmU4ZDEwMGRkNTE1%40thread.v2/0?context=%7b%22Tid%22%3a%22189de737-c93a-4f5a-8b68-6f4ca9941912%22%2c%22Oid%22%3a%2234f539ab-99e5-4195-90c7-4847f5f1b796%22%7d
