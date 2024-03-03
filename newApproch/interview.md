@@ -33,3 +33,5 @@ https://teams.microsoft.com/l/meetup-join/19%3ameeting_NGZmNmU0MDAtNjBjNS00NDMxL
 wipro
 
 https://app.codility.com/public-link/Wipro-Limited-WEE_FS_AngularJBE_ext_L1_V1/
+
+https://teams.microsoft.com/l/meetup-join/19%3ameeting_YzAzOTYxNzgtYWYzNi00NmMyLWExODctMWIwMWViMDM3MTEz%40thread.v2/0?context=%7b%22Tid%22%3a%22258ac4e4-146a-411e-9dc8-79a9e12fd6da%22%2c%22Oid%22%3a%22c579fbde-2e74-4379-9bd6-4d85d26eec31%22%7d
