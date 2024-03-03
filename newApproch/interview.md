@@ -29,3 +29,7 @@ https://pages.talview.com/cds/live-session/verification/index.html?c=yrRTi-1i19d
 
 
 https://teams.microsoft.com/l/meetup-join/19%3ameeting_NGZmNmU0MDAtNjBjNS00NDMxLTgyZTgtMmU4ZDEwMGRkNTE1%40thread.v2/0?context=%7b%22Tid%22%3a%22189de737-c93a-4f5a-8b68-6f4ca9941912%22%2c%22Oid%22%3a%2234f539ab-99e5-4195-90c7-4847f5f1b796%22%7d
+
+wipro
+
+https://app.codility.com/public-link/Wipro-Limited-WEE_FS_AngularJBE_ext_L1_V1/
