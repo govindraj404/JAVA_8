@@ -17,3 +17,6 @@ https://teams.microsoft.com/l/meetup-join/19%3ameeting_YmRhOWUxYjItNjk3Ni00MmYxL
 https://adpmeet.webex.com/adpmeet/j.php?MTID=m64231100e6aa41d93c8ddbdb2c2d5978
 
 https://teams.microsoft.com/l/meetup-join/19%3ameeting_OTFkNDc2MDMtZTk2Yy00NjhkLTgyNzUtMDRkNTJiYTFhNWNh%40thread.v2/0?context=%7b%22Tid%22%3a%22b5ca00fe-6fe6-4989-82f0-73d025612227%22%2c%22Oid%22%3a%22759fb9df-8281-48a1-994d-bd373afc582b%22%7d
+
+
+https://teams.microsoft.com/l/meetup-join/19%3ameeting_ZTU1MmI2YzEtOWNjZC00NWM3LTlmYmMtMzViYjBkNGQ3MDcx%40thread.v2/0?context=%7b%22Tid%22%3a%2296ece526-9c7d-48b0-8daf-8b93c90a5d18%22%2c%22Oid%22%3a%2266225457-3a21-44c1-9d9e-32d221b4a318%22%7d
