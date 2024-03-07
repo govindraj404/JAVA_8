@@ -11,3 +11,6 @@ https://teams.microsoft.com/dl/launcher/launcher.html?url=%2F_%23%2Fl%2Fmeetup-j
 
 IBM
 https://ibm.webex.com/ibm/j.php?MTID=m7b1f0cfbccc25c233ccefa2299c8175e
+
+TechM
+https://teams.microsoft.com/meetingOptions/?organizerId=f3003d0a-1df1-484e-adb0-a9b206aa7bc8&tenantId=edf442f5-b994-4c86-a131-b42b03a16c95&threadId=19_meeting_MmIyMWU4M2QtNzMwYy00NTg3LTlmZjItZWMyM2M5NzIxZDUz@thread.v2&messageId=0&language=en-US
