@@ -14,3 +14,5 @@ https://ibm.webex.com/ibm/j.php?MTID=m7b1f0cfbccc25c233ccefa2299c8175e
 
 TechM
 https://teams.microsoft.com/meetingOptions/?organizerId=f3003d0a-1df1-484e-adb0-a9b206aa7bc8&tenantId=edf442f5-b994-4c86-a131-b42b03a16c95&threadId=19_meeting_MmIyMWU4M2QtNzMwYy00NTg3LTlmZjItZWMyM2M5NzIxZDUz@thread.v2&messageId=0&language=en-US
+
+https://teams.microsoft.com/l/meetup-join/19%3ameeting_MmIyMWU4M2QtNzMwYy00NTg3LTlmZjItZWMyM2M5NzIxZDUz%40thread.v2/0?context=%7b%22Tid%22%3a%22edf442f5-b994-4c86-a131-b42b03a16c95%22%2c%22Oid%22%3a%22f3003d0a-1df1-484e-adb0-a9b206aa7bc8%22%7d
