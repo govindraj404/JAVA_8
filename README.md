@@ -4,3 +4,7 @@ https://teams.microsoft.com/l/meetup-join/19%3ameeting_YjBmMzU5OWQtY2MzNi00NDVmL
 fedx
 https://uni.monjin.com/public/join/616733
 
+https://www.hackerrank.com/tests/85tdj7cqid9/login?b=eyJ1c2VybmFtZSI6ImthbWlyZWRkeWdvdmluZGFyYWp1QGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiMmUxYWVmZjAiLCJoaWRlIjp0cnVlLCJhY2NvbW1vZGF0aW9ucyI6eyJhZGRpdGlvbmFsX3RpbWVfcGVyY2VudCI6MH19
+
+https://www.hackerrank.com/tests/85tdj7cqid9/login?b=eyJ1c2VybmFtZSI6ImthbWlyZWRkeWdvdmluZGFyYWp1QGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiMmUxYWVmZjAiLCJoaWRlIjp0cnVlLCJhY2NvbW1vZGF0aW9ucyI6eyJhZGRpdGlvbmFsX3RpbWVfcGVyY2VudCI6MH19
+
