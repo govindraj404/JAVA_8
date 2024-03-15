@@ -11,6 +11,8 @@ https://teams.microsoft.com/l/meetup-join/19%3ameeting_OWExNDQ3YmMtZjg0Ny00MjAwL
 
 https://us06web.zoom.us/j/85967521767
 
+https://click.pstmrk.it/3s/www.hackerrank.com%2Ftests%2F61dn5m4thto%2Flogin%3Fb%3DeyJ1c2VybmFtZSI6ImthbWlyZWRkeWdvdmluZGFyYWp1QGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiM2JjZmJhNDkiLCJoaWRlIjp0cnVlLCJhY2NvbW1vZGF0aW9ucyI6eyJhZGRpdGlvbmFsX3RpbWVfcGVyY2VudCI6MH19/EDcI/JvmzAQ/AQ/65f60169-de16-49bf-87c1-9ed6266906d2/1/d0dOfR_gfH
+
 https://deloitte.zoom.us/j/96166452973?pwd=L1RpVkJsUU5sSnFDdjRtbW1BeVhZQT09
 
 
