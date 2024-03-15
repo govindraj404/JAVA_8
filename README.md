@@ -10,3 +10,8 @@ https://teams.microsoft.com/l/meetup-join/19%3ameeting_ZDM4MTVhOWQtOGI4NC00ODg2L
 https://teams.microsoft.com/l/meetup-join/19%3ameeting_OWExNDQ3YmMtZjg0Ny00MjAwLTkzODQtNjgxOTgzMjI2NWVi%40thread.v2/0?context=%7b%22Tid%22%3a%22406f6fb2-e087-4d29-9642-817873fddc4c%22%2c%22Oid%22%3a%22c0811e6e-f745-42b3-a43f-aa876851b7d3%22%7d
 
 https://us06web.zoom.us/j/85967521767
+
+https://deloitte.zoom.us/j/96166452973?pwd=L1RpVkJsUU5sSnFDdjRtbW1BeVhZQT09
+
+
+879671
