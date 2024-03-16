@@ -22,3 +22,9 @@ https://deloitte.zoom.us/j/96166452973?pwd=L1RpVkJsUU5sSnFDdjRtbW1BeVhZQT09
 https://ibm.webex.com/ibm/j.php?MTID=m8bd1ebf97189d87bc832646c75239168
 
 https://teams.microsoft.com/l/meetup-join/19%3ameeting_MDkyMTdhMjUtNWFjYS00ZTQ3LTgwMjUtZTdiYjEwYTg4MGRm%40thread.v2/0?context=%7b%22Tid%22%3a%22b727a530-a0d5-4fb8-bd40-d8f9763e97db%22%2c%22Oid%22%3a%22df2509de-7f0b-42bb-9ccb-aa83bbdf1ae1%22%7d
+
+https://us06web.zoom.us/j/82780182656
+
+6128
+
+
