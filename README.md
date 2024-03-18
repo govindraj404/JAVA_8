@@ -30,3 +30,6 @@ https://us06web.zoom.us/j/82780182656
 
 https://krb-sjobs.brassring.com/TGnewUI/Search/home/HomeWithPreLoad?PageType=JobDetails&partnerid=26059&siteid=5016&Areq=691793BR#jobDetails=725677_5016
 
+
+https://ice.zoom.us/j/93330521479?pwd=bHFVaVpBR1hGY0daZG5VdmltUEs1UT09
+
