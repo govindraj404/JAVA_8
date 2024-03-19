@@ -33,3 +33,7 @@ https://krb-sjobs.brassring.com/TGnewUI/Search/home/HomeWithPreLoad?PageType=Job
 
 https://ice.zoom.us/j/93330521479?pwd=bHFVaVpBR1hGY0daZG5VdmltUEs1UT09
 
+LTI
+
+https://teams.microsoft.com/l/meetup-join/19%3ameeting_MGVlMDMxNzAtZjE5My00ODRjLWE1Y2QtNjdkMGNhZWI2OGQ2%40thread.v2/0?context=%7b%22Tid%22%3a%22ff355289-721e-4dd7-a663-afec62ab9d54%22%2c%22Oid%22%3a%22cfa7a96e-0264-409f-8670-7d1521dbb3f8%22%7d
+
