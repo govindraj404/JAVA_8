@@ -2,3 +2,6 @@ https://teams.microsoft.com/l/meetup-join/19%3ameeting_ZTA4M2VkZjktNmM2ZS00NWY3L
 
 
 https://krb.brassring.com/JetStream/500/Presentation/Template/ASP/Candidate/Forms/AddForm.asp?isgq=@kR/k6AE7m00ydVSGoj2Lxg==&apprvl=@6BgblizfgWMbP0LckBw7Sg==&localeid=@Q5ZGaEpLjhkXRR$xWz/EGQ==&mode=@PeZY1oZHkRBqwl/W73Z8/A==&where=@yRy5TwzK5LhAx6pPw/BVVA==&encryptedvalues=@1732vO9Ntd/RnIFYPbnAcw==*@ffdRUptWRxfy34A2W2aE3eqUA7DzZTLY09JOIEd4RtA=*@StUQbrJeIm8Ns/U2a8/YEQ==*@4XCxQXSG2t2tipuk5xVuLA==*@SfVFtt/JwzDcKJfCk4mpSw==*@neLNF8UgcE9UH9ZFBY4Msw==*@kR/k6AE7m00ydVSGoj2Lxg==*@S38PTPOrKlvO8xfzOCHKyQ==*@Wz82/BRLglywErFx4mLA6A==*@wdxjkEduSMs600x2zA6grw==*@51I8povNogiSB9Er7D0BeA==
+
+
+https://krb.brassring.com/JetStream/500/Presentation/Template/ASP/Candidate/Forms/AddForm.asp?isgq=@kR/k6AE7m00ydVSGoj2Lxg==&apprvl=@6BgblizfgWMbP0LckBw7Sg==&localeid=@Q5ZGaEpLjhkXRR$xWz/EGQ==&mode=@PeZY1oZHkRBqwl/W73Z8/A==&where=@yRy5TwzK5LhAx6pPw/BVVA==&encryptedvalues=@1732vO9Ntd/RnIFYPbnAcw==*@PKZS83j9LPkBL9GqPxAGIncwd$QAn456$LDg9CwpEIo=*@StUQbrJeIm8Ns/U2a8/YEQ==*@tWuHwU9IhTtlkAkZOBqWxg==*@SfVFtt/JwzDcKJfCk4mpSw==*@neLNF8UgcE9UH9ZFBY4Msw==*@kR/k6AE7m00ydVSGoj2Lxg==*@S38PTPOrKlvO8xfzOCHKyQ==*@Wz82/BRLglywErFx4mLA6A==*@wdxjkEduSMs600x2zA6grw==*@51I8povNogiSB9Er7D0BeA==
