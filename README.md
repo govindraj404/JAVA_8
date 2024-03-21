@@ -5,3 +5,6 @@ https://krb.brassring.com/JetStream/500/Presentation/Template/ASP/Candidate/Form
 
 
 https://krb.brassring.com/JetStream/500/Presentation/Template/ASP/Candidate/Forms/AddForm.asp?isgq=@kR/k6AE7m00ydVSGoj2Lxg==&apprvl=@6BgblizfgWMbP0LckBw7Sg==&localeid=@Q5ZGaEpLjhkXRR$xWz/EGQ==&mode=@PeZY1oZHkRBqwl/W73Z8/A==&where=@yRy5TwzK5LhAx6pPw/BVVA==&encryptedvalues=@1732vO9Ntd/RnIFYPbnAcw==*@PKZS83j9LPkBL9GqPxAGIncwd$QAn456$LDg9CwpEIo=*@StUQbrJeIm8Ns/U2a8/YEQ==*@tWuHwU9IhTtlkAkZOBqWxg==*@SfVFtt/JwzDcKJfCk4mpSw==*@neLNF8UgcE9UH9ZFBY4Msw==*@kR/k6AE7m00ydVSGoj2Lxg==*@S38PTPOrKlvO8xfzOCHKyQ==*@Wz82/BRLglywErFx4mLA6A==*@wdxjkEduSMs600x2zA6grw==*@51I8povNogiSB9Er7D0BeA==
+
+
+https://teams.microsoft.com/l/meetup-join/19%3ameeting_ZGU3OGY4MWMtYjQ3ZC00YWI1LWI5YTUtOGQ2OTY1MDZhMzJj%40thread.v2/0?context=%7b%22Tid%22%3a%22ff355289-721e-4dd7-a663-afec62ab9d54%22%2c%22Oid%22%3a%22cfa7a96e-0264-409f-8670-7d1521dbb3f8%22%7d
