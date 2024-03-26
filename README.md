@@ -8,3 +8,6 @@ https://krb.brassring.com/JetStream/500/Presentation/Template/ASP/Candidate/Form
 
 
 https://teams.microsoft.com/l/meetup-join/19%3ameeting_ZGU3OGY4MWMtYjQ3ZC00YWI1LWI5YTUtOGQ2OTY1MDZhMzJj%40thread.v2/0?context=%7b%22Tid%22%3a%22ff355289-721e-4dd7-a663-afec62ab9d54%22%2c%22Oid%22%3a%22cfa7a96e-0264-409f-8670-7d1521dbb3f8%22%7d
+
+
+https://teams.microsoft.com/l/meetup-join/19%3ameeting_NDNmNjlhNjctNTA2ZS00NjhmLTg5MDItOTAxZTMwZTcwMmI0%40thread.v2/0?context=%7b%22Tid%22%3a%22be67623c-1932-42a6-9d24-6c359fe5ea71%22%2c%22Oid%22%3a%222aae34c7-0bbe-47d2-80f9-1907769d8f1c%22%7d
