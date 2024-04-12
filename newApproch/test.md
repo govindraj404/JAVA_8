@@ -1,3 +1,4 @@
+~~~ typescript
 learning github
   private async uploadPart(
     index: number,
